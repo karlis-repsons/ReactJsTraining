@@ -1,0 +1,11 @@
+.square.container.kU7d2 {
+    &.centered {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &> .content {
+            margin: 0 auto;
+        }
+    }
+}
