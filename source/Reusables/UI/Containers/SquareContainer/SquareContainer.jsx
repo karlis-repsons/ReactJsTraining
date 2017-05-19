@@ -1,6 +1,5 @@
-// @flow
-
-/* Usage:
+/*
+Usage:
     (A) to have always centered square:
         <SquareContainer className='centered'>
             <YourChildNodesHere />
@@ -11,14 +10,14 @@
             <SquareContainer>
                 <YourChildNodesHere />
             </SquareContainer>
-        2. add your styles to container and content div-s
-           to align square.
-   Props:
-    className - optional - add your class name to container div. 
+        2. add your styles to container and content div-s to align square.
+
+Props:
+    className (optional) - add your class names to container div as 'name1 name2'.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import './SquareContainer.scss';
 
@@ -30,18 +29,17 @@ export default class SquareContainer extends React.Component {
         this.state = { sideLength: 0 };
     }
     resize() {
-        const thisDomNode = ReactDOM.findDOMNode(this);
-        if (thisDomNode) {
-            const rect = thisDomNode.getBoundingClientRect();
+        if (this.domNode) {
+            const rect = this.domNode.getBoundingClientRect();
             this.setState({ sideLength: Math.min(rect.width, rect.height) });
         }
     }
     componentDidMount() {
         this.resize();
-        window.addEventListener("resize", this.resize.bind(this));
+        window.addEventListener('resize', this.resize.bind(this));
     }
     componentWillUnmount() {
-        window.removeEventListener("resize", this.resize.bind(this));
+        window.removeEventListener('resize', this.resize.bind(this));
     }
     render() {
         const L = this.state.sideLength;
@@ -55,8 +53,15 @@ export default class SquareContainer extends React.Component {
                 </div>;
         
         return (
-            <div className={`square container kU7d2 ${this.props.className}`}>
+            <div className={`square container kU7d2 ${this.props.className}`}
+                ref={ref => this.domNode = ref}    
+            >
                 {content}
             </div>);
     }
 }
+
+SquareContainer.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.node
+};
