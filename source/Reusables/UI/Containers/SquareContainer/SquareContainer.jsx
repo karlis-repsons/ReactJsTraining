@@ -1,6 +1,6 @@
 /*
 Usage:
-    0. import SquareContainer from 'SquareContainer_kU7d2';
+    0. import SquareContainer from SquareContainer_kU7d2.
     1. <SquareContainer ...> ... </SquareContainer>
     2. you control size of square container (or you will not see it),
        container fits div.content inside the given size.
@@ -8,6 +8,9 @@ Usage:
 
 Pre-defined container class names:
     centered - to center content square both vertically and horizontally.
+
+Notes:
+    * SquareContainerExample is also exported.
 */
 
 import PropTypes from 'prop-types';
@@ -25,8 +28,7 @@ import './SquareContainer.scss';
 
 const epsilon = typeof Number.EPSILON === 'number' ? Number.EPSILON : 1e-12;
 
-export { SquareContainerExample } from './Example';
-export default class SquareContainer extends React.Component {
+class SquareContainer extends React.Component {
     constructor() {
         super();
         this.state = { sideLength: 0 };
@@ -72,5 +74,9 @@ export default class SquareContainer extends React.Component {
         );
     }
 }
+
+export default SquareContainer;
+export { SquareContainer };
+export { SquareContainerExample } from './Example';
 
 SquareContainer.propTypes = propTypes;
