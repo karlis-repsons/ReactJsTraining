@@ -1,0 +1,34 @@
+Input variables:
+        Nsi    - cellsAtSideCount - count of cells at each square table side.
+        L      - table side length = the smallest of: table container width, height.
+        igcr   - innerGapToCellSideLengthRatio.
+        oir    - outerGapToInnerGapRatio.
+
+Derived variables:
+        c      - cell side length
+        ig     - inner gap.
+        og     - outer gap.
+        nig    - replaced internal gap.
+        nog    - replaced outer gap.
+
+
+
+Relations:
+(a) without gap replacement:
+        L = 2og + Nsi c + (Nsi-1)ig
+        igcr = ig / c
+        oir = og / ig
+
+(b) with gap replacement:
+        L = 2nog + Nsi c + (Nsi-1)nig
+
+
+
+Calculation:
+(a) without gap replacement:
+        c = L / (Nsi + igcr(Nsi - 1 + 2oir))
+        ig = c igcr
+        og = ig oir
+
+(b) with gap replacement:
+        c = (L + nig - 2 nog - nig Nsi)/Nsi

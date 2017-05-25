@@ -1,0 +1,15 @@
+.square.table.container.dK36L {
+    &> .fill-all-area {
+        width: 100%; height: 100%;
+
+        &> .content {
+            position: relative;
+
+            &> * {
+                position: absolute;
+            }
+
+            //&> .cell {}
+        }
+    }
+}
