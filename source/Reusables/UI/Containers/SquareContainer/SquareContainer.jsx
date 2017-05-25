@@ -10,14 +10,14 @@ Pre-defined container class names:
     centered - to center content square both vertically and horizontally.
 
 Notes:
-    * SquareContainerExample is also exported.
+    * SquareContainerExample component is also exported.
 */
 
 import PropTypes from 'prop-types';
 const propTypes = {
-    className: PropTypes.string, // add class names to container div as 'name1 name2'.
+    className: PropTypes.string, // add class names to container div as 'name1 name2'
     children: PropTypes.node,
-    onResize: PropTypes.func // function(newContentSideLength)
+    onResize: PropTypes.func // f(newContentSideLength)
 };
 
 // ==========================
@@ -25,8 +25,6 @@ const propTypes = {
 import React from 'react';
 
 import './SquareContainer.scss';
-
-const epsilon = typeof Number.EPSILON === 'number' ? Number.EPSILON : 1e-12;
 
 class SquareContainer extends React.Component {
     constructor() {
@@ -52,7 +50,7 @@ class SquareContainer extends React.Component {
     render() {
         const L = this.state.sideLength;
         let content = null;
-        if (L >= epsilon)
+        if (L >= Number.EPSILON)
             content =
                 <div className='content'
                     style={{ width: `${L}px`, height: `${L}px` }}
@@ -80,3 +78,8 @@ export { SquareContainer };
 export { SquareContainerExample } from './Example';
 
 SquareContainer.propTypes = propTypes;
+
+// improve:
+//          * get precise container DOM element's content size -
+//            without margin, padding etc. WITHOUT using div.fill-all-area
+//            inside of container.

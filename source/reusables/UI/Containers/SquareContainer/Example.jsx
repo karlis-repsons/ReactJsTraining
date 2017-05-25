@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SquareContainer from './SquareContainer';
+import SquareContainer from 'SquareContainer_kU7d2';
 
 import './Example.scss';
 

@@ -1,4 +1,3 @@
-import { SquareContainer, SquareContainerExample } from
-    '../UI/Containers/SquareContainer/SquareContainer.jsx';
-export { SquareContainer, SquareContainerExample };
+import SquareContainer from '../UI/Containers/SquareContainer/SquareContainer.jsx';
 export default SquareContainer;
+export * from '../UI/Containers/SquareContainer/SquareContainer.jsx';
