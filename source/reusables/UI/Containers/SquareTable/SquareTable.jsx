@@ -17,10 +17,15 @@ Usage:
     
     2. you control size of square table (or you will not see it),
        table fits aligned cells inside the given size.
-    3. add your styling, if needed, provide tableDecorator
+    3. add your styling; if needed, provide tableDecorator
        to draw special borders etc.
 
+SquareTable
+    .resize()
+
 Notes:
+    * This component first mounts its container, measures it and
+      only then it mounts cells and attempts to call onMounted.
     * unit of absolute measures: 1px.
     * Example components (exported):
         SquareTable_E_BackgroundColorBordersInnerAndOuter
@@ -31,6 +36,7 @@ export const propTypes = {
     cellsAtSideCount: PropTypes.number.isRequired, // integer
 
     className: PropTypes.string, // add your class name(s) to table container div
+    style: PropTypes.object, // add style to table container div
     innerGapToCellSideLengthRatio: PropTypes.number, // default: 0
     outerGapToInnerGapRatio: PropTypes.number, // default: 1 (0 means no outer gaps)
     innerGapReplacer: PropTypes.func, // (original_distance) => f(original_distance)
@@ -62,3 +68,5 @@ export {
 //          * get precise table container DOM element's content size -
 //            without margin, padding etc. WITHOUT using div.fill-all-area
 //            inside of container.
+//          * add onMounted prop (called when div.cell containers are
+//            mounted in the DOM)

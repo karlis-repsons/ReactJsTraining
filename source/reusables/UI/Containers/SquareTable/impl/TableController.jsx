@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const defaultIgcr = 0;
 const defaultOir = 1;
@@ -21,23 +20,21 @@ export default class TableController extends React.Component {
             outerGapReplacer,
         } = props;
 
-        this.validateProps();
+        validateProps(props);
         this.state = emptyState;
 
         const model = new TableModel({
             Nsi, igcr, oir, innerGapReplacer, outerGapReplacer
         });
+        let areaFiller = null;
 
         Object.assign(this, {
             resize() {
-                const containerSizedDomNode
-                    = ReactDOM.findDOMNode(this.areaFiller); // eslint-disable-line react/no-find-dom-node
-                if (typeof containerSizedDomNode !== 'object' || Nsi === 0) {
+                if (!areaFiller || Nsi === 0) {
                     this.setState(emptyState);
                     return;
                 }
-
-                const newState = model.calculate(containerSizedDomNode);
+                const newState = model.calculate(areaFiller);
                 this.setState(newState);
 
                 if (typeof this.props.onResize === 'function')
@@ -45,12 +42,13 @@ export default class TableController extends React.Component {
             },
             render() {
                 return (
-                    // this.areaFiller should be private
-                    <TableView Nsi={Nsi} L={this.state.L} c={this.state.c}
+                    <TableView className={this.props.className}
+                        style={this.props.style}    
+                        Nsi={Nsi} L={this.state.L} c={this.state.c}
                         ig={this.state.ig} og={this.state.og}
-                        tableDecorator={this.props.tableDecorator}
-                        className={this.props.className}
-                        areaFillerRefSaver={ref => this.areaFiller = ref}
+                        tableDecorator={this.props.tableDecorator}    
+                        areaFillerRefSaver={r => areaFiller = r}
+                        onMounted={this.props.onMounted}
                     >
                         {this.props.children}
                     </TableView>
@@ -65,24 +63,23 @@ export default class TableController extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize.bind(this));
     }
-    validateProps() {
-        const p = this.props;
-        
-        if (typeof p.cellsAtSideCount != 'number'
-            || p.cellsAtSideCount % 1 >= Number.EPSILON
-        )
-            throw Error('cellsAtSideCount must be an integer.');
-
-        if (typeof p.innerGapToCellSideLengthRatio != 'number'
-            || p.innerGapToCellSideLengthRatio < 0
-        )
-            throw Error('innerGapToCellSideLengthRatio must be >= 0.');
-
-        if (typeof p.outerGapToInnerGapRatio != 'number'
-            || p.outerGapToInnerGapRatio < 0
-        )
-            throw Error('outerGapToInnerGapRatio must be >= 0.');
-    }
 }
 
 TableController.propTypes = SquareTablePropTypes;
+
+function validateProps(p) {
+    if (typeof p.cellsAtSideCount != 'number'
+        || p.cellsAtSideCount % 1 >= Number.EPSILON
+    )
+        throw Error('cellsAtSideCount must be an integer.');
+
+    if (typeof p.innerGapToCellSideLengthRatio != 'number'
+        || p.innerGapToCellSideLengthRatio < 0
+    )
+        throw Error('innerGapToCellSideLengthRatio must be >= 0.');
+
+    if (typeof p.outerGapToInnerGapRatio != 'number'
+        || p.outerGapToInnerGapRatio < 0
+    )
+        throw Error('outerGapToInnerGapRatio must be >= 0.');
+}

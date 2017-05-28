@@ -6,7 +6,8 @@ export default function onlyOfType(validType) {
 
         const value = props[propName];
         if (typeof value === 'undefined'
-            || isEmptySpace(value) || value.type === validType
+            || isEmptySpace(value) ||
+                (value.type && value.type.name === validType.name)
         )
             return;
 
@@ -14,7 +15,7 @@ export default function onlyOfType(validType) {
             if (isEmptySpace(child))
                 continue;
 
-            if (child.type !== validType)
+            if (!child.type || child.type.name !== validType.name)
                 return new Error(`${componentName} got invalid child. `
                     + `It accepts only ${validType.name} elements.`);
         }

@@ -8,11 +8,27 @@ import './TableView.scss';
 const e = Number.EPSILON;
 
 export default class TableView extends React.Component {
+    constructor() {
+        super();
+        this.isCellMounted = false;
+        this.onCellRefChange = function (ref) {
+            if (!this.isCellMounted && this.props.onMounted && ref)
+                this.props.onMounted();
+            this.isCellMounted = true;
+        }.bind(this);
+    }
+    componentWillUnmount() {
+        this.isCellMounted = false
+        // TODO:    
+        // another div.cell ref call can follow before re-mount.
+        // this.onCellRefChange is always called with null refs.    
+        ;
+    }
     render() {
         const TableContainer = (props) => (
             // div.fill-all-area is needed to avoid overcomplicated 
             // process of getting precise element's content width and height.
-            <div className={props.className}>
+            <div className={props.className} style={this.props.style}>
                 <div className='fill-all-area'
                     ref={this.props.areaFillerRefSaver}
                 >
@@ -53,6 +69,8 @@ export default class TableView extends React.Component {
                     resultingCellProps.className = cell.props.className;
                 if (typeof cell.props.style === 'object')
                     Object.assign(resultingCellProps.style, cell.props.style);
+                if (this.props.onMounted && i === 0 && j === 0)
+                    resultingCellProps.ref = this.onCellRefChange;
 
                 content.push(React.createElement(
                     Cell, resultingCellProps, cell.props.children));
@@ -79,12 +97,14 @@ export default class TableView extends React.Component {
 }
 
 TableView.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
     Nsi: PropTypes.number.isRequired,
     L: PropTypes.number.isRequired,
     c: PropTypes.number.isRequired,
     ig: PropTypes.number.isRequired,
     og: PropTypes.number.isRequired,
     tableDecorator: PropTypes.func,
-    className: PropTypes.string,
-    areaFillerRefSaver: PropTypes.func
+    areaFillerRefSaver: PropTypes.func,
+    onMounted: PropTypes.func
 };
