@@ -40,12 +40,12 @@ export class Example extends React.Component {
         
         // TODO: const mountedMessage = 'SquareTable mounted its cells.';
         return (
-            <SquareTable className='or4Sy'
+            <SquareTable className='or4Sy center'
                 cellsAtSideCount={3}
-                innerGapToCellSideLengthRatio={0.04}
-                outerGapToInnerGapRatio={0.333}
+                innerGapToCellSideLengthRatio={0.06}
+                outerGapToInnerGapRatio={0}
                 innerGapReplacer={gap => gap < 3 ? 3 : gap}
-                outerGapReplacer={gap => gap < 1 ? 1 : gap}
+                //outerGapReplacer={gap => gap < 1 ? 1 : gap}
                 onResize={l => this.resize(l)}
                 //onMounted={() => console.log(mountedMessage)} // eslint-disable-line no-console
             >

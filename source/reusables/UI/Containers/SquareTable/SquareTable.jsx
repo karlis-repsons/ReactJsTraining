@@ -23,6 +23,9 @@ Usage:
 SquareTable
     .resize()
 
+CSS classes for square alignment:
+    center, vcenter, top, bottom, hcenter, left, right.
+
 Notes:
     * This component first mounts its container, measures it and
       only then it mounts cells and attempts to call onMounted.
