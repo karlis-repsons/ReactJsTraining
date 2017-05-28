@@ -13,9 +13,11 @@ export class SquareContainerExample extends React.Component {
         this.forceUpdate();
     }
     render() {
+        const mountedMessage = 'SquareContainer mounted its content square.';
         return (
             <SquareContainer className='xJ425 centered'
                 onResize={l => this.changeLetterSize(l)}
+                onMounted={() => console.log(mountedMessage)} // eslint-disable-line no-console
             >
                 <span className='letter' style={{
                     fontSize: `${this.l / 2}px`,
