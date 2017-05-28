@@ -36,9 +36,14 @@ export default class SquareContainer extends React.Component {
     constructor() {
         super();
         this.state = { sideLength: 0 };
-
         let isMounted = false;
         let areaFiller = null;
+        const onContentRefChange = function (ref) {
+            if (!isMounted && this.props.onMounted)
+                this.props.onMounted();
+            isMounted = ref !== null;
+        }.bind(this);
+
         Object.assign(this, {
             resize() {
                 if (areaFiller) {
@@ -54,9 +59,6 @@ export default class SquareContainer extends React.Component {
                 window.addEventListener('resize', this.resize.bind(this));
             },
             componentWillUnmount() {
-                isMounted = false
-                // now, can another div.content ref call follow before re-mount?
-                ; 
                 window.removeEventListener('resize', this.resize.bind(this));
             },
             render() {
@@ -65,11 +67,7 @@ export default class SquareContainer extends React.Component {
                 if (L >= Number.EPSILON)
                     content =
                         <div className='content'
-                            ref={() => {
-                                if (!isMounted && this.props.onMounted)
-                                    this.props.onMounted();
-                                isMounted = true;
-                            }}
+                            ref={onContentRefChange}
                             style={{ width: `${L}px`, height: `${L}px` }}
                         >
                             {this.props.children}
