@@ -1,28 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Row } from '../Row';
 import { Cell } from '../Cell';
+import { getCellsWithSuggestedPositions } from './PropValidation/getCellsFromChildren';
 import './TableView.scss';
 
 const e = Number.EPSILON;
 
 export default class TableView extends React.Component {
-    constructor() {
-        super();
-        this.isCellMounted = false;
-        this.onCellRefChange = function (ref) {
-            if (!this.isCellMounted && this.props.onMounted && ref)
-                this.props.onMounted();
-            this.isCellMounted = true;
-        }.bind(this);
-    }
-    componentWillUnmount() {
-        this.isCellMounted = false
-        // TODO:    
-        // another div.cell ref call can follow before re-mount.
-        // this.onCellRefChange is always called with null refs.    
-        ;
+    getReplacementCells() {
+        const p = this.props;
+        let result = []; // eslint-disable-line prefer-const
+
+        for (const { i, j, cell }
+            of getCellsWithSuggestedPositions(p.children)
+        ) {
+            let resultingCellProps = { // eslint-disable-line prefer-const
+                key: `${i}-${j}`,
+                style: {
+                    width: p.c, height: p.c,
+                    left: p.og + j * (p.c + p.ig),
+                    top: p.og + i * (p.c + p.ig)
+                }
+            };
+            if (cell.props.style)
+                Object.assign(resultingCellProps.style, cell.props.style);
+            const filterOffPropNames = ['children', 'style'];
+            const filter = `^${filterOffPropNames.join('|')}$`;
+            for (const propName in cell.props)
+                if (!new RegExp(filter).test(propName))
+                    resultingCellProps[propName] = cell.props[propName];
+
+            result.push(React.createElement(
+                Cell, resultingCellProps, cell.props.children));
+        }
+        return result;
     }
     render() {
         const TableContainer = (props) => (
@@ -46,38 +58,7 @@ export default class TableView extends React.Component {
         if (p.Nsi === 0 || p.L < e || p.c < e)
             return <TableContainer className={containerClassNames} />;
 
-        const content = [];
-        let i = 0, j = 0;
-        React.Children.forEach(p.children, row => {
-            if (row.type !== Row)
-                return;
-
-            j = 0;
-            React.Children.forEach(row.props.children, cell => {
-                if (cell.type !== Cell)
-                    return;
-
-                let resultingCellProps = { // eslint-disable-line prefer-const
-                    key: `${i}-${j}`,
-                    style: {
-                        width: p.c, height: p.c,
-                        left: p.og + j * (p.c + p.ig),
-                        top: p.og + i * (p.c + p.ig)
-                    }
-                };
-                if (typeof cell.props.className === 'string')
-                    resultingCellProps.className = cell.props.className;
-                if (typeof cell.props.style === 'object')
-                    Object.assign(resultingCellProps.style, cell.props.style);
-                if (this.props.onMounted && i === 0 && j === 0)
-                    resultingCellProps.ref = this.onCellRefChange;
-
-                content.push(React.createElement(
-                    Cell, resultingCellProps, cell.props.children));
-                j++;
-            });
-            i++;
-        });
+        let content = this.getReplacementCells(); // eslint-disable-line prefer-const
         if (p.tableDecorator) {
             content.push(p.tableDecorator({
                 cellsAtSideCount: p.Nsi, tableSideLength: p.L,
@@ -86,9 +67,11 @@ export default class TableView extends React.Component {
         }
         return (
             <TableContainer className={containerClassNames}>
-                <div className='content' style={{
-                    width: this.props.L, height: this.props.L
-                }}>
+                <div className='content' style={
+                    Object.assign(
+                        { width: this.props.L, height: this.props.L },
+                        this.props.contentStyle)
+                }>
                     {content}
                 </div>
             </TableContainer>
@@ -99,6 +82,7 @@ export default class TableView extends React.Component {
 TableView.propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
+    contentStyle: PropTypes.object,
     Nsi: PropTypes.number.isRequired,
     L: PropTypes.number.isRequired,
     c: PropTypes.number.isRequired,

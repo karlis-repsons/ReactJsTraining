@@ -1,30 +1,46 @@
 /*
     Use this to group content, which should appear in Cell-s.
+
+Notes:
+    * the props not mentioned in propTypes
+      will be forwared to div.cell container.
+    * DO NOT use REF on cell - it will not work.
 */
 
 import PropTypes from 'prop-types';
 const propTypes = {
     className: PropTypes.string, // add class name(s) to cell container div
     children: PropTypes.any,
-    style: PropTypes.object
+    style: PropTypes.object // SquareTable will add cell positioning styles to this
 }
 
 // ==========================
 
 import React from 'react';
 
-export function Cell(props) {
-    let classNames = 'cell';
-    if (typeof props.className === 'string')
-        classNames += ` ${props.className}`;
-    
-    return (
-        <div className={classNames} style={props.style}>
+export class Cell extends React.Component {
+    getCellContainerProps() {
+        let classNames = 'cell';
+        if (typeof this.props.className === 'string')
+            classNames += ` ${this.props.className}`;
+        const filterOffPropNames = [ 'className', 'children' ];
+        const filter = `^${filterOffPropNames.join('|')}$`;
+
+        let resultingProps = {}; // eslint-disable-line prefer-const
+        resultingProps.className = classNames;
+        for (const propName in this.props)
+            if (!new RegExp(filter).test(propName))
+                resultingProps[propName] = this.props[propName];
+        return resultingProps;
+    }
+    render() {
+        return React.createElement('div', this.getCellContainerProps(),
             <div className='content'>
-                {props.children}
+                {this.props.children}
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 Cell.propTypes = propTypes;
+Cell.displayName = 'Cell';

@@ -32,6 +32,7 @@ Notes:
     * unit of absolute measures: 1px.
     * Example components (exported):
         SquareTable_E_BackgroundColorBordersInnerAndOuter
+        SquareTable_E_Fractal
 */
 
 import PropTypes from 'prop-types';
@@ -40,6 +41,7 @@ export const propTypes = {
 
     className: PropTypes.string, // add your class name(s) to table container div
     style: PropTypes.object, // add style to table container div
+    contentStyle: PropTypes.object, // add style to table content div
     innerGapToCellSideLengthRatio: PropTypes.number, // default: 0
     outerGapToInnerGapRatio: PropTypes.number, // default: 1 (0 means no outer gaps)
     innerGapReplacer: PropTypes.func, // (original_distance) => f(original_distance)
@@ -54,10 +56,10 @@ export const propTypes = {
 import TableController from './impl/TableController';
 export class SquareTable extends TableController { }
 export default SquareTable;
-import onlyOfType from './impl/childrenPropValidator'
+import childrenOnlyOfType from './impl/PropValidation/childrenPropValidator'
 import { Row } from './Row';
 SquareTable.propTypes = Object.assign(
-    {}, propTypes, { children: onlyOfType(Row) }
+    {}, propTypes, { children: childrenOnlyOfType(Row) }
 );
 
 export { Row };
@@ -66,10 +68,18 @@ export { Cell } from './Cell';
 export {
     Example as SquareTable_E_BackgroundColorBordersInnerAndOuter
 } from './Examples/BackgroundColorBordersInnerAndOuter';
+export {
+    Fractal as SquareTable_E_Fractal
+} from './Examples/Fractal';
 
 // improve:
 //          * get precise table container DOM element's content size -
 //            without margin, padding etc. WITHOUT using div.fill-all-area
 //            inside of container.
-//          * add onMounted prop (called when div.cell containers are
+//          ? add onMounted prop (called when div.cell containers are
 //            mounted in the DOM)
+
+// questions:
+//          * Performance loss because of re-mounting cells on each resize
+//            looks really bad in Fractal example. But how much better would
+//            the performance be if I would not re-mount cells?

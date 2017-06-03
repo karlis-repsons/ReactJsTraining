@@ -4,20 +4,7 @@ import { SquareTable, Row, Cell } from 'SquareTable_zW3Ec';
 
 import './BackgroundColorBordersInnerAndOuter.scss';
 
-const tryHidingTable = false;
-const tryHidingTimeout = 2000;
-
 export class Example extends React.Component {
-    constructor() {
-        super();
-        this.show = true;
-
-        if (tryHidingTable)
-            setTimeout(() => {
-                this.show = false;
-                this.forceUpdate();
-            }, tryHidingTimeout);
-    }
     resize(cellSideLength) {
         if (typeof cellSideLength !== 'number')
             return;
@@ -31,23 +18,19 @@ export class Example extends React.Component {
                 fontSize: `${this.l * 0.30}px`,
                 lineHeight: `${this.l * 0.6}px`
             }}
+                onClick={() => console.log(`Clicked cell ${title}.`)} // eslint-disable-line no-console
             >{title}</Cell>
         );
     }
     render() {
-        if (!this.show)
-            return null;
-        
-        // TODO: const mountedMessage = 'SquareTable mounted its cells.';
         return (
             <SquareTable className='or4Sy center'
                 cellsAtSideCount={3}
                 innerGapToCellSideLengthRatio={0.06}
-                outerGapToInnerGapRatio={0}
+                outerGapToInnerGapRatio={0.2}
                 innerGapReplacer={gap => gap < 3 ? 3 : gap}
-                //outerGapReplacer={gap => gap < 1 ? 1 : gap}
+                outerGapReplacer={gap => gap < 1 ? 1 : gap}
                 onResize={l => this.resize(l)}
-                //onMounted={() => console.log(mountedMessage)} // eslint-disable-line no-console
             >
                 <Row>
                     {this.cell('1-1')} {this.cell('1-2')} {this.cell('1-3')}

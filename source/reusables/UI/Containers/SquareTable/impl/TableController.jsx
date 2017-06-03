@@ -6,6 +6,7 @@ const defaultOir = 1;
 import TableModel from './TableModel';
 import TableView from './TableView';
 import { propTypes as SquareTablePropTypes } from '../SquareTable';
+import validateTableProps from './PropValidation/validateTableProps'
 
 const emptyState = { L: 0, c: 0, ig: 0, og: 0 };
 
@@ -20,7 +21,7 @@ export default class TableController extends React.Component {
             outerGapReplacer,
         } = props;
 
-        validateProps(props);
+        validateTableProps(props);
         this.state = emptyState;
 
         const model = new TableModel({
@@ -43,7 +44,8 @@ export default class TableController extends React.Component {
             render() {
                 return (
                     <TableView className={this.props.className}
-                        style={this.props.style}    
+                        style={this.props.style}
+                        contentStyle={this.props.contentStyle}
                         Nsi={Nsi} L={this.state.L} c={this.state.c}
                         ig={this.state.ig} og={this.state.og}
                         tableDecorator={this.props.tableDecorator}    
@@ -66,20 +68,3 @@ export default class TableController extends React.Component {
 }
 
 TableController.propTypes = SquareTablePropTypes;
-
-function validateProps(p) {
-    if (typeof p.cellsAtSideCount != 'number'
-        || p.cellsAtSideCount % 1 >= Number.EPSILON
-    )
-        throw Error('cellsAtSideCount must be an integer.');
-
-    if (typeof p.innerGapToCellSideLengthRatio != 'number'
-        || p.innerGapToCellSideLengthRatio < 0
-    )
-        throw Error('innerGapToCellSideLengthRatio must be >= 0.');
-
-    if (typeof p.outerGapToInnerGapRatio != 'number'
-        || p.outerGapToInnerGapRatio < 0
-    )
-        throw Error('outerGapToInnerGapRatio must be >= 0.');
-}

@@ -7,6 +7,7 @@
 
 export function Row() { return null; }
 
-import onlyOfType from './impl/childrenPropValidator'
+import childrenOnlyOfType from './impl/PropValidation/childrenPropValidator'
 import { Cell } from './Cell';
-Row.propTypes = { children: onlyOfType(Cell) }
+Row.propTypes = { children: childrenOnlyOfType(Cell) }
+Row.displayName = 'Row';
