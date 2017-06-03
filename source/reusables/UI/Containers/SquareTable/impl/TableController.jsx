@@ -3,7 +3,7 @@ import React from 'react';
 const defaultIgcr = 0;
 const defaultOir = 1;
 
-import TableModel from './TableModel';
+import TableCalculator from './TableCalculator';
 import TableView from './TableView';
 import { propTypes as SquareTablePropTypes } from '../SquareTable';
 import validateTableProps from './PropValidation/validateTableProps'
@@ -24,7 +24,7 @@ export default class TableController extends React.Component {
         validateTableProps(props);
         this.state = emptyState;
 
-        const model = new TableModel({
+        const calculator = new TableCalculator({
             Nsi, igcr, oir, innerGapReplacer, outerGapReplacer
         });
         let areaFiller = null;
@@ -35,7 +35,7 @@ export default class TableController extends React.Component {
                     this.setState(emptyState);
                     return;
                 }
-                const newState = model.calculate(areaFiller);
+                const newState = calculator.getMeasures(areaFiller);
                 this.setState(newState);
 
                 if (typeof this.props.onResize === 'function')

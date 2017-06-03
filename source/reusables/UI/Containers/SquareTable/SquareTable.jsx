@@ -76,6 +76,7 @@ export {
 //          * get precise table container DOM element's content size -
 //            without margin, padding etc. WITHOUT using div.fill-all-area
 //            inside of container.
+//          ? allow to add extra props to table and put them on container div
 //          ? add onMounted prop (called when div.cell containers are
 //            mounted in the DOM)
 
