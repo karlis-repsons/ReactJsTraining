@@ -35,11 +35,7 @@ export default class TableController extends React.Component {
                     this.setState(emptyState);
                     return;
                 }
-                const newState = calculator.getMeasures(areaFiller);
-                this.setState(newState);
-
-                if (typeof this.props.onResize === 'function')
-                    this.props.onResize(newState.c);
+                this.setState(calculator.getMeasures(areaFiller));
             },
             render() {
                 return (
@@ -65,6 +61,16 @@ export default class TableController extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize.bind(this));
     }
+    componentDidUpdate(previousProps, previousState) {
+        if (typeof this.props.onResize === 'function'
+            && areLengthsDifferent(previousState.c, this.state.c)
+        )
+            this.props.onResize(this.state.c);
+    }
 }
 
 TableController.propTypes = SquareTablePropTypes;
+
+function areLengthsDifferent(l1, l2) {
+    return Math.abs(l1 - l2) >= Number.EPSILON;
+}
