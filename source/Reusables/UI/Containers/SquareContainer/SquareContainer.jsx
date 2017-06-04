@@ -50,8 +50,6 @@ export default class SquareContainer extends React.Component {
                     const rect = areaFiller.getBoundingClientRect();
                     const newSideLength = Math.min(rect.width, rect.height);
                     this.setState({ sideLength: newSideLength });
-                    if (typeof this.props.onResize === 'function')
-                        this.props.onResize(newSideLength);
                 }
             },
             componentDidMount() {
@@ -60,6 +58,13 @@ export default class SquareContainer extends React.Component {
             },
             componentWillUnmount() {
                 window.removeEventListener('resize', this.resize.bind(this));
+            },
+            componentDidUpdate(previousProps, previousState) {
+                if (typeof this.props.onResize === 'function'
+                    && areLengthsDifferent(
+                        this.state.sideLength, previousState.sideLength)
+                )
+                    this.props.onResize(this.state.sideLength);
             },
             render() {
                 const L = this.state.sideLength;
@@ -96,7 +101,16 @@ export { SquareContainerExample } from './Example';
 
 SquareContainer.propTypes = propTypes;
 
+function areLengthsDifferent(l1, l2) {
+    return Math.abs(l1 - l2) >= Number.EPSILON;
+}
+
 // improve:
 //          * get precise container DOM element's content size -
 //            without margin, padding etc. WITHOUT using div.fill-all-area
 //            inside of container.
+
+// questions:
+//          * could it significantly improve performance (and in what cases?),
+//            if I would have something like this called in resize method:
+//            this.props.onResizeBeforeSCRender(newSideLength) ?
