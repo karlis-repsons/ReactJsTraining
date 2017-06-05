@@ -26,9 +26,8 @@ export default class TableView extends React.Component {
             if (cell.props.style)
                 Object.assign(resultingCellProps.style, cell.props.style);
             const filterOffPropNames = ['children', 'style'];
-            const filter = `^${filterOffPropNames.join('|')}$`;
             for (const propName in cell.props)
-                if (!new RegExp(filter).test(propName))
+                if (filterOffPropNames.includes(propName) === false)
                     resultingCellProps[propName] = cell.props[propName];
 
             result.push(React.createElement(
@@ -67,11 +66,11 @@ export default class TableView extends React.Component {
         }
         return (
             <TableContainer className={containerClassNames}>
-                <div className='content' style={
-                    Object.assign(
+                <div className='content' ref={this.props.contentDivRefSaver}
+                    style={Object.assign(
                         { width: this.props.L, height: this.props.L },
-                        this.props.contentStyle)
-                }>
+                        this.props.contentStyle)}
+                >
                     {content}
                 </div>
             </TableContainer>
@@ -90,5 +89,5 @@ TableView.propTypes = {
     og: PropTypes.number.isRequired,
     tableDecorator: PropTypes.func,
     areaFillerRefSaver: PropTypes.func,
-    onMounted: PropTypes.func
+    contentDivRefSaver: PropTypes.func
 };

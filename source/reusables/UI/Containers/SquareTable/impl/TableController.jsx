@@ -63,7 +63,7 @@ export default class TableController extends React.Component {
     }
     componentDidUpdate(previousProps, previousState) {
         if (typeof this.props.onResize === 'function'
-            && areLengthsDifferent(previousState.c, this.state.c)
+            && lengthsDiffer(previousState.c, this.state.c)
         )
             this.props.onResize(this.state.c);
     }
@@ -71,6 +71,6 @@ export default class TableController extends React.Component {
 
 TableController.propTypes = SquareTablePropTypes;
 
-function areLengthsDifferent(l1, l2) {
+function lengthsDiffer(l1, l2) {
     return Math.abs(l1 - l2) >= Number.EPSILON;
 }

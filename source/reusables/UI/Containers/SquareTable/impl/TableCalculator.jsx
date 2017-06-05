@@ -1,4 +1,4 @@
-export default class TableModel {
+export default class TableCalculator {
     constructor(parameters
         /*{Nsi, igcr, oir,
         innerGapReplacer,
