@@ -62,7 +62,7 @@ export default class SquareContainer extends React.Component {
             },
             componentDidUpdate(previousProps, previousState) {
                 if (typeof this.props.onResize === 'function'
-                    && areLengthsDifferent(
+                    && lengthsDiffer(
                         this.state.sideLength, previousState.sideLength)
                 )
                     this.props.onResize(this.state.sideLength);
@@ -102,7 +102,7 @@ export { SquareContainerExample } from './Example';
 
 SquareContainer.propTypes = propTypes;
 
-function areLengthsDifferent(l1, l2) {
+function lengthsDiffer(l1, l2) {
     return Math.abs(l1 - l2) >= Number.EPSILON;
 }
 
