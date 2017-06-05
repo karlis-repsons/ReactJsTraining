@@ -3,7 +3,7 @@ Usage:
     0. import SquareContainer from SquareContainer_kU7d2.
     1. <SquareContainer ...> ... </SquareContainer>
     2. you control size of square container (or you will not see it),
-       container fits div.content inside the given size.
+       container fits div.content to the given size.
     3. add your own styling.
 
 Pre-defined container class names:
@@ -38,11 +38,12 @@ export default class SquareContainer extends React.Component {
         this.state = { sideLength: 0 };
         let isMounted = false;
         let areaFiller = null;
-        const onContentRefChange = function (ref) {
+        const setAreaFillerRef = r => { areaFiller = r; };
+        const onContentRefChange = ref => {
             if (!isMounted && this.props.onMounted)
                 this.props.onMounted();
             isMounted = ref !== null;
-        }.bind(this);
+        };
 
         Object.assign(this, {
             resize() {
@@ -85,7 +86,7 @@ export default class SquareContainer extends React.Component {
                         + `${this.props.className}`}
                     >
                         <div className='fill-all-area'
-                            ref={r => areaFiller = r}
+                            ref={setAreaFillerRef}
                         >
                             {content}
                         </div>
@@ -109,6 +110,8 @@ function areLengthsDifferent(l1, l2) {
 //          * get precise container DOM element's content size -
 //            without margin, padding etc. WITHOUT using div.fill-all-area
 //            inside of container.
+//          ? pass extra props (e.g. style) to container div.
+//          ? add contentStyle prop
 
 // questions:
 //          * could it significantly improve performance (and in what cases?),
