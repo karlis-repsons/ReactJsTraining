@@ -24,9 +24,9 @@ export class Fractal extends React.Component {
     render() {
         const outerColor = 'rgb(192, 74, 35)';
         const innerColor = 'rgb(176, 198, 180)';
-        let content = []; // eslint-disable-line prefer-const
+        let content = [];
         for (let i = 0; i < 3; i++) {
-            let rowContent = []; // eslint-disable-line prefer-const
+            let rowContent = [];
             for (let j = 0; j < 3; j++) {
                 rowContent.push(
                     <Cell key={j}

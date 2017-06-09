@@ -10,12 +10,12 @@ const e = Number.EPSILON;
 export default class TableView extends React.Component {
     getReplacementCells() {
         const p = this.props;
-        let result = []; // eslint-disable-line prefer-const
+        let result = [];
 
         for (const { i, j, cell }
             of getCellsWithSuggestedPositions(p.children)
         ) {
-            let resultingCellProps = { // eslint-disable-line prefer-const
+            let resultingCellProps = {
                 key: `${i}-${j}`,
                 style: {
                     width: p.c, height: p.c,
@@ -57,7 +57,7 @@ export default class TableView extends React.Component {
         if (p.Nsi === 0 || p.L < e || p.c < e)
             return <TableContainer className={containerClassNames} />;
 
-        let content = this.getReplacementCells(); // eslint-disable-line prefer-const
+        let content = this.getReplacementCells();
         if (p.tableDecorator) {
             content.push(p.tableDecorator({
                 cellsAtSideCount: p.Nsi, tableSideLength: p.L,

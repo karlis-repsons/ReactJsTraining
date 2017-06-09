@@ -5,7 +5,7 @@ import { Row, Cell } from '../../SquareTable';
 
 export function getCellsWithSuggestedPositions(children) { // -> [{i, j, cell}]
     let i = 0, j = 0;
-    let result = []; // eslint-disable-line prefer-const
+    let result = [];
 
     React.Children.forEach(children, row => {
         if (!isTypeEqual(row, Row))

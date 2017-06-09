@@ -25,7 +25,7 @@ export class Cell extends React.Component {
             classNames += ` ${this.props.className}`;
         const filterOffPropNames = [ 'className', 'children' ];        
 
-        let resultingProps = {}; // eslint-disable-line prefer-const
+        let resultingProps = {};
         resultingProps.className = classNames;
         for (const propName in this.props)
             if (filterOffPropNames.includes(propName) === false)
