@@ -6,7 +6,8 @@ const defaultOir = 1;
 import TableCalculator from './TableCalculator';
 import TableView from './TableView';
 import { propTypes as SquareTablePropTypes } from '../SquareTable';
-import validateTableProps from './PropValidation/validateTableProps'
+import validateTableProps from './PropValidation/validateTableProps';
+import lengthsDiffer from 'areNumbersDifferent_tSbVE.js';
 
 const emptyState = { L: 0, c: 0, ig: 0, og: 0 };
 
@@ -70,7 +71,3 @@ export default class TableController extends React.Component {
 }
 
 TableController.propTypes = SquareTablePropTypes;
-
-function lengthsDiffer(l1, l2) {
-    return Math.abs(l1 - l2) >= Number.EPSILON;
-}
