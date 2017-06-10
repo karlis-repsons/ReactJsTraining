@@ -30,6 +30,7 @@ const propTypes = {
 
 import React from 'react';
 
+import lengthsDiffer from 'areNumbersDifferent_tSbVE.js';
 import './SquareContainer.scss';
 
 export default class SquareContainer extends React.Component {
@@ -101,10 +102,6 @@ export { SquareContainer };
 export { SquareContainerExample } from './Example';
 
 SquareContainer.propTypes = propTypes;
-
-function lengthsDiffer(l1, l2) {
-    return Math.abs(l1 - l2) >= Number.EPSILON;
-}
 
 // improve:
 //          * get precise container DOM element's content size -
