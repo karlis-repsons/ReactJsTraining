@@ -2,13 +2,14 @@ import makeHexColorFromRGB from 'makeHexColorFromRGB_jGcSk';
 
 export default function changeHexColorLightness(
     color, // e.g. F06D06 or #F06D06
-    amount // [-255, 255]
+    percent // [-100, 100]
 ) {
     let hasNumberSign = false;
     if (color[0] === '#') {
         color = color.slice(1);
         hasNumberSign = true;
     }
+    const amount = Math.round(255 * percent / 100);
     const n = parseInt(color, 16);
     const red   = normalize( (n >> 16)           + amount );
     const green = normalize( ((n >> 8) & 0x00FF) + amount );
