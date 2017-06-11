@@ -23,7 +23,7 @@ const propTypes = {
     className: PropTypes.string, // add class names to container div as 'name1 name2'
     children: PropTypes.node,
     onMounted: PropTypes.func, // called when content square is mounted in the DOM
-    onResize: PropTypes.func // f(newContentSideLength)
+    onResize: PropTypes.func // f(newContentSideLength: number: unit = px)
 };
 
 // ==========================
