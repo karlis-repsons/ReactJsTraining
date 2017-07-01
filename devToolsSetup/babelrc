@@ -1,0 +1,13 @@
+{
+    "presets": [
+        "latest", "react"
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                "transform-react-jsx-source"
+            ]
+        }
+    },
+    "compact": "true"
+}
