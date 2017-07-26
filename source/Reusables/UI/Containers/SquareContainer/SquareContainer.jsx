@@ -10,20 +10,26 @@ Pre-defined container class names:
     centered - to center content square both vertically and horizontally.
 
 SquareContainer
-    .resize()
+    .resize() - you might need to call this if you do not
+                provide widthPx and heightPx prop values.
 
 Notes:
-    * This component first mounts its container, measures it and
+    * When you did not provide widthPx and heightPx prop values:
+      this component first mounts its container, measures it and
       only then it mounts contents and attempts to call onMounted.
     * SquareContainerExample component is also exported.
 */
 
 import PropTypes from 'prop-types';
+
 const propTypes = {
-    className: PropTypes.string, // add class names to container div as 'name1 name2'
-    children: PropTypes.node,
-    onMounted: PropTypes.func, // called when content square is mounted in the DOM
-    onResize: PropTypes.func // f(newContentSideLength: number: unit = px)
+   className: PropTypes.string, // add class names to container div
+   style: PropTypes.object,
+   widthPx: PropTypes.number,
+   heightPx: PropTypes.number,
+   children: PropTypes.node,
+   onMounted: PropTypes.func, // called when content square is mounted
+   onResizeCompleted: PropTypes.func // f(newContentSideLengthPx: number)
 };
 
 // ==========================
@@ -34,83 +40,116 @@ import lengthsDiffer from 'areNumbersDifferent_tSbVE.js';
 import './SquareContainer.scss';
 
 export default class SquareContainer extends React.Component {
-    constructor() {
-        super();
-        this.state = { sideLength: 0 };
-        let isMounted = false;
-        let areaFiller = null;
-        const setAreaFillerRef = r => { areaFiller = r; };
-        const onContentRefChange = ref => {
-            if (!isMounted && this.props.onMounted)
-                this.props.onMounted();
-            isMounted = ref !== null;
-        };
-
-        Object.assign(this, {
-            resize() {
-                if (areaFiller) {
-                    const rect = areaFiller.getBoundingClientRect();
-                    const newSideLength = Math.min(rect.width, rect.height);
-                    this.setState({ sideLength: newSideLength });
-                }
-            },
-            componentDidMount() {
-                this.resize();
-                window.addEventListener('resize', this.resize.bind(this));
-            },
-            componentWillUnmount() {
-                window.removeEventListener('resize', this.resize.bind(this));
-            },
-            componentDidUpdate(previousProps, previousState) {
-                if (typeof this.props.onResize === 'function'
-                    && lengthsDiffer(
-                        this.state.sideLength, previousState.sideLength)
-                )
-                    this.props.onResize(this.state.sideLength);
-            },
-            render() {
-                const L = this.state.sideLength;
-                let content = null;
-                if (L >= Number.EPSILON)
-                    content =
-                        <div className='content'
-                            ref={onContentRefChange}
-                            style={{ width: `${L}px`, height: `${L}px` }}
-                        >
-                            {this.props.children}
-                        </div>;
-
-                return (
-                    // div.fill-all-area is needed to avoid overcomplicated 
-                    // process to get precise element's content dimensions.
-                    <div className={'square container kU7d2 '
-                        + `${this.props.className}`}
-                    >
-                        <div className='fill-all-area'
-                            ref={setAreaFillerRef}
-                        >
-                            {content}
-                        </div>
-                    </div>
-                );
+   constructor(props) {
+      super(props);
+      const getPropsMeasureParameters = (props) => {
+         let shouldMeasureSelf = (
+            typeof props.widthPx !== 'number'
+            || typeof props.heightPx !== 'number');
+         
+         return {
+            shouldMeasureSelf,
+            propsSideLengthPx: shouldMeasureSelf ?
+               undefined : Math.min(props.widthPx, props.heightPx)
+         };
+      };
+      let shouldMeasureSelf = true;
+      {
+         const pmp = getPropsMeasureParameters(props);
+         shouldMeasureSelf = pmp.shouldMeasureSelf;
+         this.state = {sideLengthPx: pmp.propsSideLengthPx || 0};
+      }
+      let isMounted = false;
+      let areaFiller = null;
+      const setAreaFillerRef = r => { areaFiller = r; };
+      const onContentRefChange = ref => {
+         if (!isMounted && ref && this.props.onMounted)
+            this.props.onMounted();
+         isMounted = ref !== null;
+      };
+      
+      Object.assign(this, {
+         resize() {
+            if (areaFiller) {
+               const rect = areaFiller.getBoundingClientRect();
+               const newSideLengthPx = Math.min(rect.width, rect.height);
+               if (lengthsDiffer(
+                     newSideLengthPx, this.state.sideLengthPx)
+               )
+                  this.setState({sideLengthPx: newSideLengthPx});
             }
-        });
-    }
+         }
+      });
+      this.resize = this.resize.bind(this);
+      
+      Object.assign(this, {
+         componentDidMount() {
+            if (!shouldMeasureSelf)
+               return;
+            this.resize();
+            window.addEventListener('resize', this.resize);
+         },
+         componentWillUnmount() {
+            if (!shouldMeasureSelf)
+               return;
+            window.removeEventListener('resize', this.resize);
+         },
+         componentWillReceiveProps(nextProps) {
+            const pmp = getPropsMeasureParameters(nextProps);
+            if (shouldMeasureSelf !== pmp.shouldMeasureSelf) {
+               if (!pmp.shouldMeasureSelf)
+                  window.removeEventListener('resize', this.resize);
+               else
+                  window.addEventListener('resize', this.resize);
+               shouldMeasureSelf = pmp.shouldMeasureSelf;
+            }
+            if (pmp.shouldMeasureSelf === false && lengthsDiffer(
+                  pmp.propsSideLengthPx, this.state.sideLengthPx)
+            )
+               this.setState({sideLengthPx: pmp.propsSideLengthPx});
+         },
+         componentDidUpdate(previousProps, previousState) {
+            if (this.props.onResizeCompleted
+                && lengthsDiffer(
+                  this.state.sideLengthPx, previousState.sideLengthPx)
+            )
+               this.props.onResizeCompleted(this.state.sideLengthPx);
+         },
+         render() {
+            const classNames = 'square container kU7d2 '
+                               + `${this.props.className}`;
+            const L = this.state.sideLengthPx;
+            let content = null;
+            if (L >= Number.EPSILON)
+               content =
+                  <div className='content'
+                       ref={onContentRefChange}
+                       style={{width: `${L}px`, height: `${L}px`}}
+                  >
+                     {this.props.children}
+                  </div>;
+            
+            return (
+               // div.fill-all-area is needed to avoid overcomplicated
+               // process to get precise element's content dimensions.
+               <div className={classNames} style={this.props.style}>
+                  <div className='fill-all-area' ref={setAreaFillerRef}>
+                     {content}
+                  </div>
+               </div>
+            );
+         }
+      });
+   }
 }
 
-export { SquareContainer };
-export { SquareContainerExample } from './Example';
+export {SquareContainer};
+export {SquareContainerExample} from './Example';
 
 SquareContainer.propTypes = propTypes;
 
 // improve:
-//          * get precise container DOM element's content size -
-//            without margin, padding etc. WITHOUT using div.fill-all-area
-//            inside of container.
-//          ? pass extra props (e.g. style) to container div.
-//          ? add contentStyle prop
-
-// questions:
-//          * could it significantly improve performance (and in what cases?),
-//            if I would have something like this called in resize method:
-//            this.props.onResizeBeforeSCRender(newSideLength) ?
+//    * get precise container DOM element's content size -
+//      without margin, padding etc. WITHOUT using div.fill-all-area
+//      inside of container.
+//    ? pass extra props to container div.
