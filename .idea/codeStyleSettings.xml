@@ -5,11 +5,14 @@
       <value>
         <option name="RIGHT_MARGIN" value="80" />
         <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+        <option name="HTML_QUOTE_STYLE" value="Single" />
+        <option name="HTML_ENFORCE_QUOTES" value="true" />
         <CssCodeStyleSettings>
           <option name="HEX_COLOR_LOWER_CASE" value="true" />
           <option name="KEEP_SINGLE_LINE_BLOCKS" value="true" />
         </CssCodeStyleSettings>
         <JSCodeStyleSettings>
+          <option name="REFORMAT_C_STYLE_COMMENTS" value="false" />
           <option name="USE_DOUBLE_QUOTES" value="false" />
           <option name="CHAINED_CALL_DOT_ON_NEW_LINE" value="false" />
         </JSCodeStyleSettings>
@@ -22,6 +25,7 @@
           </indentOptions>
         </codeStyleSettings>
         <codeStyleSettings language="JavaScript">
+          <option name="LINE_COMMENT_ADD_SPACE" value="false" />
           <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
           <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
           <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
