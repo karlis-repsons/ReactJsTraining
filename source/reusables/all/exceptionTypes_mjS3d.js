@@ -1,4 +1,5 @@
 export {
-    SystemException,
-    ArgumentException
+   SystemException,
+   ArgumentException,
+   InvalidOperationException
 } from '../codeElements/errorHandling/exceptions/exceptionTypes';
