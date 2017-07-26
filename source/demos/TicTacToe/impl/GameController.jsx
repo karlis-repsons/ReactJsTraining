@@ -1,5 +1,6 @@
 import React from 'react';
 
+import propTypes from '../TicTacToe';
 import GameModel from './GameModel';
 import GameView from './GameView';
 
@@ -36,6 +37,7 @@ export default class GameController extends React.Component {
             render() {
                 return (
                     <GameView ref={r => this.view = r}
+                        style={this.props.style}
                         markings={this.state.display.markings}
                         titleText={getTitleText()}
                         statusText={getStatusText()}
@@ -69,3 +71,5 @@ export default class GameController extends React.Component {
             this.view.updateMeasures.bind(this.view));
     }
 }
+
+GameController.propTypes = propTypes;

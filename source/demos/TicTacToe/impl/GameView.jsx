@@ -50,7 +50,7 @@ export default class GameView extends React.Component {
     render() {
         const p = this.props;
         return (
-            <SquareContainer className='xI462 centered'>
+            <SquareContainer className='xI462 centered' style={p.style}>
                 <div className='game f32x0'>
                     {p.titleText &&
                         <div className='title'> {p.titleText} </div>
@@ -88,6 +88,7 @@ export default class GameView extends React.Component {
 }
 
 GameView.propTypes = {
+    style: PropTypes.object,
     markings: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     titleText: PropTypes.string,
     statusText: PropTypes.string,
