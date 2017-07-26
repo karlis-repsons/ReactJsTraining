@@ -41,8 +41,10 @@ export class Fractal extends React.Component {
             }
             content.push(<Row key={i}>{rowContent}</Row>);
         }
-        return (
-            <SquareTable className={`x34d5 center element-${this.props.index}`}
+        const innerContainer = (
+            <SquareTable className={
+                    `x34d5 center element-${this.props.index}`
+                }
                 cellsAtSideCount={3}
                 innerGapToCellSideLengthRatio={0.4}
                 outerGapToInnerGapRatio={0}
@@ -55,10 +57,19 @@ export class Fractal extends React.Component {
                 {content}
             </SquareTable>
         );
+        if (this.props.index === 0)
+            return (
+                <div style={this.props.style}>
+                    {innerContainer}
+                </div>
+            );
+        else
+            return innerContainer;
     }
 }
 
 Fractal.propTypes = {
+    style: PropTypes.object,
     index: PropTypes.number // integer
 }
 
