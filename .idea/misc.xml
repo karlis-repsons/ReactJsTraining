@@ -4,6 +4,6 @@
     <option name="languageLevel" value="JSX" />
   </component>
   <component name="WebPackConfiguration">
-    <option name="path" value="$PROJECT_DIR$/devToolsSetup/webpack.config.js" />
+    <option name="path" value="$PROJECT_DIR$/devToolsSetup/webpack/webpack.dev.config.js" />
   </component>
 </project>

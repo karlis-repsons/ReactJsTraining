@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run dev-server",
-    "dev-server": "webpack-dev-server --config devToolsSetup/webpack.config.js --hot --no-info --colors --progress",
-    "lint": "eslint --config devToolsSetup/eslintrc source/**/*.js{,x} devToolsSetup/**/*.js --ignore-path devToolsSetup/eslintignore --color"
+    "dev-server": "webpack-dev-server --config devToolsSetup/webpack/webpack.dev.config.js --hot --no-info --colors --progress",
+    "lint": "eslint --config devToolsSetup/eslint/eslintrc source/**/*.js{,x} devToolsSetup/**/*.js --ignore-path devToolsSetup/eslint/eslintignore --color"
   },
   "config": {
     "ghooks": {
@@ -13,9 +13,9 @@
     }
   },
   "babel": {
-    "babelrc": "devToolsSetup/babelrc"
+    "babelrc": "devToolsSetup/babel/babelrc"
   },
-  "eslintConfig": "devToolsSetup/eslintrc",
+  "eslintConfig": "devToolsSetup/eslint/eslintrc",
   "dependencies": {
     "classnames": "^2.2.5",
     "deepmerge": "^1.5.0",
@@ -46,7 +46,8 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "svg-react-loader": "^0.4.4",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1",
+    "webpack-merge": "^4.1.0"
   }
 }
