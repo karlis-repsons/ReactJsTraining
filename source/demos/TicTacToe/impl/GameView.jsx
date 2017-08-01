@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SquareContainer from 'SquareContainer_kU7d2';
+import SquareContainer from 'SquareContainer_kU7d2_v0';
+import lengthsDiffer from 'areNumbersDifferent_tSbVE_v0';
+import changeHexColorLightness from 'changeHexColorLightness_k42fs_v0';
 
 import Board from './Board/Board';
 import MovesList from './MovesList/MovesList';
 import { playerX, playerXColor, playerOColor } from './constants';
-import lengthsDiffer from 'areNumbersDifferent_tSbVE.js';
-import changeHexColorLightness from 'changeHexColorLightness_k42fs';
 import './GameView.scss';
 
 export default class GameView extends React.Component {

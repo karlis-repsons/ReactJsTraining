@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import {ArgumentException} from 'exceptionTypes_mjS3d';
+import {ArgumentException} from 'exceptionTypes_mjS3d_v0';
 
 export default function getSharedSettingsForInput(settingsInput) {
    if (!settingsInput)

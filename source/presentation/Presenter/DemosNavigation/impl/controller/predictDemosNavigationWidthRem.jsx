@@ -1,4 +1,4 @@
-import {SystemException, ArgumentException} from 'exceptionTypes_mjS3d';
+import {SystemException, ArgumentException} from 'exceptionTypes_mjS3d_v0';
 
 import DemoNavigationItem from '../../navigationItems/DemoNavigationItem/DemoNavigationItem';
 import GroupingNavigationItem from '../../navigationItems/GroupingNavigationItem/GroupingNavigationItem';

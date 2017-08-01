@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s';
+import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s_v0';
 
 import {propTypes} from '../Presenter';
 import PresenterLayoutController from './PresenterLayoutController';

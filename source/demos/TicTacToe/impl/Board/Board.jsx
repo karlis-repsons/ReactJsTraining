@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SquareTable, Row, Cell } from 'SquareTable_zW3Ec';
+import { SquareTable, Row, Cell } from 'SquareTable_zW3Ec_v0';
 import Cross from './MarkingVisuals/Cross';
 import Circle from './MarkingVisuals/Circle';
 import {

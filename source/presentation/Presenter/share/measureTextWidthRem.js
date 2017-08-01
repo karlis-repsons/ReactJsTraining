@@ -5,7 +5,7 @@ Usage:
    * more info about canvas measurements in TextWidthMeasurer_C34kj.
 */
 
-import TextWidthMeasurer from 'TextWidthMeasurer_C34kj';
+import TextWidthMeasurer from 'TextWidthMeasurer_C34kj_v0';
 import {convertPxToRem} from './convertPxAndRem';
 
 const canvasHTMLElementId = 'canvas-for-measurements';

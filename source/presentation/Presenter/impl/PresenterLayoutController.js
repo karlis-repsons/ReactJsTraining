@@ -1,5 +1,5 @@
-import {BindMethodsBase} from 'BindMethodsBase_h436s';
-import {SystemException} from 'exceptionTypes_mjS3d';
+import {BindMethodsBase} from 'BindMethodsBase_h436s_v0';
+import {SystemException} from 'exceptionTypes_mjS3d_v0';
 
 import DemosNavigation from '../DemosNavigation/DemosNavigation';
 import {convertPxToRem} from '../share/convertPxAndRem';

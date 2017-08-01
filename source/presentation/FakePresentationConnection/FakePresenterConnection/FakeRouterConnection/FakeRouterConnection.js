@@ -1,8 +1,8 @@
-import {SquareContainerExample} from 'SquareContainer_kU7d2';
+import {SquareContainerExample} from 'SquareContainer_kU7d2_v0';
 import {
    SquareTable_E_BackgroundColorBordersInnerAndOuter,
    SquareTable_E_Fractal
-} from 'SquareTable_zW3Ec';
+} from 'SquareTable_zW3Ec_v0';
 import TicTacToe from 'demos/TicTacToe/TicTacToe';
 
 export default class FakeRouterConnection {
