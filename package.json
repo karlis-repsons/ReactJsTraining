@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npm run dev-server",
     "dev-server": "webpack-dev-server --config devToolsSetup/webpack/webpack.dev.config.js --hot --no-info --colors --progress",
-    "lint": "eslint --config devToolsSetup/eslint/eslintrc source/**/*.js{,x} devToolsSetup/**/*.js --ignore-path devToolsSetup/eslint/eslintignore --color"
+    "lint": "eslint --config devToolsSetup/eslint/eslintrc source/**/*.js{,x} devToolsSetup/**/*.js --ignore-path devToolsSetup/eslint/eslintignore --color",
+    "release": "webpack --config devToolsSetup/webpack/webpack.prod.config.js --progress --profile --colors"
   },
   "config": {
     "ghooks": {
