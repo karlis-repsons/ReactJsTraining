@@ -9,7 +9,7 @@ module.exports = {
    entry: `${paths.source}/entry.jsx`,
    plugins: [
       new HtmlWebpackPlugin({
-         template: 'source/entry.html'
+         template: `${paths.source}/entry.html`
       })
    ],
    module: {

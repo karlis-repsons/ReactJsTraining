@@ -1,4 +1,5 @@
 const merge = require('webpack-merge');
+
 const webpackConfigShare = require('./webpackConfigShare');
 
 const dev = {

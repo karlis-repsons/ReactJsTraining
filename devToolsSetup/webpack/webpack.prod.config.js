@@ -1,38 +1,27 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const webpackConfigShare = require('./webpackConfigShare');
 
 const pathsShare = require('./webpackPathsShare');
+const webpackConfigShare = require('./webpackConfigShare');
 
 let paths = pathsShare.paths;
-
 let prod = {
-
+   outputPath: path.resolve(paths.projectRoot, 'deploy')
 };
 
 module.exports = merge(webpackConfigShare, {
    output: {
-      path: path.resolve(paths.projectRoot, 'deploy'),
+      path: prod.outputPath,
       filename: '[name].bundle.js',
       publicPath: '/',
       sourceMapFilename: '[name].map'
    },
    plugins: [
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true
-      },
-      compress: {
-        screw_ie8: true
-      },
-      comments: false
-    })
-  ]
+      new webpack.DefinePlugin({
+         'process.env': {
+            NODE_ENV: JSON.stringify('production')
+         }
+      })
+   ]
 });
