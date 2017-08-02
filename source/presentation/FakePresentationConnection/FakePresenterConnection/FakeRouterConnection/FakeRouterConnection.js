@@ -1,4 +1,6 @@
-import {SquareContainerExample} from 'SquareContainer_kU7d2_v0';
+import {
+   SimpleExample as SquareContainerSimpleExample
+} from 'SquareContainer_kU7d2_v1';
 import {
    SquareTable_E_BackgroundColorBordersInnerAndOuter,
    SquareTable_E_Fractal
@@ -13,8 +15,8 @@ export default class FakeRouterConnection {
    getRoutes() {
       return [
          {
-            demoPathOnServer: '/demos/square-container-kU7d2/r3lMw',
-            demoUIComponent: SquareContainerExample
+            demoPathOnServer: '/demos/square-container-kU7d2/v1/simple',
+            demoUIComponent: SquareContainerSimpleExample
          },
          {
             demoPathOnServer: '/demos/square-table-zW3Ec/kT324',

@@ -26,7 +26,12 @@ export default class FakeDemosNavigationConnection {
             children: [
                {
                   title: 'SquareContainer',
-                  demoPathOnServer: '/demos/square-container-kU7d2/r3lMw'
+                  children: [
+                     {
+                        title: 'Simple',
+                        demoPathOnServer: '/demos/square-container-kU7d2/v1/simple'
+                     }
+                  ]
                },
                {
                   title: 'SquareTable',
