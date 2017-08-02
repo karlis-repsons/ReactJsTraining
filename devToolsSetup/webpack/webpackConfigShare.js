@@ -1,21 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let paths = {};
-paths.projectRoot = path.resolve(__dirname, '../../');
-paths = Object.assign({}, paths,
-   {
-      source: path.resolve(paths.projectRoot, 'source'),
-      devToolsSetup: path.resolve(
-         paths.projectRoot, 'devToolsSetup')
-   }
-);
+const pathsShare = require('./webpackPathsShare');
+
+let paths = pathsShare.paths;
 
 module.exports = {
    entry: `${paths.source}/entry.jsx`,
    plugins: [
       new HtmlWebpackPlugin({
-         template: 'source/entry.html'
+         template: `${paths.source}/entry.html`
       })
    ],
    module: {
