@@ -14,7 +14,7 @@ export default class FakeDemosNavigationConnection {
       this.groupingNavigationItem = new FakeGroupingNavigationItemConnection({
          settings: settingsInput.groupingNavigationItem
       });
-      this.data = {
+      this.content = {
          sourceNavigationTree: this.getSourceNavigationTree()
       };
    }

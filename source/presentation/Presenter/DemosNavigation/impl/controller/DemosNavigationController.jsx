@@ -40,9 +40,9 @@ export default class DemosNavigationController
    render() {
       return (
          <DemosNavigationView
+            connection={this.props.connection}
             style={this.props.style}
             contentStyle={this.props.contentStyle}
-            privateUISettings={this.props.connection.settings.private.ui}
             uiTreeData={this.state.uiTreeData}
             gotNewUITreeData={this.gotNewUITreeData}
          />

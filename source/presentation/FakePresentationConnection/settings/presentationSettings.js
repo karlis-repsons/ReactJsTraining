@@ -56,11 +56,11 @@ presentationSI.presenter.demosNavigation.share = {
 };
 p.navigationItemFont = presentationSI.presenter.demosNavigation.share.ui.style.navigationItemFont;
 presentationSI.presenter.demosNavigation.private = {
-   ux: {
-      expandTreeOnInitialization: true
-   },
-   ui: {
-      tree: {
+   tree: {
+      ux: {
+         expandOnInitialization: true
+      },
+      ui: {
          paddingRem: {
             left: 1 * p.navigationItemFont.sizeRem,
             right: 1 * p.navigationItemFont.sizeRem

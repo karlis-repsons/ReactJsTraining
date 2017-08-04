@@ -25,7 +25,7 @@ export default class DemosNavigationView extends React.Component {
       overridingElement.setAttribute('id', elementId);
       overridingElement.innerHTML =
          new DemosNavigationTreeStyler(
-            this.props.privateUISettings.tree
+            this.props.connection.settings.private.tree.ui
          ).overrideCSS;
       
       const domHead = document.getElementsByTagName('head').item(0);
@@ -38,7 +38,7 @@ export default class DemosNavigationView extends React.Component {
    
    render() {
       const p = this.props;
-      const prUISet = p.privateUISettings;
+      const prSet = p.connection.settings.private;
       
       const classNames = makeClassNames(
          DemosNavigationView.baseClassNames, this.props.className);
@@ -54,9 +54,9 @@ export default class DemosNavigationView extends React.Component {
                   onChange={this.props.gotNewUITreeData}
                   canDrag={false}
                   scaffoldBlockPxWidth={
-                     convertRemToPx(prUISet.tree.structureLines.blockWidthRem)}
+                     convertRemToPx(prSet.tree.ui.structureLines.blockWidthRem)}
                   rowHeight={
-                     convertRemToPx(prUISet.tree.rowHeightRem)}
+                     convertRemToPx(prSet.tree.ui.rowHeightRem)}
                />
             </div>
          </div>
@@ -67,10 +67,10 @@ export default class DemosNavigationView extends React.Component {
 DemosNavigationView.baseClassNames = 'demos navigation zJ7k3';
 
 DemosNavigationView.propTypes = {
+   connection: PropTypes.object.isRequired, // IDemosNavigationConnection
    className: PropTypes.string,
    style: PropTypes.object,
    contentStyle: PropTypes.object,
-   privateUISettings: PropTypes.object.isRequired,
    uiTreeData: PropTypes.array.isRequired, // [ DemosNavigationUITreeNode ]
    gotNewUITreeData: PropTypes.func // f ( uiTreeData )
 };

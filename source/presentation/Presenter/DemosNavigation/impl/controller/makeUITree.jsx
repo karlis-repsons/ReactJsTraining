@@ -16,7 +16,7 @@ export default function makeUITree(
       selectedDemoPathOnServer
    }
 ) {
-   const sourceTree = demosNavigationConnection.data.sourceNavigationTree
+   const sourceTree = demosNavigationConnection.content.sourceNavigationTree
       // [DemosNavigationSourceTreeNode]
    ;
    return makeUITree_impl(
@@ -84,7 +84,7 @@ function makeUINode(
        && typeof sourceTreeNode.children.length === 'number'
        && sourceTreeNode.children.length > 0
    ) {
-      uiSubtree.expanded = nc.settings.private.ux.expandTreeOnInitialization;
+      uiSubtree.expanded = nc.settings.private.tree.ux.expandOnInitialization;
       uiSubtree.children = makeUITree_impl({
          sourceTree: sourceTreeNode.children,
          demosNavigationConnection: nc,

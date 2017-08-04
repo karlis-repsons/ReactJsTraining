@@ -21,11 +21,11 @@ export default function predictDemosNavigationWidthRem(
  */
 function getMaxSubtreeWidthRem({nc, uiTreeData}) {
    const treeViewCalculator = new TreeViewCalculator(
-      nc.settings.private.ui.tree);
+      nc.settings.private.tree.ui);
    
    return getMaxSubtreeWidthRem_impl({
       isUITreeAvailable: typeof uiTreeData === 'object',
-      treeData: uiTreeData ? uiTreeData : nc.data.sourceNavigationTree,
+      treeData: uiTreeData ? uiTreeData : nc.content.sourceNavigationTree,
       accumulatedLeftPaddingRem: treeViewCalculator.leftMarginRem,
       treeViewCalculator,
       nc
@@ -78,9 +78,9 @@ function getSubtreeWidthRem(
       treeViewCalculator, nc
    }
 ) {
-   const treeSet = nc.settings.private.ui.tree;
+   const prUISet = nc.settings.private.tree.ui;
    
-   accumulatedLeftPaddingRem += treeSet.structureLines.blockWidthRem;
+   accumulatedLeftPaddingRem += prUISet.structureLines.blockWidthRem;
    
    let navigationItemWidthRem;
    if (isUITreeAvailable)
@@ -107,12 +107,12 @@ function getSubtreeWidthRem(
    
    const subtreeWidth = (accumulatedLeftPaddingRem
                          + navigationItemContainerWidthRem
-                         + treeSet.paddingRem.right);
+                         + prUISet.paddingRem.right);
    
    let result;
    const isNodeExpanded = isUITreeAvailable ?
       nodeData.expanded
-      : nc.settings.private.ux.expandTreeOnInitialization;
+      : nc.settings.private.tree.ux.expandOnInitialization;
    
    if (!isNodeExpanded || !nodeData.children)
       result = subtreeWidth;
