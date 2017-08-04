@@ -7,12 +7,13 @@ import PresenterLayoutController from './PresenterLayoutController';
 import PresenterView from './PresenterView';
 
 export default class PresenterActionController
-   extends bindMethodsBaseExtends(React.Component)
-{
+   extends bindMethodsBaseExtends(React.Component) {
    constructor(props) {
       super(props);
       this.state = {
-         selectedDemoPathOnServer: undefined
+         selectedDemo: {
+            pathOnServer: undefined
+         }
       };
       this._layoutController = new PresenterLayoutController({
          isDemoSelected: false,
@@ -34,7 +35,11 @@ export default class PresenterActionController
    _onDemoRequest({selectedDemoPathOnServer}) {
       const {lCtrl} = this._parameters;
       
-      this.setState({selectedDemoPathOnServer});
+      this.setState({
+         selectedDemo: {
+            pathOnServer: selectedDemoPathOnServer
+         }
+      });
       lCtrl.onDemoRequest();
    }
    
@@ -60,7 +65,7 @@ export default class PresenterActionController
                lCtrl.onMaximizeDemoContainerRequest}
             onNavigationRequest={lCtrl.onNavigationRequest}
             onDemoRequest={this._onDemoRequest}
-            selectedDemoPathOnServer={s.selectedDemoPathOnServer}
+            selectedDemoPathOnServer={s.selectedDemo.pathOnServer}
             demosNavigationConnection={p.connection.demosNavigation}
             demoContainerConnection={p.connection.demoContainer}
             routerConnection={p.connection.router}
