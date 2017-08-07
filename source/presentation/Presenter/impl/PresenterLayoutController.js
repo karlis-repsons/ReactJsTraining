@@ -116,10 +116,10 @@ export default class PresenterLayoutController extends BindMethodsBase {
       };
    }
    
-   onUpdatedPresenterBounds(sizePx) {
+   onUpdatedPresenterBounds(updatePx) {
       const {prLI} = this._parameters;
-      prLI.widthRem = convertPxToRem(sizePx.bounds.width);
-      prLI.heightRem = convertPxToRem(sizePx.bounds.height);
+      prLI.widthRem = convertPxToRem(updatePx.bounds.width);
+      prLI.heightRem = convertPxToRem(updatePx.bounds.height);
       
       this._updateStaticLayout();
    }
