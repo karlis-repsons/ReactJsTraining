@@ -66,10 +66,10 @@ export { Row };
 export { Cell } from './Cell';
 
 export {
-    Example as SquareTable_E_BackgroundColorBordersInnerAndOuter
-} from './Examples/BackgroundColorBordersInnerAndOuter';
+    Example as BackgroundColorBordersExample
+} from './Examples/BackgroundColorBorders';
 export {
-    Fractal as SquareTable_E_Fractal
+    Fractal as FractalExample
 } from './Examples/Fractal';
 
 // improve:

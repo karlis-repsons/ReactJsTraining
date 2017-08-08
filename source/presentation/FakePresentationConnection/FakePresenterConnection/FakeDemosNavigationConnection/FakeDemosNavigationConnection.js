@@ -22,22 +22,27 @@ export default class FakeDemosNavigationConnection {
    getSourceNavigationTree() {
       return [
          {
-            title: 'Reusables',
+            title: 'reusables',
             children: [
                {
                   title: 'SquareContainer',
-                  demoPathOnServer: '/demos/square-container-kU7d2/r3lMw'
+                  children: [
+                     {
+                        title: 'Simple',
+                        demoPathOnServer: '/demos/square-container-kU7d2/v1/simple'
+                     }
+                  ]
                },
                {
                   title: 'SquareTable',
                   children: [
                      {
                         title: 'Table',
-                        demoPathOnServer: '/demos/square-table-zW3Ec/kT324'
+                        demoPathOnServer: '/demos/square-table-zW3Ec/v0/background-color-borders'
                      },
                      {
                         title: 'Fractal of tables',
-                        demoPathOnServer: '/demos/square-table-zW3Ec/fractal-wpo03'
+                        demoPathOnServer: '/demos/square-table-zW3Ec/v0/fractal'
                      }
                   ]
                }
@@ -45,7 +50,7 @@ export default class FakeDemosNavigationConnection {
          },
          {
             title: 'Tic Tac Toe game',
-            demoPathOnServer: '/demos/tic-tac-toe-ndO3g'
+            demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0'
          }
       ];
    }

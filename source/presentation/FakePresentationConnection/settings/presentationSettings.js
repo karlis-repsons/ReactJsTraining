@@ -1,10 +1,13 @@
 // SI - settings input
 
 let p = { // dictionary for easy access to the main values
+   navigationItemFont: {
+      sizeRem: 18/16,
+      names: undefined
+   }
    // the below variables are initialized later:
    // baseFontSizeRem
    // defaultFontNames
-   // navigationItemFont: { sizeRem, names }
 };
 
 let presentationSI = {
@@ -42,19 +45,50 @@ presentationSI.presenter.parentInput = presentationSI;
 p.baseFontSizeRem = presentationSI.presenter.share.ui.style.font.baseFontSizeRem;
 p.defaultFontNames = presentationSI.presenter.share.ui.style.font.defaultFontNames;
 
+// header
+presentationSI.presenter.header = {
+   share: {
+      //
+   },
+   private: {
+      ui: {
+         style: {
+            backgroundColorCSSValue: 'hsla(95, 47%, 19%, 1)'
+         }
+      },
+      title: {
+         ui: {
+            style: {
+               marginRem: {
+                  left: 0, right: 0, top: 0, bottom: 0
+               },
+               paddingEm: {
+                  left: 1/3 * p.navigationItemFont.sizeRem,
+                  right: 1/3 * p.navigationItemFont.sizeRem,
+                  top: 1,
+                  bottom: 1
+               },
+               font: {
+                  sizeRem: 3,
+                  names: undefined
+               },
+               color: 'white'
+            }
+         }
+      }
+   }
+};
+presentationSI.presenter.header.parentInput = presentationSI.presenter;
+
 // demosNavigation
 presentationSI.presenter.demosNavigation = {};
 presentationSI.presenter.demosNavigation.share = {
    ui: {
       style: {
-         navigationItemFont: {
-            sizeRem: 18/16,
-            names: undefined
-         }
+         navigationItemFont: p.navigationItemFont
       }
    }
 };
-p.navigationItemFont = presentationSI.presenter.demosNavigation.share.ui.style.navigationItemFont;
 presentationSI.presenter.demosNavigation.private = {
    tree: {
       ux: {
@@ -226,5 +260,16 @@ presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton = {
    }
 };
 presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton.parentInput = presentationSI.presenter.demoContainer.inNavigationMode;
+
+// footer
+presentationSI.presenter.footer = {
+   share: {
+      //
+   },
+   private: {
+      //
+   }
+};
+presentationSI.presenter.footer.parentInput = presentationSI.presenter;
 
 export default function getSettings() { return presentationSI; }

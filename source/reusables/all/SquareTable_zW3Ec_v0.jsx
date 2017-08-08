@@ -1,3 +1,3 @@
-import { SquareTable } from '../UI/Containers/SquareTable/v0/SquareTable_zW3Ec_v0';
+import { SquareTable } from '../UI/containers/SquareTable/v0/SquareTable_zW3Ec_v0';
 export default SquareTable;
-export * from '../UI/Containers/SquareTable/v0/SquareTable_zW3Ec_v0';
+export * from '../UI/containers/SquareTable/v0/SquareTable_zW3Ec_v0';
