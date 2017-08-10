@@ -3,11 +3,12 @@ import React from 'react';
 import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s_v0';
 
 import {propTypes} from '../Presenter';
-import PresenterLayoutController from './PresenterLayoutController';
-import PresenterView from './PresenterView';
+import PresenterLayoutController from './layout/PresenterLayoutController';
+import PresenterView from './view/PresenterView';
 
 export default class PresenterActionController
-   extends bindMethodsBaseExtends(React.Component) {
+   extends bindMethodsBaseExtends(React.Component)
+{
    constructor(props) {
       super(props);
       this.state = {
@@ -33,8 +34,9 @@ export default class PresenterActionController
    }
    
    _onDemoRequest({selectedDemoPathOnServer}) {
-      const {lCtrl} = this._parameters;
+      const {p, lCtrl} = this._parameters;
       
+      p.connection.onDemoRequest(selectedDemoPathOnServer);
       this.setState({
          selectedDemo: {
             pathOnServer: selectedDemoPathOnServer
@@ -53,22 +55,21 @@ export default class PresenterActionController
       
       return (
          <PresenterView
+            ref={lCtrl.saveViewRef}
+            connection={p.connection}
             className={p.className}
-            sharedUISettings={p.connection.settings.shared.ui}
             style={p.style}
             shouldRenderContent={this.shouldRenderContent}
             layoutParameters={lat}
             onUpdatedBounds={lCtrl.onUpdatedPresenterBounds}
-            navigationRefSaver={lCtrl.saveNavigationRef}
+            onUpdatedDemoBounds={lCtrl.onUpdatedDemoBounds}
             onUpdatedNavigationTreeWidth={lCtrl.onUpdatedNavigationTreeWidth}
             onMaximizeDemoContainerRequest={
                lCtrl.onMaximizeDemoContainerRequest}
             onNavigationRequest={lCtrl.onNavigationRequest}
             onDemoRequest={this._onDemoRequest}
+            afterDemoScroll={lCtrl.afterDemoScroll}
             selectedDemoPathOnServer={s.selectedDemo.pathOnServer}
-            demosNavigationConnection={p.connection.demosNavigation}
-            demoContainerConnection={p.connection.demoContainer}
-            routerConnection={p.connection.router}
          />
       );
    }

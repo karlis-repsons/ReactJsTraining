@@ -1,10 +1,8 @@
 export default class PresenterViewStyler {
-   constructor(
-      {styleFromProp, layoutParameters, sharedUISettings}
-   ) {
-      this._styleFromProp = styleFromProp;
-      this._layout = layoutParameters;
-      this._sharedUISettings = sharedUISettings;
+   constructor({props}) {
+      this._styleFromProp = props.style;
+      this._layout = props.layoutParameters;
+      this._sharedUISettings = props.connection.settings.shared.ui;
    }
    
    get _parameters() {

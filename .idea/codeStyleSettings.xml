@@ -12,7 +12,6 @@
           <option name="KEEP_SINGLE_LINE_BLOCKS" value="true" />
         </CssCodeStyleSettings>
         <JSCodeStyleSettings>
-          <option name="REFORMAT_C_STYLE_COMMENTS" value="false" />
           <option name="USE_DOUBLE_QUOTES" value="false" />
           <option name="CHAINED_CALL_DOT_ON_NEW_LINE" value="false" />
         </JSCodeStyleSettings>
@@ -27,6 +26,8 @@
         <codeStyleSettings language="JavaScript">
           <option name="LINE_COMMENT_ADD_SPACE" value="false" />
           <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+          <option name="CLASS_BRACE_STYLE" value="5" />
+          <option name="METHOD_BRACE_STYLE" value="5" />
           <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
           <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
           <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />

@@ -7,12 +7,21 @@ import {
    Route as ActivableRouterContent
 } from 'react-router-dom';
 
-import DemosNavigation from '../DemosNavigation/DemosNavigation';
-import DemoContainer from '../DemoContainer/DemoContainer';
-import PresenterViewStyler from './PresenterViewStyler';
-import {convertRemToPx} from '../share/convertPxAndRem';
+import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s_v0';
 
-export default class PresenterView extends React.Component {
+import DemosNavigation from '../../DemosNavigation/DemosNavigation';
+import DemoContainer from '../../DemoContainer/DemoContainer';
+import PresenterViewStyler from './PresenterViewStyler';
+import {convertRemToPx} from '../../share/convertPxAndRem';
+
+export default class PresenterView
+   extends bindMethodsBaseExtends(React.Component)
+{
+   constructor() {
+      super();
+      this.bindMethods([this._saveNavigationRef]);
+   }
+   
    get _parameters() {
       const lat = this.props.layoutParameters;
       
@@ -30,13 +39,8 @@ export default class PresenterView extends React.Component {
          'presenter Fh3r6 ', p.className);
       
       let styler;
-      if (p.shouldRenderContent) {
-         styler = new PresenterViewStyler({
-            styleFromProp: p.style,
-            layoutParameters: p.layoutParameters,
-            sharedUISettings: p.sharedUISettings
-         });
-      }
+      if (p.shouldRenderContent)
+         styler = new PresenterViewStyler({props: p});
       
       return (
          <Router>
@@ -56,6 +60,8 @@ export default class PresenterView extends React.Component {
       );
    }
    
+   _saveNavigationRef(r) { this.navigation = r; }
+   
    _renderNavigation(viewStyler) {
       const {p} = this._parameters;
       
@@ -64,8 +70,8 @@ export default class PresenterView extends React.Component {
       
       return (
          <DemosNavigation
-            ref={p.navigationRefSaver}
-            connection={p.demosNavigationConnection}
+            ref={this._saveNavigationRef}
+            connection={p.connection.demosNavigation}
             style={viewStyler.demosNavigation.css}
             contentStyle={viewStyler.navigationContent.css}
             selectedDemoPathOnServer={p.selectedDemoPathOnServer}
@@ -82,14 +88,14 @@ export default class PresenterView extends React.Component {
       
       return (
          <DemoContainer
-            connection={p.demoContainerConnection}
+            connection={p.connection.demoContainer}
             style={viewStyler.demoContainer.css}
             isDemoSelected={!!p.selectedDemoPathOnServer}
             showMaximized={dcLat.isMaximized}
             onMaximizeRequest={p.onMaximizeDemoContainerRequest}
             onNavigationRequest={p.onNavigationRequest}
          >
-            {p.routerConnection.routes.map(
+            {p.connection.router.routes.map(
                (uiRoute, i) =>
                   <ActivableRouterContent
                      path={uiRoute.demoPathOnServer}
@@ -111,19 +117,17 @@ export default class PresenterView extends React.Component {
 }
 
 PresenterView.propTypes = {
-   sharedUISettings: PropTypes.object.isRequired,
+   connection: PropTypes.object.isRequired,
    className: PropTypes.string,
    style: PropTypes.object,
    shouldRenderContent: PropTypes.bool.isRequired,
    layoutParameters: PropTypes.object,
    onUpdatedBounds: PropTypes.func,
-   navigationRefSaver: PropTypes.func,
+   onUpdatedDemoBounds: PropTypes.func, // TODO
    onUpdatedNavigationTreeWidth: PropTypes.func,
    onMaximizeDemoContainerRequest: PropTypes.func,
    onNavigationRequest: PropTypes.func,
    onDemoRequest: PropTypes.func, // f({selectedDemoPathOnServer})
-   selectedDemoPathOnServer: PropTypes.string,
-   demosNavigationConnection: PropTypes.object.isRequired,
-   demoContainerConnection: PropTypes.object.isRequired,
-   routerConnection: PropTypes.object.isRequired
+   afterDemoScroll: PropTypes.func, // f(verticalScrollDistancePx) TODO
+   selectedDemoPathOnServer: PropTypes.string
 };
