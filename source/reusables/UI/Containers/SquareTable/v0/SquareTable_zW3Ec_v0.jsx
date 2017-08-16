@@ -20,15 +20,15 @@ Usage:
     3. add your styling; if needed, provide tableDecorator
        to draw special borders etc.
 
-SquareTable
-    .resize()
-
 CSS classes for square alignment:
     center, vcenter, top, bottom, hcenter, left, right.
 
+Static methods:
+    * calculateMeasures( props ) ->
+          { squareSideLengthPx, cellSideLengthPx,
+            innerGap, outerGap }
+
 Notes:
-    * This component first mounts its container, measures it and
-      only then it mounts cells and attempts to call onMounted.
     * unit of absolute measures: 1px.
     * Example components (exported):
         SquareTable_E_BackgroundColorBordersInnerAndOuter
@@ -38,6 +38,8 @@ Notes:
 import PropTypes from 'prop-types';
 export const propTypes = {
     cellsAtSideCount: PropTypes.number.isRequired, // integer
+    widthPx: PropTypes.number.isRequired,
+    heightPx: PropTypes.number.isRequired,
 
     className: PropTypes.string, // add your class name(s) to table container div
     style: PropTypes.object, // add style to table container div
@@ -47,8 +49,8 @@ export const propTypes = {
     innerGapReplacer: PropTypes.func, // (original_distance) => f(original_distance)
     outerGapReplacer: PropTypes.func, // (original_distance) => f(original_distance)
     tableDecorator: PropTypes.func, // ({cellsAtSideCount, tableSideLength, cellSideLength, innerGap, outerGap}) => { ... }
-
-    onResize: PropTypes.func // function(newCellSideLength)
+    
+    // children: childrenOnlyOfType(Row) - added below
 };
 
 // ==========================
@@ -73,11 +75,6 @@ export {
 } from './Examples/Fractal';
 
 // improve:
-//          * get precise table container DOM element's content size -
-//            without margin, padding etc. WITHOUT using div.fill-all-area
-//            inside of container.
-//          * allow passing content width and height as props to make possible
-//            full rendering of table or even fractal in a single step. 
 //          ? avoid render() calls if calculator did not return different value
 //          ? remove cell content div and let client code add it if needed
 //          ? allow to add extra props to table and put them on container div
@@ -85,6 +82,5 @@ export {
 //            mounted in the DOM)
 
 // questions:
-//          * Performance loss because of re-mounting cells on each resize
-//            looks really bad in Fractal example. But how much better would
-//            the performance be if I would not re-mount cells?
+//          * How much time does it take to re-measure DOM element compared to
+//            how much time it takes to remove and re-mount that element in DOM?

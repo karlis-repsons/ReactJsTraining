@@ -25,8 +25,8 @@ export default class Demo extends DemoBase {
       
       return (
          <FractalExample
-            widthRem={p.widthRem}
-            heightRem={p.heightRem}
+            widthPx={p.widthPx}
+            heightPx={p.heightPx}
             style={this.baseStyle} />
       );
    }

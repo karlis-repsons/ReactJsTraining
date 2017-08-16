@@ -3,6 +3,8 @@
     This component does not output anything in the browser DOM.
 */
 
+// Row.propTypes = { children: childrenOnlyOfType(Cell) } - added below
+
 // ==========================
 
 export function Row() { return null; }

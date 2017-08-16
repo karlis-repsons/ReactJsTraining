@@ -10,10 +10,6 @@ import {
 import './Board.scss';
 
 export default class Board extends React.Component {
-    componentDidUpdate() {
-        if (this.table)
-            this.table.resize();    
-    }
     render() {
         const p = this.props;
         let classNames = 'dY43c center';
@@ -45,6 +41,8 @@ export default class Board extends React.Component {
         }
         return (
             <SquareTable ref={r => this.table = r}
+                widthPx={p.boardSideLength}
+                heightPx={p.boardSideLength}
                 className={classNames} style={p.style}
                 cellsAtSideCount={cellsAtSideCount}
                 innerGapToCellSideLengthRatio={0.04}
@@ -61,6 +59,7 @@ export default class Board extends React.Component {
 Board.propTypes = {
     className: PropTypes.string, // for container
     style: PropTypes.object, // for container
+    boardSideLength: PropTypes.number.isRequired,
     markings: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     isGameOver: PropTypes.bool,
     onCellClick: PropTypes.func // f(i, j)

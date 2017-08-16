@@ -3,7 +3,7 @@
 
 Notes:
     * the props not mentioned in propTypes
-      will be forwared to div.cell container.
+      will be forwarded to div.cell container.
     * DO NOT use REF on cell - it will not work.
 */
 
@@ -11,8 +11,9 @@ import PropTypes from 'prop-types';
 const propTypes = {
     className: PropTypes.string, // add class name(s) to cell container div
     children: PropTypes.any,
-    style: PropTypes.object // SquareTable will add cell positioning styles to this
-}
+    style: PropTypes.object // SquareTable will add
+                            // cell positioning styles to this
+};
 
 // ==========================
 

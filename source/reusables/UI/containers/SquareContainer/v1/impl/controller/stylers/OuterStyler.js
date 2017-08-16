@@ -20,7 +20,10 @@ export default class OuterStyler {
    }
    
    get _shouldSetPositionRelative() {
-      const osp = this._props.outerStyle.position;
+      let osp;
+      if (this._props.outerStyle)
+         osp = this._props.outerStyle.position;
+      
       if (!osp)
          return true;
       

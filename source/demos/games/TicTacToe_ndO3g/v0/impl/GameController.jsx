@@ -50,9 +50,14 @@ export default class GameController extends DemoBase {
 
         Object.assign(this, {
             render() {
+                const p = this.props;
+                
                 return (
-                    <GameView ref={r => this.view = r}
-                        style={this.props.baseStyle}
+                    <GameView
+                        ref={r => this.view = r}
+                        widthRem={p.widthRem}
+                        heightRem={p.heightRem}
+                        style={this.baseStyle}
                         markings={this.state.display.markings}
                         titleText={getTitleText()}
                         statusText={getStatusText()}
@@ -78,12 +83,6 @@ export default class GameController extends DemoBase {
     }
     componentDidMount() {
         this.view.updateMeasures();
-        window.addEventListener('resize',
-            this.view.updateMeasures.bind(this.view));
-    }
-    componentWillUnmount() {
-        window.removeEventListener('resize',
-            this.view.updateMeasures.bind(this.view));
     }
 }
 

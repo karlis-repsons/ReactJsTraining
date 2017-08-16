@@ -1,6 +1,9 @@
 export default function lengthStringFromStyle(
    style, lengthPropertyName
 ) {
+   if (!style)
+      return;
+   
    let input = style[lengthPropertyName];
    
    let result;

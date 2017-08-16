@@ -5,8 +5,6 @@ import { Cell } from '../Cell';
 import { getCellsWithSuggestedPositions } from './PropValidation/getCellsFromChildren';
 import './TableView.scss';
 
-const e = Number.EPSILON;
-
 export default class TableView extends React.Component {
     getReplacementCells() {
         const p = this.props;
@@ -18,9 +16,10 @@ export default class TableView extends React.Component {
             let resultingCellProps = {
                 key: `${i}-${j}`,
                 style: {
-                    width: p.c, height: p.c,
-                    left: p.og + j * (p.c + p.ig),
-                    top: p.og + i * (p.c + p.ig)
+                    width: `${p.c}px`,
+                    height: `${p.c}px`,
+                    left: `${p.og + j * (p.c + p.ig)}px`,
+                    top: `${p.og + i * (p.c + p.ig)}px`
                 }
             };
             if (cell.props.style)
@@ -36,27 +35,18 @@ export default class TableView extends React.Component {
         return result;
     }
     render() {
-        const TableContainer = (props) => (
-            // div.fill-all-area is needed to avoid overcomplicated 
-            // process of getting precise element's content width and height.
-            <div className={props.className} style={this.props.style}>
-                <div className='fill-all-area'
-                    ref={this.props.areaFillerRefSaver}
-                >
-                    {props.children}
-                </div>
-            </div>
-        );
-
         const component_id = 'dK36L';
         const p = this.props;
+        
         let containerClassNames = `square table container ${component_id}`;
         if (typeof p.className === 'string')
             containerClassNames += ` ${p.className}`;
 
-        if (p.Nsi === 0 || p.L < e || p.c < e)
-            return <TableContainer className={containerClassNames} />;
-
+        const containerStyle = Object.assign({}, p.style, {
+            width: `${p.widthPx}px`,
+            height: `${p.heightPx}px`
+        });
+        
         let content = this.getReplacementCells();
         if (p.tableDecorator) {
             content.push(p.tableDecorator({
@@ -65,20 +55,22 @@ export default class TableView extends React.Component {
             }));
         }
         return (
-            <TableContainer className={containerClassNames}>
-                <div className='content' ref={this.props.contentDivRefSaver}
+            <div className={containerClassNames} style={containerStyle}>
+                <div className='content'
                     style={Object.assign(
                         { width: this.props.L, height: this.props.L },
                         this.props.contentStyle)}
                 >
                     {content}
                 </div>
-            </TableContainer>
+            </div>
         );
     }
 }
 
 TableView.propTypes = {
+    widthPx: PropTypes.number.isRequired,
+    heightPx: PropTypes.number.isRequired,
     className: PropTypes.string,
     style: PropTypes.object,
     contentStyle: PropTypes.object,
@@ -87,7 +79,6 @@ TableView.propTypes = {
     c: PropTypes.number.isRequired,
     ig: PropTypes.number.isRequired,
     og: PropTypes.number.isRequired,
-    tableDecorator: PropTypes.func,
-    areaFillerRefSaver: PropTypes.func,
-    contentDivRefSaver: PropTypes.func
+    tableDecorator: PropTypes.func
+   // children: childrenOnlyOfType(Row) - checked before
 };

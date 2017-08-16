@@ -6,52 +6,54 @@ import {SquareTable, Row, Cell} from 'SquareTable_zW3Ec_v0';
 import './BackgroundColorBorders.scss';
 
 export class Example extends React.Component {
-   resize(cellSideLength) {
-      if (typeof cellSideLength !== 'number')
-         return;
-      
-      this.l = cellSideLength;
-      this.forceUpdate();
-   }
-   
-   cell(title) {
+   cell(title, cellSideLengthPx) {
       return (
-         <Cell style={{
-            fontSize: `${this.l * 0.30}px`,
-            lineHeight: `${this.l * 0.6}px`
-         }}
-               onClick={() => console.log(`Clicked cell ${title}.`)} // eslint-disable-line no-console
+         <Cell
+            style={{
+               fontSize: `${cellSideLengthPx * 0.30}px`,
+               lineHeight: `${cellSideLengthPx * 0.6}px`
+            }}
+            onClick={() => console.log(`Clicked cell ${title}.`)} // eslint-disable-line no-console
+            key={title}
          >{title}</Cell>
       );
    }
    
    render() {
+      const tableProps = {
+         widthPx: this.props.widthPx,
+         heightPx: this.props.heightPx,
+         className: 'or4Sy center',
+         cellsAtSideCount: 3,
+         innerGapToCellSideLengthRatio: 0.06,
+         outerGapToInnerGapRatio: 0.2,
+         innerGapReplacer: gap => gap < 3 ? 3 : gap,
+         outerGapReplacer: gap => gap < 1 ? 1 : gap,
+      };
+      
+      const tableMeasures = SquareTable.calculateMeasures(tableProps);
+      let tableContent = [];
+      for (let i = 1; i <= 3; i++) {
+         let rowContent = [];
+         for (let j = 1; j <= 3; j++)
+            rowContent.push(
+               this.cell(
+                  `${i}-${j}`,
+                  tableMeasures.cellSideLengthPx));
+         
+         tableContent.push(<Row key={i}>{rowContent}</Row>);
+      }
+      
       return (
-         <div style={this.props.style}>
-            <SquareTable
-               className='or4Sy center'
-               cellsAtSideCount={3}
-               innerGapToCellSideLengthRatio={0.06}
-               outerGapToInnerGapRatio={0.2}
-               innerGapReplacer={gap => gap < 3 ? 3 : gap}
-               outerGapReplacer={gap => gap < 1 ? 1 : gap}
-               onResize={l => this.resize(l)}
-            >
-               <Row>
-                  {this.cell('1-1')} {this.cell('1-2')} {this.cell('1-3')}
-               </Row>
-               <Row>
-                  {this.cell('2-1')} {this.cell('2-2')} {this.cell('2-3')}
-               </Row>
-               <Row>
-                  {this.cell('3-1')} {this.cell('3-2')} {this.cell('3-3')}
-               </Row>
-            </SquareTable>
-         </div>
+         <div style={this.props.style}> {
+            React.createElement(SquareTable, tableProps, tableContent)
+         } </div>
       );
    }
 }
 
 Example.propTypes = {
+   widthPx: PropTypes.number.isRequired,
+   heightPx: PropTypes.number.isRequired,
    style: PropTypes.object
 };

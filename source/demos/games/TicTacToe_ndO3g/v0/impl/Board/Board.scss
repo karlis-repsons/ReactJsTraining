@@ -1,7 +1,9 @@
 @import '../tictactoe-style-globals';
 
 .square.table.dY43c {
-    & > * > .content {
+    width: 100% !important;
+    
+    & > .content {
         background-color: $default-foreground-color;
     }
     .cell.J30fs {

@@ -9,6 +9,8 @@ import {
 const demoBaseProps = {
    widthRem: PropTypes.number.isRequired,
    heightRem: PropTypes.number.isRequired,
+   widthPx: PropTypes.number.isRequired,
+   heightPx: PropTypes.number.isRequired,
    style: PropTypes.object.isRequired
 };
 
