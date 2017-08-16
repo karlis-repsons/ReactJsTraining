@@ -4,7 +4,8 @@ let p = { // dictionary for easy access to the main values
    navigationItemFont: {
       sizeRem: 18/16,
       names: undefined
-   }
+   },
+   verticalScrollAccelerationFactor: 0.3
    // the below variables are initialized later:
    // baseFontSizeRem
    // defaultFontNames
@@ -54,6 +55,17 @@ presentationSI.presenter.header = {
       ui: {
          style: {
             backgroundColorCSSValue: 'hsla(95, 47%, 19%, 1)'
+         },
+         sizeRem: {
+            min: {
+               width: 7,
+               //height:
+            }
+         }
+      },
+      ux: {
+         scrolling: {
+            verticalAccelerationFactor: p.verticalScrollAccelerationFactor
          }
       },
       title: {
@@ -63,15 +75,16 @@ presentationSI.presenter.header = {
                   left: 0, right: 0, top: 0, bottom: 0
                },
                paddingEm: {
-                  left: 1/3 * p.navigationItemFont.sizeRem,
-                  right: 1/3 * p.navigationItemFont.sizeRem,
-                  top: 1,
-                  bottom: 1
+                  left: 1/1.8 * p.navigationItemFont.sizeRem,
+                  right: 1/1.8 * p.navigationItemFont.sizeRem,
+                  top: 0.4,
+                  bottom: 0.6
                },
                font: {
-                  sizeRem: 3,
+                  sizeRem: 1.8,
                   names: undefined
                },
+               lineHeightRem: 1.8,
                color: 'white'
             }
          }
@@ -210,28 +223,12 @@ presentationSI.presenter.demoContainer = {
 presentationSI.presenter.demoContainer.parentInput = presentationSI.presenter;
 presentationSI.presenter.demoContainer.inNavigationMode = {
    private: {
-      ui: {
-         contentPaddingRem: {
-            top: 3,
-            right: 3,
-            bottom: 3,
-            left: 3
-         }
-      }
    },
    parentInput: presentationSI.presenter.demoContainer
 };
 
 presentationSI.presenter.demoContainer.inMaximizedMode = {
    private: {
-      ui: {
-         contentPaddingRem: {
-            top: 3,
-            right: 3,
-            bottom: 3,
-            left: 3
-         }
-      }
    },
    parentInput: presentationSI.presenter.demoContainer
 };
@@ -240,9 +237,15 @@ presentationSI.presenter.demoContainer.inMaximizedMode = {
 presentationSI.presenter.demoContainer.inMaximizedMode.navigationButton = {
    private: {
       ui: {
+         marginRem: {
+            top: 0.8, right: 0.8, bottom: 0.8, left: 0.8
+         },
+         paddingEm: {
+            top: 0.8/1.6, right: 0.8/1.6, bottom: 0.8/1.6, left: 0.8/1.6
+         },
          style: {
             font: {
-               sizeRem: 1,
+               sizeRem: 1.6,
                names: undefined
             }
          }
@@ -255,7 +258,12 @@ presentationSI.presenter.demoContainer.inMaximizedMode.navigationButton.parentIn
 presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton = {
    private: {
       ui: {
-         //
+         marginRem: {
+            top: 0.5, right: 2.5, bottom: 0.5, left: 0.5
+         },
+         sizeRem: {
+            width: 3.5, height: 3.5
+         }
       }
    }
 };
@@ -267,7 +275,16 @@ presentationSI.presenter.footer = {
       //
    },
    private: {
-      //
+      ui: {
+         style: {
+            backgroundColorCSSValue: 'hsla(45, 47%, 19%, 1)'
+         }
+      },
+      ux: {
+         scrolling: {
+            verticalAccelerationFactor: p.verticalScrollAccelerationFactor
+         }
+      },
    }
 };
 presentationSI.presenter.footer.parentInput = presentationSI.presenter;

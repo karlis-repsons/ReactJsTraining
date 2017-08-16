@@ -6,8 +6,8 @@ export default class ContainerInNavigationMode extends DCInNavigationMode { }
 
 export const propTypes = {
    connection: PropTypes.object.isRequired, // IDCInNavigationModeConnection
-   className: PropTypes.string,
-   style: PropTypes.object,
+   style: PropTypes.object.isRequired,
+   contentStyle: PropTypes.object.isRequired,
    children: PropTypes.node,
    isDemoSelected: PropTypes.bool.isRequired,
    onMaximizeRequest: PropTypes.func // f()

@@ -4,6 +4,8 @@ import {BindMethodsBase} from 'BindMethodsBase_h436s_v0';
 import {SystemException} from 'exceptionTypes_mjS3d_v0';
 
 import DemosNavigation from '../../DemosNavigation/DemosNavigation';
+import PresenterHeader from '../../PresenterHeader/PresenterHeader';
+import PresenterFooter from '../../PresenterFooter/PresenterFooter';
 import {convertPxToRem} from '../../share/convertPxAndRem';
 
 import empty from './impl/emptyLayoutStructures/emptyLayoutStructures';
@@ -46,15 +48,17 @@ export default class PresenterLayoutController extends BindMethodsBase {
       
       return {
          staticLayoutCalculator: this._staticLayoutCalculator,
-         lat: this._layout,
          
          prUISet: Set.private.ui,
          prUXSet: Set.private.ux,
          
+         lat: this._layout,
+         
          LI,
-         treeLI: LI.navigation.tree,
+         navLI: LI.demosNavigation,
          dcLI: LI.demoContainer,
-         dLI: LI.demoContainer.demo
+         sccLI: LI.demoContainer.scrollContainer,
+         dLI: LI.demoContainer.scrollContainer.demo
       };
    }
    
@@ -63,6 +67,16 @@ export default class PresenterLayoutController extends BindMethodsBase {
       
       LI.widthRem = convertPxToRem(updatePx.bounds.width);
       LI.heightRem = convertPxToRem(updatePx.bounds.height);
+      
+      LI.header.heightRem = PresenterHeader.predictHeightRem({
+         connection: this._connection.header,
+         widthRem: LI.widthRem
+      });
+      
+      LI.footer.heightRem = PresenterFooter.predictHeightRem({
+         connection: this._connection.footer,
+         widthRem: LI.widthRem
+      });
       
       this._updateIfStaticLayout();
    }
@@ -83,8 +97,8 @@ export default class PresenterLayoutController extends BindMethodsBase {
    }
    
    onUpdatedNavigationTreeWidth() {
-      const {treeLI} = this._parameters;
-      treeLI.widthRem = this._predictNavigationTreeWidthRem();
+      const {navLI} = this._parameters;
+      navLI.tree.widthRem = this._predictNavigationTreeWidthRem();
       this._updateIfStaticLayout();
    }
    
@@ -112,9 +126,9 @@ export default class PresenterLayoutController extends BindMethodsBase {
    }
    
    afterDemoScroll(verticalScrollDistancePx) {
-      const {dLI} = this._parameters;
+      const {sccLI} = this._parameters;
       
-      dLI.verticalScrollDistanceRem
+      sccLI.verticalScrollDistanceRem
          = convertPxToRem(verticalScrollDistancePx);
       
       this._updateIfStaticLayout();
@@ -126,12 +140,12 @@ export default class PresenterLayoutController extends BindMethodsBase {
       
       return i(LI.widthRem) && i(LI.heightRem)
              && i(LI.preferShowingDemoOrNavigation)
-             //&& i(LI.header.heightRem) // TODO
-             && i(LI.navigation.tree.widthRem)
+             && i(LI.header.heightRem)
+             && i(LI.demosNavigation.tree.widthRem)
              && i(LI.demoContainer.preferMaximized)
              && i(LI.demoContainer.isDemoSelected)
-             && i(LI.demoContainer.demo.verticalScrollDistanceRem)
-             //&& i(LI.footer.heightRem); // TODO
+             && i(LI.demoContainer.scrollContainer.verticalScrollDistanceRem)
+             && i(LI.footer.heightRem);
    }
    
    get isAnimating() {
@@ -148,13 +162,12 @@ export default class PresenterLayoutController extends BindMethodsBase {
       LI.preferShowingDemoOrNavigation =
          isDemoSelected ? preferDemo : preferNavigation;
       
-      LI.header.heightRem = undefined; // TODO
-      LI.footer.heightRem = undefined; // TODO
-      LI.navigation.tree.widthRem =
+      LI.demosNavigation.tree.widthRem =
          this._predictNavigationTreeWidthRem();
       
       dcLI.preferMaximized = prUXSet.preferMaximizedDemoView.initially;
       dcLI.isDemoSelected = isDemoSelected;
+      dcLI.scrollContainer.verticalScrollDistanceRem = 0;
       
       return LI;
    }
@@ -174,8 +187,8 @@ export default class PresenterLayoutController extends BindMethodsBase {
    
    _predictNavigationTreeWidthRem() {
       try {
-         if (this._view && this._view.navigation)
-            return this._view.navigation.predictWidthRem();
+         if (this._view && this._view.demosNavigation)
+            return this._view.demosNavigation.predictWidthRem();
          else
             return DemosNavigation.predictWidthRem(
                this._connection.demosNavigation

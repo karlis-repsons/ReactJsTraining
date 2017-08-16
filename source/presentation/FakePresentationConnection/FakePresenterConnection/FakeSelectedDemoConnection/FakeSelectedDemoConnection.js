@@ -3,5 +3,11 @@ export default class FakeSelectedDemoConnection {
       this._settings = demoComponent.settings;
    }
    
-   get settings() { return this._settings; }
+   get settings() {
+      return this._settings;
+   }
+   
+   get isDemoSelected() {
+      return !!this._settings;
+   }
 }

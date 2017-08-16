@@ -5,22 +5,22 @@ import ContainerInNavigationMode from '../inNavigationMode/ContainerInNavigation
 import ContainerInMaximizedMode from '../inMaximizedMode/ContainerInMaximizedMode';
 
 export default class DemoContainerController extends React.Component {
-   static predictPaddingRem(
-      {connection, isDemoContainerMaximized}
-   ) {
-      let dcClass, dcConnection;
-      if (isDemoContainerMaximized) {
-         dcClass = ContainerInMaximizedMode;
-         dcConnection = connection.inMaximizedMode;
-      }
-      else {
-         dcClass = ContainerInNavigationMode;
-         dcConnection = connection.inNavigationMode;
-      }
-      
-      return dcClass.predictPaddingRem({
-         connection: dcConnection
-      });
+   static predictPaddingRem({
+                               demoContainerConnection,
+                               selectedDemoConnection,
+                               isDemoContainerMaximized
+                            })
+   {
+      if (isDemoContainerMaximized)
+         return ContainerInMaximizedMode.predictPaddingRem({
+            connection: demoContainerConnection.inMaximizedMode,
+            selectedDemoConnection
+         });
+      else
+         return ContainerInNavigationMode.predictPaddingRem({
+            connection: demoContainerConnection.inNavigationMode,
+            selectedDemoConnection
+         });
    }
    
    render() {
@@ -29,9 +29,9 @@ export default class DemoContainerController extends React.Component {
       if (p.showMaximized)
          return (
             <ContainerInMaximizedMode
-               className={p.className}
                connection={p.connection.inMaximizedMode}
                style={p.style}
+               contentStyle={p.contentStyle}
                isDemoSelected={p.isDemoSelected}
                onNavigationRequest={p.onNavigationRequest}
             >
@@ -41,9 +41,9 @@ export default class DemoContainerController extends React.Component {
       else
          return (
             <ContainerInNavigationMode
-               className={p.className}
                connection={p.connection.inNavigationMode}
                style={p.style}
+               contentStyle={p.contentStyle}
                isDemoSelected={p.isDemoSelected}
                onMaximizeRequest={p.onMaximizeRequest}
             >

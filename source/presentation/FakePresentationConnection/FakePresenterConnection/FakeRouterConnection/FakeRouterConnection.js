@@ -5,6 +5,8 @@ import SquareTable_zW3Ec_v0_Fractal from 'demos/all/SquareTable_zW3Ec_v0_Fractal
 
 import TicTacToe_ndO3g_v0 from 'demos/all/TicTacToe_ndO3g_v0';
 
+import ControlledScrolling_jy437 from 'demos/all/ControlledScrolling_jy437';
+
 export default class FakeRouterConnection {
    constructor() {
       this.routes = this.getRoutes();
@@ -27,6 +29,20 @@ export default class FakeRouterConnection {
          {
             demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0',
             demoUIComponent: TicTacToe_ndO3g_v0
+         },
+         {
+            demoPathOnServer: '/demos/controlled-scrolling-jy437/repeat-0',
+            demoUIComponent: ControlledScrolling_jy437,
+            demoOwnPropValues: {
+               countOfTextRepeats: 0
+            }
+         },
+         {
+            demoPathOnServer: '/demos/controlled-scrolling-jy437/repeat-14',
+            demoUIComponent: ControlledScrolling_jy437,
+            demoOwnPropValues: {
+               countOfTextRepeats: 14
+            }
          }
       ];
    }

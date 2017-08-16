@@ -9,7 +9,7 @@ const settings = {
    presentation: {
       ui: {
          allDemoFitsInsideAnyContainer: true,
-         maxContainerButtonsOverlapRemAt: {allSides: 0}
+         maxContainerButtonsOverlapRemAt: {allSides: Number.MAX_VALUE}
       },
       ux: {
          animation: {

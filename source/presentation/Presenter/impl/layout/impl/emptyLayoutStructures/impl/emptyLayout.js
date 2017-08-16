@@ -12,7 +12,7 @@ export const emptyLayout = {
          boundsRem: eb
       }
    },
-   navigation: {
+   demosNavigation: {
       boundsRem: eb,
       isMaximized: u,
       isHidden: u,
@@ -27,7 +27,11 @@ export const emptyLayout = {
       containsHeader: u,
       containsFooter: u,
       content: {
-         boundsRem: eb
+         boundsRem: eb,
+         scrollContainer: {
+            boundsRem: eb,
+            hasScroll: u
+         }
       }
    },
    footer: {

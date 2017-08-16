@@ -51,6 +51,24 @@ export default class FakeDemosNavigationConnection {
          {
             title: 'Tic Tac Toe game',
             demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0'
+         },
+         {
+            title: 'presenter features',
+            children: [
+               {
+                  title: 'controlled scrolling',
+                  children: [
+                     {
+                        title: 'short text',
+                        demoPathOnServer: '/demos/controlled-scrolling-jy437/repeat-0'
+                     },
+                     {
+                        title: 'long text',
+                        demoPathOnServer: '/demos/controlled-scrolling-jy437/repeat-14'
+                     }
+                  ]
+               }
+            ]
          }
       ];
    }

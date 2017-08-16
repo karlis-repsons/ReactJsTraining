@@ -5,7 +5,7 @@ export const emptyLayoutInput = {
    heightRem: u,
    preferShowingDemoOrNavigation: u,
    header: {heightRem: u},
-   navigation: {
+   demosNavigation: {
       tree: {
          widthRem: u
       }
@@ -13,11 +13,13 @@ export const emptyLayoutInput = {
    demoContainer: {
       preferMaximized: u,
       isDemoSelected: u,
-      demo: {
+      scrollContainer: {
          verticalScrollDistanceRem: 0,
-         currentSize: {
-            widthWithMarginsRem: u,
-            heightWithMarginsRem: u
+         demo: {
+            currentSize: {
+               widthWithMarginsRem: u,
+               heightWithMarginsRem: u
+            }
          }
       }
    },

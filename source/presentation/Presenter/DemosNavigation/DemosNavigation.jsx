@@ -14,9 +14,8 @@ export default class DemosNavigation extends DemosNavigationController { }
 
 export const propTypes = {
    connection: PropTypes.object.isRequired, // IDemosNavigationConnection
-   className: PropTypes.string,
-   style: PropTypes.object,
-   contentStyle: PropTypes.object,
+   style: PropTypes.object.isRequired,
+   contentStyle: PropTypes.object.isRequired,
    selectedDemoPathOnServer: PropTypes.string,
    onUpdatedUITreeData: PropTypes.func, // f()
    onDemoRequest: PropTypes.func // f({selectedDemoPathOnServer})

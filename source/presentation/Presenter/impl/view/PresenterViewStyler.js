@@ -1,20 +1,25 @@
 export default class PresenterViewStyler {
    constructor({props}) {
-      this._styleFromProp = props.style;
-      this._layout = props.layoutParameters;
-      this._sharedUISettings = props.connection.settings.shared.ui;
+      this._props = props;
    }
    
    get _parameters() {
-      const lat = this._layout;
+      const connection = this._props.connection;
+      const lat = this._props.layoutParameters;
       
       return {
-         shUISet: this._sharedUISettings,
+         shUISet: connection.settings.shared.ui,
          lat,
-         nav: lat.navigation,
-         navc: lat.navigation.content,
-         dc: this._layout.demoContainer,
-         dcc: this._layout.demoContainer.content
+         
+         hLat: lat.header,
+         hcLat: lat.header.content,
+         dnLat: lat.demosNavigation,
+         dncLat: lat.demosNavigation.content,
+         dcLat: lat.demoContainer,
+         dccLat: lat.demoContainer.content,
+         sccLat: lat.demoContainer.content.scrollContainer,
+         fLat: lat.footer,
+         fcLat: lat.footer.content
       };
    }
    
@@ -23,85 +28,134 @@ export default class PresenterViewStyler {
       const font = shUISet.style.font;
       
       return {
-         css: Object.assign({}, this._styleFromProp,
-            {
+         css: Object.assign({
                position: 'relative',
                overflow: 'hidden',
                fontSize: `${font.baseFontSizeRem}rem`,
                fontFamily: font.defaultFontNames
-            })
+            },
+            this._props.style
+         )
+      };
+   }
+   
+   get header() {
+      const {hLat, hcLat} = this._parameters;
+      
+      return {
+         css: Object.assign({
+               position: 'absolute'
+            },
+            this._makeRemBoundsCSS(hLat.boundsRem)
+         ),
+         content: {
+            css: Object.assign({
+                  position: 'absolute'
+               },
+               this._makeRemBoundsCSS(hcLat.boundsRem)
+            )
+         }
       };
    }
    
    get demosNavigation() {
-      const {nav} = this._parameters;
+      const {dnLat, dncLat} = this._parameters;
       
       return {
-         css: {
-            position: 'absolute',
-            top: `${nav.boundsRem.top}rem`,
-            right: `${nav.boundsRem.right}rem`,
-            bottom: `${nav.boundsRem.bottom}rem`,
-            left: `${nav.boundsRem.left}rem`,
-            width: `${nav.boundsRem.width}rem`,
-            height: `${nav.boundsRem.height}rem`,
-            
-            display: nav.isHidden ? 'none' : 'block',
-            
-            backgroundColor: 'paleturquoise'
+         css: Object.assign({
+               position: 'absolute',
+               display: dnLat.isHidden ? 'none' : 'block',
+               backgroundColor: 'paleturquoise'
+            },
+            this._makeRemBoundsCSS(dnLat.boundsRem)
+         ),
+         content: {
+            css: Object.assign({
+                  position: 'absolute'
+               },
+               this._makeRemBoundsCSS(dncLat.boundsRem)
+            )
          }
       };
    }
    
    get demoContainer() {
-      const {dc} = this._parameters;
+      const {dcLat, dccLat, sccLat} = this._parameters;
       
       return {
-         css: {
-            position: 'absolute',
-            top: `${dc.boundsRem.top}rem`,
-            right: `${dc.boundsRem.right}rem`,
-            bottom: `${dc.boundsRem.bottom}rem`,
-            left: `${dc.boundsRem.left}rem`,
-            width: `${dc.boundsRem.width}rem`,
-            height: `${dc.boundsRem.height}rem`,
-            
-            display: dc.isHidden ? 'none' : 'block',
-            
-            backgroundColor: 'palegoldenrod'
+         css: Object.assign({
+               position: 'absolute',
+               display: dcLat.isHidden ? 'none' : 'block',
+               backgroundColor: 'palegoldenrod'
+            },
+            this._makeRemBoundsCSS(dcLat.boundsRem)
+         ),
+         content: {
+            css: Object.assign({
+                  position: 'absolute'
+               },
+               this._makeRemBoundsCSS(dccLat.boundsRem)
+            ),
+            scrollContainer: {
+               css: Object.assign(
+                  {
+                     position: 'absolute',
+                     overflow: sccLat.hasScroll ? 'auto' : 'hidden',
+                     zIndex: 0,
+                     backgroundColor: 'lightgray'
+                  },
+                  this._makeRemBoundsCSS(sccLat.boundsRem)
+               ),
+               demo: {
+                  css: {
+                     overflow: 'visible'
+                  }
+               }
+            }
          }
       };
    }
    
-   get navigationContent() {
-      const {navc} = this._parameters;
+   get footer() {
+      const {fLat, fcLat} = this._parameters;
       
       return {
-         css: {
-            position: 'absolute',
-            top: `${navc.boundsRem.top}rem`,
-            right: `${navc.boundsRem.right}rem`,
-            bottom: `${navc.boundsRem.bottom}rem`,
-            left: `${navc.boundsRem.left}rem`,
-            width: `${navc.boundsRem.width}rem`,
-            height: `${navc.boundsRem.height}rem`,
+         css: Object.assign({
+               position: 'absolute'
+            },
+            this._makeRemBoundsCSS(fLat.boundsRem)
+         ),
+         content: {
+            css: Object.assign({
+                  position: 'absolute'
+               },
+               this._makeRemBoundsCSS(fcLat.boundsRem)
+            )
          }
       };
    }
    
-   get demoContent() {
-      const {dcc} = this._parameters;
+   _makeRemBoundsCSS(boundsRem)
+   {
+      let css = {};
+      if (typeof boundsRem.top === 'number')
+         css.top = `${boundsRem.top}rem`;
       
-      return {
-         css: {
-            position: 'absolute',
-            top: `${dcc.boundsRem.top}rem`,
-            right: `${dcc.boundsRem.right}rem`,
-            bottom: `${dcc.boundsRem.bottom}rem`,
-            left: `${dcc.boundsRem.left}rem`,
-            width: `${dcc.boundsRem.width}rem`,
-            height: `${dcc.boundsRem.height}rem`,
-         }
-      };
+      if (typeof boundsRem.bottom === 'number')
+         css.bottom = `${boundsRem.bottom}rem`;
+      
+      if (typeof boundsRem.right === 'number')
+         css.right = `${boundsRem.right}rem`;
+      
+      if (typeof boundsRem.left === 'number')
+         css.left = `${boundsRem.left}rem`;
+      
+      if (typeof boundsRem.width === 'number')
+         css.width = `${boundsRem.width}rem`;
+      
+      if (typeof boundsRem.height === 'number')
+         css.height = `${boundsRem.height}rem`;
+      
+      return css;
    }
 }

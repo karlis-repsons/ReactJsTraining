@@ -11,28 +11,43 @@ export default class DCInNavigationModeStyler {
       };
    }
    
-   get containerDiv() {
+   get container() {
       const {p} = this._parameters;
       
       return {
-         css: Object.assign({}, p.style,
-            {
-               position: 'absolute',
+         css: Object.assign({
                backgroundColor: '#633A3A'
-            })
+            },
+            p.style
+         )
+      };
+   }
+   
+   get content() {
+      const {p} = this._parameters;
+      const pcs = p.contentStyle;
+      
+      let styleCSS = {};
+      if (!pcs.position || !/^(relative|absolute|fixed)$/.test(pcs.position))
+         styleCSS.position = 'relative';
+      
+      return {
+         css: Object.assign(styleCSS, p.contentStyle)
       };
    }
    
    get maximizeButton() {
       const {p} = this._parameters;
+      const mbPrUISet = p.connection.maximizeButton.settings.private.ui;
       
       return {
          css: {
             position: 'absolute',
-            top: '0.5rem',
-            right: '0.5rem',
-            width: '2rem',
-            height: '2rem',
+            top: `${mbPrUISet.marginRem.top}rem`,
+            right: `${mbPrUISet.marginRem.right}rem`,
+            width: `${mbPrUISet.sizeRem.width}rem`,
+            height: `${mbPrUISet.sizeRem.height}rem`,
+            zIndex: 1,
             cursor: p.isDemoSelected ? 'pointer' : undefined,
             
             backgroundColor: 'white'

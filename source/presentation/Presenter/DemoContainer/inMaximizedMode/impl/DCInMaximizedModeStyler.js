@@ -8,37 +8,60 @@ export default class DCInMaximizedModeStyler {
       const conn = p.connection;
       
       return {
-         p,
-         bPrUISet: conn.navigationButton.settings.private.ui
+         p
       };
    }
    
-   get containerDiv() {
+   get container() {
       const {p} = this._parameters;
       
       return {
-         css: Object.assign({}, p.style,
-            {
-               position: 'absolute',
+         css: Object.assign({
                backgroundColor: '#3B633A'
-            })
+            },
+            p.style
+         )
+      };
+   }
+   
+   get content() {
+      const {p} = this._parameters;
+      const pcs = p.contentStyle;
+      
+      let styleCSS = {};
+      if (!pcs.position || !/^(relative|absolute|fixed)$/.test(pcs.position))
+         styleCSS.position = 'relative';
+      
+      return {
+         css: Object.assign(styleCSS, p.contentStyle)
       };
    }
    
    get navigationButton() {
-      const {bPrUISet} = this._parameters;
-      const font = bPrUISet.style.font;
+      const {p} = this._parameters;
+      const nbPrUISet = p.connection.navigationButton.settings.private.ui;
+      const nbFont = nbPrUISet.style.font;
       
       return {
          css: {
             position: 'absolute',
-            top: '0.5rem',
-            left: '0.5rem',
-            fontSize: `${font.size}rem`,
-            fontFamily: `${font.names}`,
+            top: `${nbPrUISet.marginRem.top}rem`,
+            left: `${nbPrUISet.marginRem.left}rem`,
+            zIndex: 1,
             cursor: 'pointer',
             
             backgroundColor: 'white'
+         },
+         title: {
+            css: {
+               paddingTop: `${nbPrUISet.paddingEm.top}em`,
+               paddingLeft: `${nbPrUISet.paddingEm.left}em`,
+               paddingBottom: `${nbPrUISet.paddingEm.bottom}em`,
+               paddingRight: `${nbPrUISet.paddingEm.right}em`,
+               fontSize: `${nbFont.sizeRem}rem`,
+               lineHeight: `${nbFont.sizeRem}rem`,
+               fontFamily: `${nbFont.names}`
+            }
          }
       };
    }

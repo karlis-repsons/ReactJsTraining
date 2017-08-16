@@ -1,34 +1,78 @@
 import React from 'react';
-import makeClassNames from 'classnames';
 
 import propTypes from '../ContainerInMaximizedMode';
 import DCInMaximizedModeStyler from './DCInMaximizedModeStyler';
 
 export default class DCInMaximizedMode extends React.Component {
-   static predictPaddingRem({connection}) {
-      const prUISet = connection.settings.private.ui;
-      return prUISet.contentPaddingRem;
+   static predictPaddingRem(
+      {
+         connection,
+         selectedDemoConnection: demoConn
+      }
+   )
+   {
+      const getMaxTopOverlapRem = () => {
+         let result;
+         
+         const maxOverlapRemAt =
+            demoConn.settings.presentation.ui.maxContainerButtonsOverlapRemAt;
+         if (typeof maxOverlapRemAt.allSides === 'number')
+            result = maxOverlapRemAt.allSides;
+         if (typeof maxOverlapRemAt.top === 'number')
+            result = maxOverlapRemAt.top;
+         if (typeof maxOverlapRemAt.rightTop === 'number')
+            result = maxOverlapRemAt.rightTop;
+         
+         return result;
+      };
+      
+      const getButtonHeightRem = () => {
+         const nButPrUISet = connection.navigationButton.settings.private.ui;
+         const nbMarginRem = nButPrUISet.marginRem;
+         const nbFontSizeRem = nButPrUISet.style.font.sizeRem;
+         const nbPaddingHeightRem = (
+                                       nButPrUISet.paddingEm.top + nButPrUISet.paddingEm.bottom
+                                    ) * nbFontSizeRem;
+         
+         const result = nbMarginRem.top + nbMarginRem.bottom
+                        + nbPaddingHeightRem
+                        + nbFontSizeRem;
+         return result;
+      };
+      
+      const buttonHeightRem = getButtonHeightRem();
+      const maxTopOverlapRem = getMaxTopOverlapRem();
+      const topPaddingRem =
+         Math.max(0, buttonHeightRem - maxTopOverlapRem);
+      
+      return {
+         top: topPaddingRem, right: 0, bottom: 0, left: 0
+      };
    }
    
    render() {
       const p = this.props;
       
-      const classNames = makeClassNames(
-         'demo container maxmode kU351', p.className);
-      
+      const classNames = 'demo container maxmode kU351';
       const styler = new DCInMaximizedModeStyler({props: p});
       
       return (
-         <div className={classNames} style={styler.containerDiv.css}>
-            <div className='show navigation button'
-                 style={styler.navigationButton.css}
-                 onClick={p.onNavigationRequest}
-            >
-               {'< navigate demos'}
-            </div>
+         <div className={classNames} style={styler.container.css}>
+            <div className='content' style={styler.content.css}>
+               <div className='show navigation button'
+                    style={styler.navigationButton.css}
+                    onClick={p.onNavigationRequest}
+               >
+                  <div className='title'
+                       style={styler.navigationButton.title.css}
+                  >
+                     {p.connection.navigationButton.content.title}
+                  </div>
+               </div>
+               
+               {p.children}
             
-            {p.children}
-         
+            </div>
          </div>
       );
    }

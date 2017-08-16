@@ -40,9 +40,7 @@ export default class DemosNavigationView extends React.Component {
       const p = this.props;
       const prSet = p.connection.settings.private;
       
-      const classNames = makeClassNames(
-         DemosNavigationView.baseClassNames, this.props.className);
-      
+      const classNames = DemosNavigationView.baseClassNames;
       const styler = new DemosNavigationViewStyler();
       
       return (
@@ -68,9 +66,8 @@ DemosNavigationView.baseClassNames = 'demos navigation zJ7k3';
 
 DemosNavigationView.propTypes = {
    connection: PropTypes.object.isRequired, // IDemosNavigationConnection
-   className: PropTypes.string,
-   style: PropTypes.object,
-   contentStyle: PropTypes.object,
+   style: PropTypes.object.isRequired,
+   contentStyle: PropTypes.object.isRequired,
    uiTreeData: PropTypes.array.isRequired, // [ DemosNavigationUITreeNode ]
    gotNewUITreeData: PropTypes.func // f ( uiTreeData )
 };

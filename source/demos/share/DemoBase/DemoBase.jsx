@@ -6,11 +6,13 @@ import {
    InvalidOperationException
 } from 'exceptionTypes_mjS3d_v0';
 
-export const demoProps = {
+const demoBaseProps = {
    widthRem: PropTypes.number.isRequired,
    heightRem: PropTypes.number.isRequired,
-   style: PropTypes.object
+   style: PropTypes.object.isRequired
 };
+
+const demoBaseDefaultProps = { };
 
 export default class DemoBase extends React.Component {
    constructor(props) {
@@ -38,4 +40,5 @@ export default class DemoBase extends React.Component {
    set baseStyle(s) { throw new InvalidOperationException(); }
 }
 
-DemoBase.propTypes = demoProps;
+DemoBase.propTypes = demoBaseProps;
+DemoBase.defaultProps = demoBaseDefaultProps;
