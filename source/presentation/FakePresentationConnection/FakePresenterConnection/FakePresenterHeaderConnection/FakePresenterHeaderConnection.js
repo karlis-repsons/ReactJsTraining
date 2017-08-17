@@ -8,7 +8,7 @@ export default class FakePresenterHeaderConnection {
       };
       this.content = {
          title: 'Kārlis React training',
-         backgroundImageCSSValue: undefined
+         backgroundImageCSSValue: undefined // TODO jd432
       };
    }
    

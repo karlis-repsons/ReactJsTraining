@@ -54,7 +54,7 @@ presentationSI.presenter.header = {
    private: {
       ui: {
          style: {
-            backgroundColorCSSValue: 'hsla(95, 47%, 19%, 1)'
+            backgroundColorCSSValue: 'hsla(217, 29%, 72%, 1)'
          },
          sizeRem: {
             min: {
@@ -85,7 +85,8 @@ presentationSI.presenter.header = {
                   names: undefined
                },
                lineHeightRem: 1.8,
-               color: 'white'
+               color: 'hsla(4, 70%, 37%, 1)',
+               textShadowCSSValue: '0 0 0.1em hsla(48, 82%, 51%, 1)'
             }
          }
       }

@@ -1,3 +1,5 @@
+import backgroundImage from './images/2017-05-24.de.light.JPG';
+
 // do NOT cache this
 export default class PresenterHeaderStyler {
    constructor({props}) {
@@ -34,7 +36,10 @@ export default class PresenterHeaderStyler {
          css: Object.assign(
             settingsCSS,
             {
-               overflow: 'hidden'
+               overflow: 'hidden',
+               backgroundImage: `url(${backgroundImage})`, // TODO jd432 - load image from CMS
+               backgroundSize: 'cover',
+               backgroundPosition: '0% 57%'
             },
             p.style
          )
@@ -78,6 +83,9 @@ export default class PresenterHeaderStyler {
       
       if (tPrUISty.color)
          settingsCSS.color = tPrUISty.color;
+      
+      if (tPrUISty.textShadowCSSValue)
+         settingsCSS.textShadow = tPrUISty.textShadowCSSValue;
       
       return {
          css: Object.assign(

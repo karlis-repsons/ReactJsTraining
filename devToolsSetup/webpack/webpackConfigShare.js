@@ -41,10 +41,24 @@ module.exports = {
             ]
          },
          {
-            test: /\.svg$/,
-            use: {
-               loader: 'svg-react-loader'
-            }
+            test: /\.(jpe?g|svg|png|gif)$/i,
+            use: [
+               {
+                  loader: 'file-loader',
+                  options: {
+                     name: './[path][name].[ext]'
+                  }
+               },
+               {
+                  loader: 'image-webpack-loader',
+                  options: {
+                     mozjpeg: {
+                        quality: 80,
+                        progressive: true
+                     },
+                  }
+               }
+            ]
          }
       ]
    },
