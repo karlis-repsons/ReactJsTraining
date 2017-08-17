@@ -13,6 +13,7 @@ Static methods:
 export default class DemoContainer extends DemoContainerController { }
 export const propTypes = {
    connection: PropTypes.object.isRequired, // IDemoContainerConnection
+   selectedDemoConnection: PropTypes.object.isRequired, // ISelectedDemoConnection
    style: PropTypes.object.isRequired,
    contentStyle: PropTypes.object.isRequired,
    children: PropTypes.node,

@@ -6,6 +6,7 @@ export default class ContainerInNavigationMode extends DCInNavigationMode { }
 
 export const propTypes = {
    connection: PropTypes.object.isRequired, // IDCInNavigationModeConnection
+   selectedDemoConnection: PropTypes.object.isRequired, // ISelectedDemoConnection
    style: PropTypes.object.isRequired,
    contentStyle: PropTypes.object.isRequired,
    children: PropTypes.node,

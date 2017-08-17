@@ -30,6 +30,7 @@ export default class DemoContainerController extends React.Component {
          return (
             <ContainerInMaximizedMode
                connection={p.connection.inMaximizedMode}
+               selectedDemoConnection={p.selectedDemoConnection}
                style={p.style}
                contentStyle={p.contentStyle}
                isDemoSelected={p.isDemoSelected}
@@ -42,6 +43,7 @@ export default class DemoContainerController extends React.Component {
          return (
             <ContainerInNavigationMode
                connection={p.connection.inNavigationMode}
+               selectedDemoConnection={p.selectedDemoConnection}
                style={p.style}
                contentStyle={p.contentStyle}
                isDemoSelected={p.isDemoSelected}

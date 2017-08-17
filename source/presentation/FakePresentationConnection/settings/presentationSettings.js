@@ -259,7 +259,7 @@ presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton = {
    private: {
       ui: {
          marginRem: {
-            top: 0.5, right: 2.5, bottom: 0.5, left: 0.5
+            top: 0.5, right: 0.5, bottom: 0.5, left: 0.5
          },
          sizeRem: {
             width: 3.5, height: 3.5

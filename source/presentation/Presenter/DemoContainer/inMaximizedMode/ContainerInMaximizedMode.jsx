@@ -6,6 +6,7 @@ export default class ContainerInMaximizedMode extends DCInMaximizedMode { }
 
 export const propTypes = {
    connection: PropTypes.object.isRequired, // IDCInMaximizedModeConnection
+   selectedDemoConnection: PropTypes.object.isRequired, // ISelectedDemoConnection
    style: PropTypes.object.isRequired,
    contentStyle: PropTypes.object.isRequired,
    children: PropTypes.node,

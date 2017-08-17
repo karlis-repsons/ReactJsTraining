@@ -123,6 +123,7 @@ export default class PresenterView
       return (
          <DemoContainer
             connection={p.connection.demoContainer}
+            selectedDemoConnection={p.connection.selectedDemo}
             style={style.css}
             contentStyle={style.content.css}
             isDemoSelected={isDemoSelected}

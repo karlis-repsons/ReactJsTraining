@@ -38,13 +38,18 @@ export default class DCInNavigationModeStyler {
    
    get maximizeButton() {
       const {p} = this._parameters;
+      const demoSet = p.selectedDemoConnection.settings;
       const mbPrUISet = p.connection.maximizeButton.settings.private.ui;
+      
+      let remFromRightSide = mbPrUISet.marginRem.right;
+      if (demoSet.presentation.ui.allDemoFitsInsideAnyContainer === false)
+         remFromRightSide += 2; // TODO - set scroll bar width
       
       return {
          css: {
             position: 'absolute',
             top: `${mbPrUISet.marginRem.top}rem`,
-            right: `${mbPrUISet.marginRem.right}rem`,
+            right: `${remFromRightSide}rem`,
             width: `${mbPrUISet.sizeRem.width}rem`,
             height: `${mbPrUISet.sizeRem.height}rem`,
             zIndex: 1,
