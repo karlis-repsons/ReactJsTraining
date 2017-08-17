@@ -17,7 +17,8 @@ export const preferNavigation = 'navigation';
 export default class PresenterLayoutController extends BindMethodsBase {
    constructor(
       {isDemoSelected, commitLayout, presenterConnection}
-   ) {
+   )
+   {
       super();
       
       this._connection = presenterConnection;
@@ -190,9 +191,10 @@ export default class PresenterLayoutController extends BindMethodsBase {
          if (this._view && this._view.demosNavigation)
             return this._view.demosNavigation.predictWidthRem();
          else
-            return DemosNavigation.predictWidthRem(
-               this._connection.demosNavigation
-            );
+            return DemosNavigation.predictWidthRem({
+               demosNavigationConnection: this._connection.demosNavigation,
+               selectedDemoConnection: this._connection.selectedDemo
+            });
       }
       catch (e) {
          console.error(e)/*TODO: production change*/; // eslint-disable-line no-console

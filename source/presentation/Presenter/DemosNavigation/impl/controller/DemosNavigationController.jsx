@@ -15,19 +15,26 @@ export default class DemosNavigationController
       this.state = {
          uiTreeData: makeUITree({
             demosNavigationConnection: props.connection,
-            onDemoRequest: props.onDemoRequest,
-            selectedDemoPathOnServer: props.selectedDemoPathOnServer})
+            selectedDemoConnection: props.selectedDemoConnection,
+            onDemoRequest: props.onDemoRequest
+         })
       };
       this.bindMethods([this.gotNewUITreeData]);
    }
    
-   static predictWidthRem(demosNavigationConnection) {
-      return predictDemosNavigationWidthRem({demosNavigationConnection});
+   static predictWidthRem(
+      {demosNavigationConnection, selectedDemoConnection}
+   )
+   {
+      return predictDemosNavigationWidthRem({
+         demosNavigationConnection, selectedDemoConnection
+      });
    }
    
    predictWidthRem() {
       return predictDemosNavigationWidthRem({
          demosNavigationConnection: this.props.connection,
+         selectedDemoConnection: this.props.selectedDemoConnection,
          uiTreeData: this.state.uiTreeData
       });
    }

@@ -102,6 +102,7 @@ export default class PresenterView
          <DemosNavigation
             ref={this._saveDemosNavigationRef}
             connection={p.connection.demosNavigation}
+            selectedDemoConnection={p.connection.selectedDemo}
             style={style.css}
             contentStyle={style.content.css}
             selectedDemoPathOnServer={p.selectedDemoPathOnServer}

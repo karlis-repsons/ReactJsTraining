@@ -42,6 +42,8 @@ export default class FakePresenterConnection {
       const demoComponent = matchingRoute.demoUIComponent;
       
       this.header.onDemoRequest(demoComponent);
-      this.selectedDemo.onDemoRequest(demoComponent);
+      this.selectedDemo.onDemoRequest({
+         demoComponent, demoPathOnServer
+      });
    }
 }

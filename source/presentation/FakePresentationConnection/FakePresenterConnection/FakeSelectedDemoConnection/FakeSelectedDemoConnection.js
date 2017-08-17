@@ -1,6 +1,7 @@
 export default class FakeSelectedDemoConnection {
-   onDemoRequest(demoComponent) {
+   onDemoRequest({demoComponent, demoPathOnServer}) {
       this._settings = demoComponent.settings;
+      this._demoPathOnServer = demoPathOnServer;
    }
    
    get settings() {
@@ -9,5 +10,9 @@ export default class FakeSelectedDemoConnection {
    
    get isDemoSelected() {
       return !!this._settings;
+   }
+   
+   get demoPathOnServer() {
+      return this._demoPathOnServer;
    }
 }

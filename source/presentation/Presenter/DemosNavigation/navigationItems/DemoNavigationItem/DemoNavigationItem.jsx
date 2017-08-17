@@ -5,10 +5,23 @@ import {NavLink} from 'react-router-dom';
 import measureTextWidthRem from '../../../share/measureTextWidthRem';
 
 export default class DemoNavigationItem extends React.Component {
+   static predictWidthRem(
+      {
+         connection, // IDemoNavigationItemConnection
+         title, // string
+         //isSelected // ISelectedDemoConnection // TODO - make this available
+      }
+   )
+   {
+      return measureTextWidthRem(
+         title, {cssFont: getCssFont(connection)});
+   }
+   
    _renderLink() {
       const p = this.props;
+      const sdConn = p.selectedDemoConnection;
       
-      if (p.isSelected)
+      if (sdConn.demoPathOnServer === p.routePath)
          return p.title;
       else
          return (
@@ -37,25 +50,15 @@ export default class DemoNavigationItem extends React.Component {
    }
 }
 
-DemoNavigationItem.predictWidthRem = function (
-   {
-      title, // string
-      connection // IDemoNavigationItemConnection
-   }
-) {
-   return measureTextWidthRem(
-      title, {cssFont: getCssFont(connection)});
-};
-
 DemoNavigationItem.propTypes = {
    connection: PropTypes.object.isRequired,
+   selectedDemoConnection: PropTypes.object.isRequired
+   // ISelectedDemoConnection -
+   // the first given value will stay cached in react sortable tree
+   ,
    title: PropTypes.string.isRequired,
-   isSelected: PropTypes.bool,
    routePath: PropTypes.string.isRequired,
    onClick: PropTypes.func // f()
-};
-DemoNavigationItem.defaultProps = {
-   isSelected: false
 };
 
 function getCssFont(connection) {

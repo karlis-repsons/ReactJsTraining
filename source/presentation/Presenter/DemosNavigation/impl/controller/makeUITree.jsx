@@ -5,15 +5,15 @@ import GroupingNavigationItem from '../../navigationItems/GroupingNavigationItem
 
 /**
  * @param demosNavigationConnection - IDemosNavigationConnection
+ * @param selectedDemoConnection - ISelectedDemoConnection
  * @param onDemoRequest - ?f({selectedDemoPathOnServer})
- * @param selectedDemoPathOnServer - string
  * @return input of react-sortable-tree - [DemosNavigationUITreeNode]
  */
 export default function makeUITree(
    {
       demosNavigationConnection,
-      onDemoRequest,
-      selectedDemoPathOnServer
+      selectedDemoConnection,
+      onDemoRequest
    }
 ) {
    const sourceTree = demosNavigationConnection.content.sourceNavigationTree
@@ -23,23 +23,25 @@ export default function makeUITree(
       {
          sourceTree,
          demosNavigationConnection,
-         onDemoRequest,
-         selectedDemoPathOnServer
+         selectedDemoConnection,
+         onDemoRequest
       });
 }
 
 function makeUITree_impl(
    {
       sourceTree, demosNavigationConnection,
-      onDemoRequest, selectedDemoPathOnServer
+      selectedDemoConnection, onDemoRequest
    }
-) {
+)
+{
    let uiTree = [];
    sourceTree.forEach(node =>
       uiTree.push(makeUINode({
          sourceTreeNode: node,
          demosNavigationConnection,
-         onDemoRequest, selectedDemoPathOnServer
+         selectedDemoConnection,
+         onDemoRequest
       })));
    return uiTree;
 }
@@ -51,9 +53,10 @@ function makeUITree_impl(
 function makeUINode(
    {
       sourceTreeNode, demosNavigationConnection: nc,
-      onDemoRequest, selectedDemoPathOnServer
+      selectedDemoConnection: sdConn, onDemoRequest
    }
-) {
+)
+{
    let uiSubtree = {};
    
    if (!sourceTreeNode.demoPathOnServer)
@@ -62,19 +65,16 @@ function makeUINode(
             connection={nc.groupingNavigationItem}
             title={sourceTreeNode.title}
          />);
-   else
-   {
-      let onClick;
-      if (selectedDemoPathOnServer !== sourceTreeNode.demoPathOnServer)
-         onClick = () => onDemoRequest({
-            selectedDemoPathOnServer: sourceTreeNode.demoPathOnServer});
+   else {
+      const onClick = () => onDemoRequest({
+         selectedDemoPathOnServer: sourceTreeNode.demoPathOnServer
+      });
       
       uiSubtree.title = (
          <DemoNavigationItem
             connection={nc.demoNavigationItem}
+            selectedDemoConnection={sdConn}
             title={sourceTreeNode.title}
-            isSelected={selectedDemoPathOnServer ===
-                        sourceTreeNode.demoPathOnServer}
             routePath={sourceTreeNode.demoPathOnServer}
             onClick={onClick}
          />);
@@ -88,6 +88,7 @@ function makeUINode(
       uiSubtree.children = makeUITree_impl({
          sourceTree: sourceTreeNode.children,
          demosNavigationConnection: nc,
+         selectedDemoConnection: sdConn,
          onDemoRequest
       });
    }
