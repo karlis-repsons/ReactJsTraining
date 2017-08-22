@@ -121,7 +121,8 @@ export default class PresenterLayoutController extends BindMethodsBase {
    }
    
    onMaximizeDemoContainerRequest() {
-      const {dcLI} = this._parameters;
+      const {LI, dcLI} = this._parameters;
+      LI.preferShowingDemoOrNavigation = preferDemo;
       dcLI.preferMaximized = true;
       this._updateIfStaticLayout();
    }

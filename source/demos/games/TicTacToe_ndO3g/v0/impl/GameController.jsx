@@ -51,13 +51,21 @@ export default class GameController extends DemoBase {
         Object.assign(this, {
             render() {
                 const p = this.props;
-                
+                const marginThicknessRem =
+                   Math.min(p.widthRem, p.heightRem) / 8;
+                const style = Object.assign(
+                    {
+                        margin: `${marginThicknessRem}rem`
+                    },
+                    this.baseStyle
+                );
+      
                 return (
                     <GameView
                         ref={r => this.view = r}
-                        widthRem={p.widthRem}
-                        heightRem={p.heightRem}
-                        style={this.baseStyle}
+                        widthRem={p.widthRem - 2 * marginThicknessRem}
+                        heightRem={p.heightRem - 2 * marginThicknessRem}
+                        style={style}
                         markings={this.state.display.markings}
                         titleText={getTitleText()}
                         statusText={getStatusText()}

@@ -5,21 +5,25 @@ export default class DCInNavigationModeStyler {
    
    get _parameters() {
       const p = this._props;
+      const shUISet = p.connection.settings.shared.ui;
+      const prUISet = p.connection.settings.private.ui;
+      const demoSet = p.selectedDemoConnection.settings;
       
       return {
-         p
+         p, demoSet, shUISet, prUISet
       };
    }
    
    get container() {
-      const {p} = this._parameters;
+      const {p, prUISet} = this._parameters;
+      
+      let settingsCSS = {};
+      
+      if (prUISet.backgroundColor)
+         settingsCSS.backgroundColor = prUISet.backgroundColor;
       
       return {
-         css: Object.assign({
-               backgroundColor: '#633A3A'
-            },
-            p.style
-         )
+         css: Object.assign(settingsCSS, p.style)
       };
    }
    
@@ -33,41 +37,6 @@ export default class DCInNavigationModeStyler {
       
       return {
          css: Object.assign(styleCSS, p.contentStyle)
-      };
-   }
-   
-   get maximizeButton() {
-      const {p} = this._parameters;
-      const demoSet = p.selectedDemoConnection.settings;
-      const mbPrUISet = p.connection.maximizeButton.settings.private.ui;
-      
-      let remFromRightSide = mbPrUISet.marginRem.right;
-      if (demoSet.presentation.ui.allDemoFitsInsideAnyContainer === false)
-         remFromRightSide += 2; // TODO - set scroll bar width
-      
-      return {
-         css: {
-            position: 'absolute',
-            top: `${mbPrUISet.marginRem.top}rem`,
-            right: `${remFromRightSide}rem`,
-            width: `${mbPrUISet.sizeRem.width}rem`,
-            height: `${mbPrUISet.sizeRem.height}rem`,
-            zIndex: 1,
-            cursor: p.isDemoSelected ? 'pointer' : undefined,
-            
-            backgroundColor: 'white'
-         }
-      };
-   }
-   
-   get maximizeIcon() {
-      const {p} = this._parameters;
-      
-      return {
-         color: p.isDemoSelected ? 'blue' : 'gray',
-         css: {
-            width: '100%', height: '100%'
-         }
       };
    }
 }

@@ -40,6 +40,7 @@ export default class DemosNavigationTreeCalculator {
       return (
          2 * ic.border.thicknessRem
          + ic.paddingRem.left + ic.paddingRem.right
+         + ic.boxShadow.maxThickness.rightRem
          + ic.labelContainer.paddingRightRem );
    }
 }

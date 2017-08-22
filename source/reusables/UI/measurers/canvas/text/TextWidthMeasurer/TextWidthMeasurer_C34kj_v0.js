@@ -43,6 +43,11 @@ export default class TextWidthMeasurer {
       let context = this._canvasHTMLElement.getContext('2d');
       context.font = cssFont;
       
-      return context.measureText(text).width;
+      // TODO - fix this logic or some related code to handle various displays
+      const pxMultiplyFactor =
+         window.devicePixelRatio >= 2 - Number.EPSILON
+            ? 2 : 1;
+      
+      return context.measureText(text).width * pxMultiplyFactor;
    }
 }

@@ -13,7 +13,8 @@ import TreeViewCalculator from '../view/tree/DemosNavigationTreeCalculator';
 export default function predictDemosNavigationWidthRem(
    {demosNavigationConnection: nc, uiTreeData}
 ) {
-   return getMaxSubtreeWidthRem({nc, uiTreeData});
+   const result = getMaxSubtreeWidthRem({nc, uiTreeData});
+   return result;
 }
 
 /**

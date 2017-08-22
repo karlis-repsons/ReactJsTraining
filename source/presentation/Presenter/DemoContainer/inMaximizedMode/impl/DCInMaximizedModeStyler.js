@@ -5,22 +5,24 @@ export default class DCInMaximizedModeStyler {
    
    get _parameters() {
       const p = this._props;
-      const conn = p.connection;
+      const shUISet = p.connection.settings.shared.ui;
+      const prUISet = p.connection.settings.private.ui;
       
       return {
-         p
+         p, shUISet, prUISet
       };
    }
    
    get container() {
-      const {p} = this._parameters;
+      const {p, prUISet} = this._parameters;
+      
+      let settingsCSS = {};
+      
+      if (prUISet.backgroundColor)
+         settingsCSS.backgroundColor = prUISet.backgroundColor;
       
       return {
-         css: Object.assign({
-               backgroundColor: '#3B633A'
-            },
-            p.style
-         )
+         css: Object.assign(settingsCSS, p.style)
       };
    }
    
@@ -39,7 +41,7 @@ export default class DCInMaximizedModeStyler {
    
    get navigationButton() {
       const {p} = this._parameters;
-      const nbPrUISet = p.connection.navigationButton.settings.private.ui;
+      const nbPrUISet = p.connection.settings.private.navigationButton.ui;
       const nbFont = nbPrUISet.style.font;
       
       return {
@@ -50,7 +52,7 @@ export default class DCInMaximizedModeStyler {
             zIndex: 1,
             cursor: 'pointer',
             
-            backgroundColor: 'white'
+            backgroundColor: nbPrUISet.style.backgroundColor
          },
          title: {
             css: {
@@ -60,7 +62,8 @@ export default class DCInMaximizedModeStyler {
                paddingRight: `${nbPrUISet.paddingEm.right}em`,
                fontSize: `${nbFont.sizeRem}rem`,
                lineHeight: `${nbFont.sizeRem}rem`,
-               fontFamily: `${nbFont.names}`
+               fontFamily: `${nbFont.names}`,
+               color: nbPrUISet.style.color
             }
          }
       };

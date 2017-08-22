@@ -41,11 +41,23 @@ export default class DemosNavigationView extends React.Component {
       const prSet = p.connection.settings.private;
       
       const classNames = DemosNavigationView.baseClassNames;
-      const styler = new DemosNavigationViewStyler();
+      const styler = new DemosNavigationViewStyler({props: p});
+      
+      let maximizeSelectedDemoButton;
+      if (p.selectedDemoConnection.isDemoSelected)
+         maximizeSelectedDemoButton = (
+            <div style={styler.hideButton.css} onClick={p.onHideRequest}>
+               <i className='fa fa-times'
+                  style={styler.hideButton.icon.css} />
+            </div>
+         );
       
       return (
-         <div className={classNames} style={this.props.style}>
-            <div className='content' style={this.props.contentStyle}>
+         <div className={classNames} style={styler.container.css}>
+            <div className='content' style={styler.content.css}>
+               
+               {maximizeSelectedDemoButton}
+               
                <SortableTree
                   style={styler.sortableTree.css}
                   treeData={this.props.uiTreeData}
@@ -56,6 +68,7 @@ export default class DemosNavigationView extends React.Component {
                   rowHeight={
                      convertRemToPx(prSet.tree.ui.rowHeightRem)}
                />
+            
             </div>
          </div>
       );
@@ -66,8 +79,13 @@ DemosNavigationView.baseClassNames = 'demos navigation zJ7k3';
 
 DemosNavigationView.propTypes = {
    connection: PropTypes.object.isRequired, // IDemosNavigationConnection
+   selectedDemoConnection: PropTypes.object.isRequired
+   // ISelectedDemoConnection -
+   // the first given value will stay cached in react sortable tree
+   ,
    style: PropTypes.object.isRequired,
    contentStyle: PropTypes.object.isRequired,
    uiTreeData: PropTypes.array.isRequired, // [ DemosNavigationUITreeNode ]
-   gotNewUITreeData: PropTypes.func // f ( uiTreeData )
+   gotNewUITreeData: PropTypes.func, // f ( uiTreeData )
+   onHideRequest: PropTypes.func  // f()
 };

@@ -108,6 +108,7 @@ export default class PresenterView
             selectedDemoPathOnServer={p.selectedDemoPathOnServer}
             onUpdatedUITreeData={p.onUpdatedNavigationTreeWidth}
             onDemoRequest={p.onDemoRequest}
+            onHideRequest={p.onMaximizeDemoContainerRequest}
             key='DemosNavigation'
          />);
    }

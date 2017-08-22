@@ -2,7 +2,6 @@ import React from 'react';
 
 import propTypes from '../ContainerInNavigationMode';
 import DCInNavigationModeStyler from './DCInNavigationModeStyler';
-import MaximizeIcon from '../MaximizeIcon/MaximizeIcon';
 
 export default class DCInNavigationMode extends React.Component {
    static predictPaddingRem(
@@ -27,14 +26,11 @@ export default class DCInNavigationMode extends React.Component {
          return result;
       };
       
-      const mButPrUISet = connection.maximizeButton.settings.private.ui;
-      const buttonHeightRem =
-         mButPrUISet.marginRem.top + mButPrUISet.marginRem.bottom
-         + mButPrUISet.sizeRem.height;
+      const reservedHeightRem = 0;
       
       const maxTopOverlapRem = getMaxTopOverlapRem();
       const topPaddingRem =
-         Math.max(0, buttonHeightRem - maxTopOverlapRem);
+         Math.max(0, reservedHeightRem - maxTopOverlapRem);
       
       return {
          top: topPaddingRem, right: 0, bottom: 0, left: 0
@@ -50,17 +46,7 @@ export default class DCInNavigationMode extends React.Component {
       return (
          <div className={classNames} style={styler.container.css}>
             <div className='content' style={styler.content.css}>
-               <div className='maximize button'
-                    style={styler.maximizeButton.css}
-                    onClick={p.isDemoSelected && p.onMaximizeRequest}
-               >
-                  <MaximizeIcon
-                     color={styler.maximizeIcon.color}
-                  />
-               </div>
-               
                {p.children}
-            
             </div>
          </div>
       );

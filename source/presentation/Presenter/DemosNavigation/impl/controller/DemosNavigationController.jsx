@@ -45,13 +45,17 @@ export default class DemosNavigationController
    }
    
    render() {
+      const p = this.props;
+      
       return (
          <DemosNavigationView
-            connection={this.props.connection}
-            style={this.props.style}
-            contentStyle={this.props.contentStyle}
+            connection={p.connection}
+            selectedDemoConnection={p.selectedDemoConnection}
+            style={p.style}
+            contentStyle={p.contentStyle}
             uiTreeData={this.state.uiTreeData}
             gotNewUITreeData={this.gotNewUITreeData}
+            onHideRequest={p.onHideRequest}
          />
       );
    }

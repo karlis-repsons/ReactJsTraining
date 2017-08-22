@@ -9,7 +9,7 @@ const settings = {
    presentation: {
       ui: {
          allDemoFitsInsideAnyContainer: true,
-         maxContainerButtonsOverlapRemAt: {allSides: Number.MAX_VALUE}
+         maxContainerButtonsOverlapRemAt: {allSides: 0}
       },
       ux: {
          animation: {
@@ -22,12 +22,20 @@ const settings = {
 export default class Simple extends DemoBase {
    render() {
       const p = this.props;
+     
+      const marginThicknessRem = Math.min(p.widthRem, p.heightRem) / 8;
+      const style = Object.assign(
+         {
+            margin: `${marginThicknessRem}rem`
+         },
+         this.baseStyle
+      );
       
       return (
          <SimpleExample
-            widthRem={p.widthRem}
-            heightRem={p.heightRem}
-            style={this.baseStyle} />
+            widthRem={p.widthRem - 2 * marginThicknessRem}
+            heightRem={p.heightRem - 2 * marginThicknessRem}
+            style={style} />
       );
    }
 }

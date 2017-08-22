@@ -22,7 +22,8 @@ export const propTypes = {
    contentStyle: PropTypes.object.isRequired,
    selectedDemoPathOnServer: PropTypes.string,
    onUpdatedUITreeData: PropTypes.func, // f()
-   onDemoRequest: PropTypes.func // f({selectedDemoPathOnServer})
+   onDemoRequest: PropTypes.func, // f({selectedDemoPathOnServer})
+   onHideRequest: PropTypes.func  // f()
 };
 
 DemosNavigation.propTypes = propTypes;

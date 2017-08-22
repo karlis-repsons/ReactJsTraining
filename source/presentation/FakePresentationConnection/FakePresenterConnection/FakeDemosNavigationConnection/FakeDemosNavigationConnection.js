@@ -53,10 +53,10 @@ export default class FakeDemosNavigationConnection {
             demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0'
          },
          {
-            title: 'presenter features',
+            title: 'presenter',
             children: [
                {
-                  title: 'controlled scrolling',
+                  title: 'controlled scrolling feature',
                   children: [
                      {
                         title: 'short text',
@@ -65,6 +65,20 @@ export default class FakeDemosNavigationConnection {
                      {
                         title: 'long text',
                         demoPathOnServer: '/demos/controlled-scrolling-jy437/repeat-14'
+                     }
+                  ]
+               },
+               {
+                  title: 'Presenter structure',
+                  demoPathOnServer: '/demos/structure/samples/presenter',
+                  children: [
+                     {
+                        title: 'layout data',
+                        demoPathOnServer: '/demos/structure/samples/presenter-types'
+                     },
+                     {
+                        title: 'layout implementation',
+                        demoPathOnServer: '/demos/structure/samples/presenter-impl-layout'
                      }
                   ]
                }

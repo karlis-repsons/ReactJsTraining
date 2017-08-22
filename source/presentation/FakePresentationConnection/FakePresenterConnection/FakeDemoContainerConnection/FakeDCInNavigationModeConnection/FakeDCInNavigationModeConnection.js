@@ -6,11 +6,5 @@ export default class FakeDCInNavigationModeConnection {
          shared: getSharedSettingsForInput(settingsInput),
          private: settingsInput.private
       };
-      this.maximizeButton = {
-         settings: {
-            shared: getSharedSettingsForInput(settingsInput.maximizeButton),
-            private: settingsInput.maximizeButton.private
-         }
-      };
    }
 }

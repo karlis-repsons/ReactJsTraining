@@ -9,7 +9,7 @@ const settings = {
    presentation: {
       ui: {
          allDemoFitsInsideAnyContainer: true,
-         maxContainerButtonsOverlapRemAt: {allSides: Number.MAX_VALUE}
+         maxContainerButtonsOverlapRemAt: {allSides: 0}
       },
       ux: {
          animation: {
@@ -23,11 +23,19 @@ export default class Demo extends DemoBase {
    render() {
       const p = this.props;
       
+      const marginThicknessPx = Math.min(p.widthPx, p.heightPx) / 8;
+      const style = Object.assign(
+         {
+            margin: `${marginThicknessPx}px`
+         },
+         this.baseStyle
+      );
+      
       return (
          <FractalExample
-            widthPx={p.widthPx}
-            heightPx={p.heightPx}
-            style={this.baseStyle} />
+            widthPx={p.widthPx - 2 * marginThicknessPx}
+            heightPx={p.heightPx - 2 * marginThicknessPx}
+            style={style} />
       );
    }
 }

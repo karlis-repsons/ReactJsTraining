@@ -32,6 +32,8 @@ export default class DemosNavigationTreeStyler {
       const {calc} = this._parameters;
       const leftMarginRem = calc.leftMarginRem;
       
+      // TODO: add correct top and bottom padding
+      
       return (
          `.rst__node {
             margin-left: ${leftMarginRem}rem;
@@ -147,28 +149,28 @@ export default class DemosNavigationTreeStyler {
    
    get _overrideNavigationItemContainerCSS() {
       const {prUISet} = this._parameters;
-      const container = prUISet.itemContainer;
+      const ic = prUISet.itemContainer;
       
       const paddingCSSValue =
          (pd => `${pd.top}rem ${pd.right}rem ` +
-                `${pd.bottom}rem ${pd.left}rem`)(container.paddingRem);
+                `${pd.bottom}rem ${pd.left}rem`)(ic.paddingRem);
       const borderCSSValue = (b =>
-         `${b.cssStyle} ${b.color} ${b.thicknessRem}rem`)(container.border);
+         `${b.cssStyle} ${b.color} ${b.thicknessRem}rem`)(ic.border);
       
       return (
          `.rst__rowContents {
              min-width: 0;
              padding: ${paddingCSSValue};
              border: ${borderCSSValue};
-             border-radius: ${container.borderRadiusRem}rem;
-             box-shadow: ${container.boxShadow.cssValue};
-             background-color: ${container.backgroundColor};
+             border-radius: ${ic.borderRadiusRem}rem;
+             box-shadow: ${ic.boxShadow.cssValue};
+             background-color: ${ic.backgroundColor};
           }
           .rst__rowContentsDragDisabled {
-             border-left: ${container.borderCSSValue};
+             border-left: ${borderCSSValue};
           }
           .rst__rowLabel {
-             padding-right: ${container.labelContainer.paddingRightRem}rem;
+             padding-right: ${ic.labelContainer.paddingRightRem}rem;
           }`
       );
    }

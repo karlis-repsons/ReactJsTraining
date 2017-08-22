@@ -27,7 +27,7 @@ export default class DCInMaximizedMode extends React.Component {
       };
       
       const getButtonHeightRem = () => {
-         const nButPrUISet = connection.navigationButton.settings.private.ui;
+         const nButPrUISet = connection.settings.private.navigationButton.ui;
          const nbMarginRem = nButPrUISet.marginRem;
          const nbFontSizeRem = nButPrUISet.style.font.sizeRem;
          const nbPaddingHeightRem = (
@@ -66,7 +66,7 @@ export default class DCInMaximizedMode extends React.Component {
                   <div className='title'
                        style={styler.navigationButton.title.css}
                   >
-                     {p.connection.navigationButton.content.title}
+                     {p.connection.content.navigationButton.title}
                   </div>
                </div>
                

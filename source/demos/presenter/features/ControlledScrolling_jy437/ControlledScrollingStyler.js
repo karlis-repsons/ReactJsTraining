@@ -33,9 +33,20 @@ export default class ControlledScrollingStyler {
          css: Object.assign({
                width: `${Math.min(28, p.widthRem)}rem`,
                padding: '4.8rem 3rem',
-               color: 'hsla(61, 32%, 29%, 1)'
+               color: 'hsla(203, 32%, 29%, 1)'
             }
          )
+      };
+   }
+   
+   get author() {
+      return {
+         css: {
+            width: '100%',
+            paddingBottom: '0.3rem',
+            textAlign: 'center',
+            fontSize: '1.1rem'
+         }
       };
    }
    
@@ -43,20 +54,57 @@ export default class ControlledScrollingStyler {
       return {
          css: {
             width: '100%',
-            paddingBottom: '1.5em',
+            paddingBottom: '3.5rem',
             textAlign: 'center',
-            fontSize: '2rem'
+            fontSize: '1.9rem'
          }
       };
    }
    
-   get text() {
+   get dedication() {
+      return {
+         css: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingBottom: '3.5rem',
+         },
+         text: {
+            css: {
+               maxWidth: '14.5rem',
+               width: '70%',
+               textAlign: 'right',
+               fontSize: '1rem',
+            }
+         }
+         
+      };
+   }
+   
+   get h2() {
       return {
          css: {
             width: '100%',
+            paddingBottom: '2rem',
             textAlign: 'left',
-            whiteSpace: 'pre-wrap',
-            textIndent: '2.3em'
+            fontSize: '1.3rem',
+            fontWeight: 'normal',
+            textIndent: '2.3rem'
+         }
+      }
+      
+   }
+   
+   get text() {
+      return {
+         block: {
+            width: '100%',
+            textAlign: 'left',
+            paddingBottom: '6rem'
+         },
+         paragraph: {
+            fontSize: '1rem',
+            textIndent: '2.3rem',
          }
       };
    }

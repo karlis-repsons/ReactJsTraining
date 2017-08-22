@@ -9,6 +9,7 @@ export default class PresenterViewStyler {
       
       return {
          shUISet: connection.settings.shared.ui,
+         sccSet: connection.settings.private.demoContainerContent.scrollContainer,
          lat,
          
          hLat: lat.header,
@@ -32,7 +33,8 @@ export default class PresenterViewStyler {
                position: 'relative',
                overflow: 'hidden',
                fontSize: `${font.baseFontSizeRem}rem`,
-               fontFamily: font.defaultFontNames
+               fontFamily: font.defaultFontNames,
+               backgroundColor: shUISet.style.color.background
             },
             this._props.style
          )
@@ -64,8 +66,7 @@ export default class PresenterViewStyler {
       return {
          css: Object.assign({
                position: 'absolute',
-               display: dnLat.isHidden ? 'none' : 'block',
-               backgroundColor: 'paleturquoise'
+               display: dnLat.isHidden ? 'none' : 'block'
             },
             this._makeRemBoundsCSS(dnLat.boundsRem)
          ),
@@ -80,13 +81,16 @@ export default class PresenterViewStyler {
    }
    
    get demoContainer() {
-      const {dcLat, dccLat, sccLat} = this._parameters;
+      const {sccSet, dcLat, dccLat, sccLat} = this._parameters;
+      
+      let sccSettingsCSS = {};
+      if (sccSet.ui.backgroundColor)
+         sccSettingsCSS.backgroundColor = sccSet.ui.backgroundColor;
       
       return {
          css: Object.assign({
                position: 'absolute',
-               display: dcLat.isHidden ? 'none' : 'block',
-               backgroundColor: 'palegoldenrod'
+               display: dcLat.isHidden ? 'none' : 'block'
             },
             this._makeRemBoundsCSS(dcLat.boundsRem)
          ),
@@ -101,9 +105,9 @@ export default class PresenterViewStyler {
                   {
                      position: 'absolute',
                      overflow: sccLat.hasScroll ? 'auto' : 'hidden',
-                     zIndex: 0,
-                     backgroundColor: 'lightgray'
+                     zIndex: 0
                   },
+                  sccSettingsCSS,
                   this._makeRemBoundsCSS(sccLat.boundsRem)
                ),
                demo: {

@@ -6,12 +6,8 @@ export default class FakeDCInMaximizedModeConnection {
          shared: getSharedSettingsForInput(settingsInput),
          private: settingsInput.private
       };
-      this.navigationButton = {
-         settings: {
-            shared: getSharedSettingsForInput(settingsInput.navigationButton),
-            private: settingsInput.navigationButton.private
-         },
-         content: {
+      this.content = {
+         navigationButton: {
             title: 'navigation'
          }
       };

@@ -6,7 +6,7 @@ const pathsShare = require('./webpackPathsShare');
 let paths = pathsShare.paths;
 
 module.exports = {
-   entry: `${paths.source}/entry.jsx`,
+   entry: ['babel-polyfill', `${paths.source}/entry.jsx`],
    plugins: [
       new HtmlWebpackPlugin({
          template: `${paths.source}/entry.html`
@@ -41,7 +41,7 @@ module.exports = {
             ]
          },
          {
-            test: /\.(jpe?g|svg|png|gif)$/i,
+            test: /\.(jpe?g|png|gif)$/i,
             use: [
                {
                   loader: 'file-loader',

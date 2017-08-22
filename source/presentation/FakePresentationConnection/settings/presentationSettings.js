@@ -1,8 +1,10 @@
 // SI - settings input
 
+const devStyle = false; // use development colors etc. if true, use production style if false
+
 let p = { // dictionary for easy access to the main values
    navigationItemFont: {
-      sizeRem: 18/16,
+      sizeRem: 16/16,
       names: undefined
    },
    verticalScrollAccelerationFactor: 0.3
@@ -19,6 +21,9 @@ let presentationSI = {
                font: {
                   baseFontSizeRem: 1,
                   defaultFontNames: 'Futura, sans-serif'
+               },
+               color: {
+                  background: 'white'
                }
             }
          }
@@ -36,6 +41,13 @@ let presentationSI = {
             preferMaximizedDemoView: {
                initially: false,
                later: false
+            }
+         },
+         demoContainerContent: {
+            scrollContainer: {
+               ui: {
+                  backgroundColor: devStyle ? 'lightgray' : undefined
+               }
             }
          }
       }
@@ -99,11 +111,17 @@ presentationSI.presenter.demosNavigation = {};
 presentationSI.presenter.demosNavigation.share = {
    ui: {
       style: {
-         navigationItemFont: p.navigationItemFont
+         navigationItemFont: p.navigationItemFont,
+         color: {
+            background: undefined
+         }
       }
    }
 };
 presentationSI.presenter.demosNavigation.private = {
+   ui: {
+      backgroundColor: devStyle ? 'paleturquoise' : 'hsla(214, 40%, 90%, 1)'
+   },
    tree: {
       ux: {
          expandOnInitialization: true
@@ -111,30 +129,37 @@ presentationSI.presenter.demosNavigation.private = {
       ui: {
          paddingRem: {
             left: 1 * p.navigationItemFont.sizeRem,
-            right: 1 * p.navigationItemFont.sizeRem
+            right: 1 * p.navigationItemFont.sizeRem,
+            top: 0 * p.navigationItemFont.sizeRem, // implementation pending
+            bottom: 0 * p.navigationItemFont.sizeRem // implementation pending
          },
          rowHeightRem: 2.7 * p.navigationItemFont.sizeRem,
          structureLines: {
             blockWidthRem: 3.5 * p.navigationItemFont.sizeRem,
             hLine: {
-               color: 'yellow',
-               thicknessRem: 1 / 18 * p.navigationItemFont.sizeRem,
-               minThicknessPx: 3
+               color: devStyle ? 'yellow' : 'hsla(214, 0%, 84%, 1)',
+               thicknessRem:
+                  1 / (devStyle ? 18 : 30) * p.navigationItemFont.sizeRem,
+               minThicknessPx: devStyle ? 3 : 4
             },
             vLine: {
-               color: 'red',
-               thicknessRem: 1 / 11 * p.navigationItemFont.sizeRem,
-               minThicknessPx: 5
+               color: devStyle ? 'red' : 'hsla(214, 0%, 84%, 1)',
+               thicknessRem:
+                  1 / (devStyle ? 11 : 30) * p.navigationItemFont.sizeRem,
+               minThicknessPx: devStyle ? 5 : 4
             }
          },
          expandCollapseButtons: {
             common: {
-               backgroundColor: 'white',
+               backgroundColor: devStyle ?
+                  'white' : 'hsla(214, 40%, 97%, 1)',
                states: {
                   normal: {
                      diameterRem: 1 * p.navigationItemFont.sizeRem,
                      boxShadow: {
-                        cssValue: '0 0 0 0.0625rem hsla(203, 84%, 30%, 1)',
+                        cssValue: devStyle ?
+                           '0 0 0 0.0625rem hsla(203, 84%, 30%, 1)'
+                           : '0 0 0 0.0625rem hsla(214, 0%, 84%, 1)',
                         maxThickness: {
                            leftRem: 0.0625
                         }
@@ -143,33 +168,51 @@ presentationSI.presenter.demosNavigation.private = {
                   hovered: {
                      diameterRem: 1.05 * p.navigationItemFont.sizeRem,
                      boxShadow: {
-                        cssValue: '0 0 0 0.0625rem hsla(203, 84%, 50%, 1)',
+                        cssValue: devStyle ?
+                           '0 0 0 0.0625rem hsla(203, 84%, 50%, 1)'
+                        :
+                           `0 0
+                           ${0.4/18*16*p.navigationItemFont.sizeRem}rem
+                           ${0.1/18*16*p.navigationItemFont.sizeRem}rem
+                           hsla(45, 86%, 55%, 1)`,
                         maxThickness: {
-                           leftRem: 0.0625
+                           leftRem: (0.4+0.1)/18*16*p.navigationItemFont.sizeRem
                         }
                      }
                   },
                   focused: {
                      boxShadow: {
-                        cssValue: '0 0 0 0.0625rem hsla(203, 84%, 30%, 0.84), 0 0 0.0625rem 0.1875rem hsla(147, 84%, 39%, 1)',
+                        cssValue: devStyle ?
+                           `0 0 0 0.0625rem hsla(203, 84%, 30%, 0.84)
+                            ,
+                            0 0 0.0625rem 0.1875rem hsla(147, 84%, 39%, 1)`
+                        :
+                           `0 0
+                           ${0.4/18*16*p.navigationItemFont.sizeRem}rem
+                           ${0.1/18*16*p.navigationItemFont.sizeRem}rem
+                           hsla(45, 86%, 55%, 1)`,
                         maxThickness: {
-                           leftRem: 0.1875
+                           leftRem: devStyle ?
+                              0.0625 + 0.1875
+                              :
+                              (0.4+0.1)/18*16*p.navigationItemFont.sizeRem
                         }
                      }
                   }
                }
             },
             expand: {
-               signColor: 'green',
+               signColor: devStyle ?
+                  'green' : 'hsla(10, 40%, 70%, 1)',
                backgroundImageCSSValue: 'url(\'data:image/svg+xml;utf8,<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="{signColor}" d="m 18.07627,9.9745767 -4.050847,0 0,-4.050848 c 0,-1.1180338 -0.907389,-2.0254236 -2.025423,-2.0254236 -1.118034,0 -2.0254235,0.9073898 -2.0254235,2.0254236 l 0.071905,4.050848 -4.1227503,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 l 4.1227503,-0.0719 -0.071905,4.122749 c 0,1.118034 0.9073895,2.025425 2.0254235,2.025425 1.118034,0 2.025423,-0.907391 2.025423,-2.025425 l 0,-4.122749 4.050847,0.0719 c 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z" /></svg>\')'
             },
             collapse: {
-               signColor: 'red',
+               signColor: devStyle ?
+                  'red' : 'hsla(10, 40%, 70%, 1)',
                backgroundImageCSSValue: 'url(\'data:image/svg+xml;utf8,<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="{signColor}" d="m 18.07627,9.9745767 -12.1525388,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 12.1525388,0 5.0499608,-0.126066 12.1525388,0 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z" /></svg>\')'
             }
          },
          itemContainer: {
-            //minWidthRem: 0,
             paddingRem: {
                top: 0.5 * p.navigationItemFont.sizeRem,
                right: 0.5 * p.navigationItemFont.sizeRem,
@@ -177,18 +220,34 @@ presentationSI.presenter.demosNavigation.private = {
                left: 0.5 * p.navigationItemFont.sizeRem
             },
             border: {
-               thicknessRem: 1/16,
-               color: 'red',
+               thicknessRem: devStyle ? 1/16 : 1/10,
+               color: devStyle ?
+                  'red' : 'hsla(214, 40%, 99%, 1)',
                cssStyle: 'solid'
             },
             borderRadiusRem: p.navigationItemFont.sizeRem / 2,
             boxShadow: {
-               cssValue: '0 0 0 0',
+               cssValue: devStyle ?
+                  '0 0 0 0' : `
+                     ${0.3/18*16*p.navigationItemFont.sizeRem}rem
+                     ${-0.3/18*16*p.navigationItemFont.sizeRem}rem
+                     ${1 /18*16*p.navigationItemFont.sizeRem}rem
+                     hsla(214, 40%, 99%, 1)
+                     ,
+                     ${-0.3/18*16*p.navigationItemFont.sizeRem}rem
+                     ${0.3/18*16*p.navigationItemFont.sizeRem}rem
+                     ${1 /18*16*p.navigationItemFont.sizeRem}rem
+                     hsla(214, 40%, 99%, 1)
+                  `,
                maxThickness: {
-                  rightRem: 0
+                  rightRem: devStyle ?
+                     0
+                     :
+                     (0.3 + 1)/3/18*16*p.navigationItemFont.sizeRem
                }
             },
-            backgroundColor: 'hsla(44, 84%, 92%, 0.5)',
+            backgroundColor: devStyle ?
+               'hsla(44, 84%, 92%, 0.5)' : 'hsla(214, 40%, 99%, 1)',
             labelContainer: {
                paddingRightRem: 0
             }
@@ -214,7 +273,11 @@ presentationSI.presenter.demosNavigation.groupingNavigationItem.parentInput = pr
 presentationSI.presenter.demoContainer = {
    share: {
       ui: {
-         //
+         style: {
+            color: {
+               background: undefined
+            }
+         }
       }
    },
    private: {
@@ -224,51 +287,44 @@ presentationSI.presenter.demoContainer = {
 presentationSI.presenter.demoContainer.parentInput = presentationSI.presenter;
 presentationSI.presenter.demoContainer.inNavigationMode = {
    private: {
+      ui: {
+         backgroundColor: devStyle ? '#633A3A' : undefined
+      }
    },
    parentInput: presentationSI.presenter.demoContainer
 };
 
 presentationSI.presenter.demoContainer.inMaximizedMode = {
    private: {
-   },
-   parentInput: presentationSI.presenter.demoContainer
-};
-
-// navigationButton
-presentationSI.presenter.demoContainer.inMaximizedMode.navigationButton = {
-   private: {
       ui: {
-         marginRem: {
-            top: 0.8, right: 0.8, bottom: 0.8, left: 0.8
-         },
-         paddingEm: {
-            top: 0.8/1.6, right: 0.8/1.6, bottom: 0.8/1.6, left: 0.8/1.6
-         },
-         style: {
-            font: {
-               sizeRem: 1.6,
-               names: undefined
+         backgroundColor: devStyle ? '#3B633A' : undefined
+      },
+      navigationButton: {
+         ui: {
+            marginRem: {
+               top: devStyle? 0.8 : 0.5,
+               right: devStyle? 0.8 : 1.6/3,
+               bottom: devStyle? 0.8 : 1.6/3,
+               left: devStyle? 0.8 : 1.6/3
+            },
+            paddingEm: {
+               top: 0.3/1.6, right: 0.4, bottom: 0.45/1.6, left: 0.4
+            },
+            style: {
+               backgroundColor: devStyle ?
+                  'hsla(10, 43%, 69%, 1)' : 'hsla(203, 32%, 86%, 0.88)',
+               color: devStyle ?
+                  'hsla(229, 70%, 50%, 1)' : 'hsla(0, 25%, 50%, 1)',
+               font: {
+                  sizeRem: 1.6,
+                  names: undefined
+               }
             }
          }
       }
-   }
+   },
+   parentInput: presentationSI.presenter.demoContainer
 };
-presentationSI.presenter.demoContainer.inMaximizedMode.navigationButton.parentInput = presentationSI.presenter.demoContainer.inMaximizedMode;
-
-// maximizeButton
-presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton = {
-   private: {
-      ui: {
-         marginRem: {
-            top: 0.5, right: 0.5, bottom: 0.5, left: 0.5
-         },
-         sizeRem: {
-            width: 3.5, height: 3.5
-         }
-      }
-   }
-};
-presentationSI.presenter.demoContainer.inNavigationMode.maximizeButton.parentInput = presentationSI.presenter.demoContainer.inNavigationMode;
 
 // footer
 presentationSI.presenter.footer = {

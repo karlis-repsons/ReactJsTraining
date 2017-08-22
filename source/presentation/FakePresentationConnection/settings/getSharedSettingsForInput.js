@@ -7,13 +7,13 @@ export default function getSharedSettingsForInput(settingsInput) {
    
    let sharedSettings = {};
    
-   if (settingsInput.share)
-      sharedSettings = merge(sharedSettings, settingsInput.share);
-   
    if (settingsInput.parentInput)
       sharedSettings = merge(sharedSettings,
          getSharedSettingsForInput(settingsInput.parentInput)
       );
+   
+   if (settingsInput.share)
+      sharedSettings = merge(sharedSettings, settingsInput.share);
    
    return sharedSettings;
 }
