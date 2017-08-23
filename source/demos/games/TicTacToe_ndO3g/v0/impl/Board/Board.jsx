@@ -15,6 +15,17 @@ export default class Board extends React.Component {
         let classNames = 'dY43c center';
         if (typeof p.className === 'string' && p.className.length > 0)
             classNames += ` ${p.className}`;
+        const squareTableProps = {
+            widthPx: p.boardSideLength,
+            heightPx: p.boardSideLength,
+            className: classNames, style: p.style,
+            cellsAtSideCount: cellsAtSideCount,
+            innerGapToCellSideLengthRatio: 0.04,
+            outerGapToInnerGapRatio: 0.333,
+            innerGapReplacer: gap => gap < 3 ? 3 : gap,
+            outerGapReplacer: gap => gap < 1 ? 1 : gap
+        };
+        const stMea = SquareTable.calculateMeasures(squareTableProps);
 
         let content = [];
         if (p.markings) { // Babel fails without these braces
@@ -23,8 +34,8 @@ export default class Board extends React.Component {
                 for (let j = 0; j < cellsAtSideCount; j++) {
                     let cellClassNames = 'J30fs';
                     if (!p.markings[i][j] && !p.isGameOver)
-                        cellClassNames += ' vacant';    
-                    
+                        cellClassNames += ' vacant';
+
                     rowContent.push(
                         <Cell className={cellClassNames} key={j}
                             onClick={p.onCellClick
@@ -32,27 +43,17 @@ export default class Board extends React.Component {
                                 : null
                             }
                         >
-                            {cellContent(p.markings[i][j])}
+                            {cellContent(
+                                p.markings[i][j], stMea.cellSideLengthPx
+                            )}
                         </Cell>
                     );
                 }
                 content.push(<Row key={i}>{rowContent}</Row>);
             }
         }
-        return (
-            <SquareTable ref={r => this.table = r}
-                widthPx={p.boardSideLength}
-                heightPx={p.boardSideLength}
-                className={classNames} style={p.style}
-                cellsAtSideCount={cellsAtSideCount}
-                innerGapToCellSideLengthRatio={0.04}
-                outerGapToInnerGapRatio={0.333}
-                innerGapReplacer={gap => gap < 3 ? 3 : gap}
-                outerGapReplacer={gap => gap < 1 ? 1 : gap}
-            >
-                {content}
-            </SquareTable>
-        );
+        return React.createElement(
+            SquareTable, squareTableProps, content);
     }
 }
 
@@ -69,11 +70,16 @@ Board.defaultProps = {
     isGameOver: false
 };
 
-function cellContent(marking) {
+function cellContent(marking, cellSideLengthPx) {
     if (!marking)
         return null;
 
+    const style = {
+        width: `${cellSideLengthPx}px`,
+        height: `${cellSideLengthPx}px`
+    };
+
     return marking === playerX
-        ? <Cross color={playerXColor} />
-        : <Circle color={playerOColor} />;
+        ? <Cross color={playerXColor} style={style} />
+        : <Circle color={playerOColor} style={style} />;
 }

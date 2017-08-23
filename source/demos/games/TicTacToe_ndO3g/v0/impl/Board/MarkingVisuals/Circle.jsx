@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function Circle(props) {
     return (
-        <svg viewBox='0 0 200 200'>
+        <svg viewBox='0 0 200 200' style={props.style}>
             <g transform='translate(0,-852.36216)'>
                 <path
                     style={{
@@ -19,5 +19,6 @@ export default function Circle(props) {
 }
 
 Circle.propTypes = {
+    style: PropTypes.object,
     color: PropTypes.string
 };

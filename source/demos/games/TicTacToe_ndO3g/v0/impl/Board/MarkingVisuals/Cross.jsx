@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function Cross(props) {
     return (
-        <svg viewBox='0 0 200 200'>
+        <svg viewBox='0 0 200 200' style={props.style}>
             <path
                 style={{
                     fill: props.color, fillOpacity: 1, fillRule: 'evenodd',
@@ -16,5 +16,6 @@ export default function Cross(props) {
 }
 
 Cross.propTypes = {
+    style: PropTypes.object,
     color: PropTypes.string
 };
