@@ -50,20 +50,19 @@ export default class MovesList extends React.Component {
                   `by ${move.player}: `
                   + `(${move.position[0] + 1}, ${move.position[1] + 1})`;
                
-               let liContent = [<span key='num'>{`${index + 1}. `}</span>];
+               let liContent;
                if (p.currentMoveIndex === index)
-                  liContent.push(<span>{title}</span>);
+                  liContent = <span>{`${index + 1}. ${title}`}</span>;
                else
-                  liContent.push(
-                     <span key='num'>{
-                        `${index + 1}. `
-                     }</span>
-                     ,
-                     <a href='#' onClick={() => p.onClickAtMove(index)}
-                        key='lnk'
-                     >
-                        {title}
-                     </a>
+                  liContent = (
+                     <span>
+                        <span>{
+                           `${index + 1}. `
+                        }</span>
+                        <a href='#' onClick={() => p.onClickAtMove(index)}>
+                           {title}
+                        </a>
+                     </span>
                   );
                
                return (
