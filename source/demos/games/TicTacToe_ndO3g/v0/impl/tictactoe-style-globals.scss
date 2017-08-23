@@ -1,15 +1,2 @@
-$default-font-size: 2vmin;
 $default-foreground-color: #003049;
 $default-fonts: Futura, sans-serif;
-
-@mixin column-count($value) {
-    column-count: $value;
-    -webkit-column-count: $value; /* Chrome, Safari, Opera */
-    -moz-column-count: $value; /* Firefox */
-}
-
-@mixin column-gap($value) {
-    column-gap: $value;
-    -webkit-column-gap: $value; /* Chrome, Safari, Opera */
-    -moz-column-gap: $value; /* Firefox */
-}

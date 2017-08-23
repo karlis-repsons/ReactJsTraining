@@ -1,23 +1,10 @@
 @import '../tictactoe-style-globals';
 
 ol.cU43g {
-    counter-reset: c;
-    padding-right: 3*$default-font-size;
-    list-style-position: inside;
-    @include column-gap(2*$default-font-size);
-
-    & > li:before {
-        padding-right: $default-font-size;
-
-        content: counter(c, '.');
-        counter-increment: c;
-    }
+    list-style-type: none;
 
     & > li {
         white-space: nowrap;
-        font-size: 1.5*$default-font-size
-            // optimum: 1.8 for small window sizes, 1.5 for big ones
-        ;
         line-height: 2;
     }
 }

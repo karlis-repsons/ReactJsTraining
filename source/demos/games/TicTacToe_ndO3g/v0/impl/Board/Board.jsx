@@ -19,7 +19,7 @@ export default class Board extends React.Component {
             widthPx: p.boardSideLength,
             heightPx: p.boardSideLength,
             className: classNames, style: p.style,
-            cellsAtSideCount: cellsAtSideCount,
+            cellsAtSideCount,
             innerGapToCellSideLengthRatio: 0.04,
             outerGapToInnerGapRatio: 0.333,
             innerGapReplacer: gap => gap < 3 ? 3 : gap,

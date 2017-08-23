@@ -38,8 +38,8 @@ export default class GameView extends React.Component {
       else {
          const {width: W, height: H}
             = this.fBsDiv.getBoundingClientRect();
-         const h = this.props.statusText
-            ? this.statusDiv.getBoundingClientRect().height
+         const h = this.props.statusText ?
+            this.statusDiv.getBoundingClientRect().height
             : 0;
          newBoardSideLength = Math.min(W, H - h);
       }
@@ -48,37 +48,79 @@ export default class GameView extends React.Component {
       }
    }
    
-   getStatusStyle() {
+   get baseFontSizeRem() {
       const p = this.props;
+      const baseFontSizeRem =
+         Math.min(p.widthRem, p.heightRem) / 100 * 2;
+      
+      return baseFontSizeRem;
+   }
+   
+   getOuterStyle(marginThicknessRem) {
+      const p = this.props;
+      
+      const style = Object.assign(
+         {
+            margin: `${marginThicknessRem}rem`
+         },
+         p.style
+      );
+      
+      return style;
+   }
+   
+   get titleStyle() {
+      const bfsRem = this.baseFontSizeRem;
+      const style = {
+         fontSize: `${4 * bfsRem}rem`,
+         marginBottom: `${2 * bfsRem}rem`
+      };
+      
+      return style;
+   }
+   
+   get statusStyle() {
+      const p = this.props;
+      const bfsRem = this.baseFontSizeRem;
+      
+      let style = {
+         paddingTop: `${2 * bfsRem}rem`,
+         fontSize: `${2 * bfsRem}rem`
+      };
       if (p.previousMoves && p.previousMoves.length > 0)
-         return {
-            color: changeHexColorLightness(
-               this.props.nextPlayer === playerX
-                  ? playerXColor : playerOColor
-               , +30
-            )
-         };
+         style.color = changeHexColorLightness(
+            this.props.nextPlayer === playerX
+               ? playerXColor : playerOColor
+            , +30
+         );
+      
+      return style;
    }
    
    render() {
       const p = this.props;
+      const marginThicknessRem =
+         Math.min(p.widthRem, p.heightRem) / 8;
       
       return (
          <SquareContainer
-            outerWidthRem={p.widthRem}
-            outerHeightRem={p.heightRem}
+            outerWidthRem={p.widthRem - 2 * marginThicknessRem}
+            outerHeightRem={p.heightRem - 2 * marginThicknessRem}
             squareAlignment={squareAlignments.centered}
-            outerStyle={p.style}
+            outerStyle={this.getOuterStyle(marginThicknessRem)}
          >
             <div className='game f32x0'>
                {p.titleText &&
-                <div className='title'> {p.titleText} </div>
+                <div className='title' style={this.titleStyle}>
+                   {p.titleText}
+                </div>
                }
                <div className='f-bi'>
                   <MovesList className='history'
                              isVisible={p.isGameOver}
                              previousMoves={p.previousMoves}
                              currentMoveIndex={p.indexOfPreviousMarkings}
+                             baseFontSizeRem={this.baseFontSizeRem}
                              onClickAtMove={p.onPreviousMarkingsRequest}
                   />
                   <div className='f-bs' ref={this.setFBsRef}>
@@ -90,7 +132,7 @@ export default class GameView extends React.Component {
                      />
                      {p.statusText &&
                       <div className='status' ref={this.setStatusRef}
-                           style={this.getStatusStyle()}
+                           style={this.statusStyle}
                       >
                          {p.statusText}
                       </div>
