@@ -1,5 +1,7 @@
 // SI - settings input
 
+import PresenterHeaderStyler from '../../Presenter/PresenterHeader/impl/view/PresenterHeaderStyler';
+
 const devStyle = false; // use development colors etc. if true, use production style if false
 
 let p = { // dictionary for easy access to the main values
@@ -7,11 +9,13 @@ let p = { // dictionary for easy access to the main values
       sizeRem: 16/16,
       names: undefined
    },
-   verticalScrollAccelerationFactor: 0.3
+   verticalScrollAccelerationFactor: 0.2
    // the below variables are initialized later:
    // baseFontSizeRem
    // defaultFontNames
 };
+
+import presenterBackgroundImageUrl from '../../Presenter/impl/view/images/background.size-optimized.jpg';
 
 let presentationSI = {
    presenter: {
@@ -23,7 +27,7 @@ let presentationSI = {
                   defaultFontNames: 'Futura, sans-serif'
                },
                color: {
-                  background: 'white'
+                  background: 'hsla(217, 29%, 72%, 1)'
                }
             }
          }
@@ -35,6 +39,11 @@ let presentationSI = {
                   max: 0.7,
                   default: 0.3
                }
+            },
+            style: {
+               backgroundColor: undefined,
+               backgroundImageCSSValue: `url(${presenterBackgroundImageUrl})`,
+               backgroundPositionCSSValue: undefined
             }
          },
          ux: {
@@ -66,7 +75,9 @@ presentationSI.presenter.header = {
    private: {
       ui: {
          style: {
-            backgroundColorCSSValue: 'hsla(217, 29%, 72%, 1)'
+            backgroundColor: 'hsla(213, 22%, 25%, 0.8)',
+            backgroundImageCSSValue: undefined,
+            backgroundPositionCSSValue: undefined
          },
          sizeRem: {
             min: {
@@ -94,11 +105,11 @@ presentationSI.presenter.header = {
                },
                font: {
                   sizeRem: 1.8,
-                  names: undefined
+                  names: '"Comic Sans MS", sans-serif'
                },
                lineHeightRem: 1.8,
-               color: 'hsla(4, 70%, 37%, 1)',
-               textShadowCSSValue: '0 0 0.1em hsla(48, 82%, 51%, 1)'
+               color: 'hsla(0, 60%, 77%, 1)',
+               textShadowCSSValue: '0 0 0.1em hsla(0, 0%, 0%, 1)'
             }
          }
       }
@@ -120,7 +131,8 @@ presentationSI.presenter.demosNavigation.share = {
 };
 presentationSI.presenter.demosNavigation.private = {
    ui: {
-      backgroundColor: devStyle ? 'paleturquoise' : 'hsla(214, 40%, 90%, 1)'
+      backgroundColor: devStyle ?
+         'paleturquoise' : 'hsla(214, 40%, 90%, 0.6)'
    },
    tree: {
       ux: {
@@ -220,7 +232,7 @@ presentationSI.presenter.demosNavigation.private = {
                left: 0.5 * p.navigationItemFont.sizeRem
             },
             border: {
-               thicknessRem: devStyle ? 1/16 : 1/10,
+               thicknessRem: devStyle ? 1/16 : 0,
                color: devStyle ?
                   'red' : 'hsla(214, 40%, 99%, 1)',
                cssStyle: 'solid'
@@ -275,7 +287,7 @@ presentationSI.presenter.demoContainer = {
       ui: {
          style: {
             color: {
-               background: undefined
+               background: 'hsla(214, 40%, 90%, 0.4)'
             }
          }
       }
@@ -288,7 +300,16 @@ presentationSI.presenter.demoContainer.parentInput = presentationSI.presenter;
 presentationSI.presenter.demoContainer.inNavigationMode = {
    private: {
       ui: {
-         backgroundColor: devStyle ? '#633A3A' : undefined
+         backgroundColor: devStyle ? '#633A3A' : undefined,
+         bordersIfDemoWantsBorder: {
+            top: null,
+            right: null,
+            bottom: null,
+            left: {
+               thicknessPx: 1,
+               color: 'hsla(214, 40%, 51%, 1)'
+            }
+         }
       }
    },
    parentInput: presentationSI.presenter.demoContainer
@@ -297,7 +318,13 @@ presentationSI.presenter.demoContainer.inNavigationMode = {
 presentationSI.presenter.demoContainer.inMaximizedMode = {
    private: {
       ui: {
-         backgroundColor: devStyle ? '#3B633A' : undefined
+         backgroundColor: devStyle ? '#3B633A' : undefined,
+         bordersIfDemoWantsBorder: {
+            top: null,
+            right: null,
+            bottom: null,
+            left: null
+         }
       },
       navigationButton: {
          ui: {
@@ -334,7 +361,7 @@ presentationSI.presenter.footer = {
    private: {
       ui: {
          style: {
-            backgroundColorCSSValue: 'hsla(45, 47%, 19%, 1)'
+            backgroundColorCSSValue: 'hsla(45, 47%, 19%, 0.7)'
          }
       },
       ux: {

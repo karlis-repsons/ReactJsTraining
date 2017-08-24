@@ -9,6 +9,7 @@ export default class PresenterViewStyler {
       
       return {
          shUISet: connection.settings.shared.ui,
+         prUISty: connection.settings.private.ui.style,
          sccSet: connection.settings.private.demoContainerContent.scrollContainer,
          lat,
          
@@ -25,8 +26,16 @@ export default class PresenterViewStyler {
    }
    
    get presenter() {
-      const {shUISet} = this._parameters;
+      const {shUISet, prUISty} = this._parameters;
       const font = shUISet.style.font;
+      
+      let settingsCSS = {};
+      if (prUISty.backgroundColor)
+         settingsCSS.backgroundColor = prUISty.backgroundColor;
+      if (prUISty.backgroundImageCSSValue)
+         settingsCSS.backgroundImage = prUISty.backgroundImageCSSValue;
+      if (prUISty.backgroundPositionCSSValue)
+         settingsCSS.backgroundPosition = prUISty.backgroundPositionCSSValue;
       
       return {
          css: Object.assign({
@@ -34,8 +43,10 @@ export default class PresenterViewStyler {
                overflow: 'hidden',
                fontSize: `${font.baseFontSizeRem}rem`,
                fontFamily: font.defaultFontNames,
-               backgroundColor: shUISet.style.color.background
+               backgroundColor: shUISet.style.color.background,
+               backgroundSize: 'cover'
             },
+            settingsCSS,
             this._props.style
          )
       };
@@ -96,7 +107,8 @@ export default class PresenterViewStyler {
          ),
          content: {
             css: Object.assign({
-                  position: 'absolute'
+                  position: 'absolute',
+                  boxSizing: 'border-box'
                },
                this._makeRemBoundsCSS(dccLat.boundsRem)
             ),

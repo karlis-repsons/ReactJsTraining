@@ -54,3 +54,5 @@ export default class DCInNavigationMode extends React.Component {
 }
 
 DCInNavigationMode.propTypes = propTypes;
+
+export const predictPaddingRem = DCInNavigationMode.predictPaddingRem;

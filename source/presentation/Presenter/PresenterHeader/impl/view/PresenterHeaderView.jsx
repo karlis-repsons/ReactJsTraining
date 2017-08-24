@@ -22,6 +22,12 @@ export default class PresenterHeaderView extends React.Component {
                      {content.title}
                   </div>
                }
+               <div className='top accent'
+                    style={styler.accents.top.css} />
+               <div className='middle accent'
+                    style={styler.accents.middle.css} />
+               <div className='bottom accent'
+                    style={styler.accents.bottom.css} />
             </div>
          </header>
       );

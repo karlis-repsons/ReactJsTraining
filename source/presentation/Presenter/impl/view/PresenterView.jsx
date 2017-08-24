@@ -8,13 +8,14 @@ import {
 } from 'react-router-dom';
 
 import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s_v0';
+import {convertRemToPx} from '../../share/convertPxAndRem';
 
 import PresenterHeader from '../../PresenterHeader/PresenterHeader';
 import PresenterFooter from '../../PresenterFooter/PresenterFooter';
 import DemosNavigation from '../../DemosNavigation/DemosNavigation';
 import DemoContainer from '../../DemoContainer/DemoContainer';
+
 import PresenterViewStyler from './PresenterViewStyler';
-import {convertRemToPx} from '../../share/convertPxAndRem';
 
 export default class PresenterView
    extends bindMethodsBaseExtends(React.Component)

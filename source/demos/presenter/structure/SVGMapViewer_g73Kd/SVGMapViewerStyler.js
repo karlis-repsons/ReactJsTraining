@@ -24,8 +24,6 @@ export default class SVGMapViewerStyler {
    }
    
    get content() {
-      const {p} = this._parameters;
-      
       return {
          css: Object.assign({
                width: '100%', height: '100%'
@@ -35,8 +33,6 @@ export default class SVGMapViewerStyler {
    }
    
    get image() {
-      const {p} = this._parameters;
-      
       return {
          css: Object.assign({
                width: '100%', height: '100%'

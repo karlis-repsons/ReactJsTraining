@@ -79,3 +79,5 @@ export default class DCInMaximizedMode extends React.Component {
 }
 
 DCInMaximizedMode.propTypes = propTypes;
+
+export const predictPaddingRem = DCInMaximizedMode.predictPaddingRem;

@@ -1,5 +1,3 @@
-import backgroundImage from './images/2017-05-24.de.light.JPG';
-
 // do NOT cache this
 export default class PresenterHeaderStyler {
    constructor({props}) {
@@ -24,8 +22,12 @@ export default class PresenterHeaderStyler {
       const {p, prUISty} = this._parameters;
       
       let settingsCSS = {};
-      if (prUISty.backgroundColorCSSValue)
-         settingsCSS.backgroundColor = prUISty.backgroundColorCSSValue;
+      if (prUISty.backgroundColor)
+         settingsCSS.backgroundColor = prUISty.backgroundColor;
+      if (prUISty.backgroundImageCSSValue)
+         settingsCSS.backgroundImage = prUISty.backgroundImageCSSValue;
+      if (prUISty.backgroundPositionCSSValue)
+         settingsCSS.backgroundPosition = prUISty.backgroundPositionCSSValue;
       
       if (!p.style.width)
          settingsCSS.width = `${p.widthRem}rem`;
@@ -37,9 +39,7 @@ export default class PresenterHeaderStyler {
             settingsCSS,
             {
                overflow: 'hidden',
-               backgroundImage: `url(${backgroundImage})`, // TODO jd432 - load image from CMS
                backgroundSize: 'cover',
-               backgroundPosition: '0% 57%'
             },
             p.style
          )
@@ -49,8 +49,14 @@ export default class PresenterHeaderStyler {
    get content() {
       const {p} = this._parameters;
       
+      let styleCSS = {};
+      if (!p.contentStyle.position
+          || !/^(relative|absolute|fixed)$/.test(p.contentStyle.position)
+      )
+         styleCSS.position = 'relative';
+      
       return {
-         css: p.contentStyle
+         css: Object.assign(p.contentStyle, styleCSS)
       };
    }
    
@@ -91,10 +97,51 @@ export default class PresenterHeaderStyler {
          css: Object.assign(
             settingsCSS,
             {
+               position: 'absolute',
+               left: 0, top: 0, zIndex: 1,
                fontSize: `${tPrUISty.font.sizeRem}rem`,
                lineHeight: `${tPrUISty.lineHeightRem}rem`
             }
          )
+      };
+   }
+   
+   get accents() {
+      // TODO: take settings from connection
+      
+      return {
+         top: {
+            css: {
+               position: 'absolute',
+               left: 0, bottom: '0.9rem',
+               zIndex: 0,
+               width: '100%',
+               height: '0.8rem',
+               background: 'linear-gradient(to right, hsla(27, 38%, 17%, 0.25), hsla(27, 38%, 17%, 0.25), hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0))'
+            }
+         },
+         middle: {
+            css: {
+               position: 'absolute',
+               left: 0, bottom: '0.6rem',
+               zIndex: 0,
+               width: '100%',
+               height: '0.1rem',
+               background: 'linear-gradient(to right, hsla(27, 38%, 9%, 0.25)'
+                           + ', hsla(27, 38%, 9%, 0.1))'
+            }
+         },
+         bottom: {
+            css: {
+               position: 'absolute',
+               left: 0, bottom: '0.3rem',
+               zIndex: 0,
+               width: '100%',
+               height: '0.1rem',
+               background: 'linear-gradient(to right, hsla(27, 38%, 98%, 0.25)'
+                           + ', hsla(27, 38%, 98%, 0.1))'
+            }
+         }
       };
    }
 }

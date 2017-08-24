@@ -13,7 +13,8 @@ const settings = {
     presentation: {
         ui: {
             allDemoFitsInsideAnyContainer: false,
-            maxContainerButtonsOverlapRemAt: { allSides: 1.5, top: 4.3, bottom: 4.3 }
+            maxContainerButtonsOverlapRemAt: { allSides: 1.5, top: 4.3, bottom: 4.3 },
+            demoPreferences: {}
         },
         ux: {
             animation: {

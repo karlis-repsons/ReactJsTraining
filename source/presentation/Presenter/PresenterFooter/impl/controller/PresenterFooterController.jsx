@@ -6,7 +6,7 @@ export default class PresenterFooterController
    extends React.Component
 {
    static predictHeightRem({connection, widthRem}) {
-      return 1; // TODO
+      return 2; // TODO
    }
    
    render() {

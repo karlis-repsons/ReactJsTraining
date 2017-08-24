@@ -1,3 +1,5 @@
+import {convertPxToRem} from '../../../share/convertPxAndRem';
+
 import DemoContainer from '../../../DemoContainer/DemoContainer'
 import empty from './emptyLayoutStructures/emptyLayoutStructures';
 import {preferDemo, preferNavigation} from '../PresenterLayoutController';
@@ -20,8 +22,10 @@ export default class StaticLayoutCalculator {
       return {
          prUISet: pConn.settings.private.ui,
          hSet: pConn.header.settings,
-         fSet: pConn.footer.settings,
+         dcNavPrUISet: pConn.demoContainer.inNavigationMode.settings.private.ui,
+         dcMaxPrUISet: pConn.demoContainer.inMaximizedMode.settings.private.ui,
          deSet: pConn.selectedDemo.settings,
+         fSet: pConn.footer.settings,
          
          LI,
          DLI: this._derivedLayoutInput,
@@ -211,7 +215,8 @@ export default class StaticLayoutCalculator {
    
    _setDemoContainer() {
       const {
-         deSet, LI, DLI, dcLI, deLI, dcLat, dccLat, sccLat
+         dcNavPrUISet, dcMaxPrUISet, deSet,
+         LI, DLI, dcLI, deLI, dcLat, dccLat, sccLat
       } = this._parameters;
       
       const setOuterLat = () => {
@@ -251,15 +256,43 @@ export default class StaticLayoutCalculator {
       // depends on dcLat.isMaximized, dccLat.boundsRem.{width,height}
       const setScrollContainerLat = () => {
          const dcPadPrRem = DLI.demoContainerPaddingRem;
+         const getBorderThicknessAtSidesPx = () => {
+            const prUISet = dcLat.isMaximized ? dcMaxPrUISet : dcNavPrUISet;
+            const brdSet = prUISet.bordersIfDemoWantsBorder;
+            const deUISet = deSet.presentation.ui;
+            let result = {top: 0, right: 0, bottom: 0, left: 0};
+            if (deUISet.demoPreferences.wantsBorder === true) {
+               result = {
+                  top: dcPadPrRem.top < Number.EPSILON && brdSet.top ?
+                     convertPxToRem(brdSet.top.thicknessPx)
+                     : 0,
+                  right: dcPadPrRem.right < Number.EPSILON && brdSet.right ?
+                     convertPxToRem(brdSet.right.thicknessPx)
+                     : 0,
+                  bottom: dcPadPrRem.bottom < Number.EPSILON && brdSet.bottom ?
+                     convertPxToRem(brdSet.bottom.thicknessPx)
+                     : 0,
+                  left: dcPadPrRem.left < Number.EPSILON && brdSet.left ?
+                     convertPxToRem(brdSet.left.thicknessPx)
+                     : 0,
+               };
+            }
+            return result;
+         };
+         
+         const borderThicknessRemAt = getBorderThicknessAtSidesPx();
          const sccHeightRem = dccLat.boundsRem.height
-                              - dcPadPrRem.top - dcPadPrRem.bottom;
+                              - dcPadPrRem.top - dcPadPrRem.bottom
+                              - borderThicknessRemAt.top
+                              - borderThicknessRemAt.bottom;
          sccLat.boundsRem = {
             top: dcPadPrRem.top,
             bottom: dcPadPrRem.bottom,
             left: dcPadPrRem.left,
             right: dcPadPrRem.right,
             width: dccLat.boundsRem.width
-                   - dcPadPrRem.left - dcPadPrRem.right,
+                   - dcPadPrRem.left - dcPadPrRem.right
+                   - borderThicknessRemAt.left - borderThicknessRemAt.right,
             height: sccHeightRem
          };
          

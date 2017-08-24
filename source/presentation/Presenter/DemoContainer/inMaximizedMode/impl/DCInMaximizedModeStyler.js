@@ -1,3 +1,6 @@
+import {predictPaddingRem} from './DCInMaximizedMode';
+import getContentBorderCSS from '../../share/styler/getContentBorderCSS';
+
 export default class DCInMaximizedModeStyler {
    constructor({props}) {
       this._props = props;
@@ -5,19 +8,21 @@ export default class DCInMaximizedModeStyler {
    
    get _parameters() {
       const p = this._props;
-      const shUISet = p.connection.settings.shared.ui;
+      const shUISty = p.connection.settings.shared.ui.style;
       const prUISet = p.connection.settings.private.ui;
+      const deUISet = p.selectedDemoConnection.settings.presentation.ui;
       
       return {
-         p, shUISet, prUISet
+         p, shUISty, prUISet, deUISet
       };
    }
    
    get container() {
-      const {p, prUISet} = this._parameters;
+      const {p, shUISty, prUISet} = this._parameters;
       
       let settingsCSS = {};
-      
+      if (shUISty.color.background)
+         settingsCSS.backgroundColor = shUISty.color.background;
       if (prUISet.backgroundColor)
          settingsCSS.backgroundColor = prUISet.backgroundColor;
       
@@ -27,12 +32,25 @@ export default class DCInMaximizedModeStyler {
    }
    
    get content() {
-      const {p} = this._parameters;
-      const pcs = p.contentStyle;
+      const {p, prUISet, deUISet} = this._parameters;
       
       let styleCSS = {};
-      if (!pcs.position || !/^(relative|absolute|fixed)$/.test(pcs.position))
+      
+      if (!p.contentStyle.position
+          || !/^(relative|absolute|fixed)$/.test(p.contentStyle.position)
+      )
          styleCSS.position = 'relative';
+      
+      const brdSet = prUISet.bordersIfDemoWantsBorder;
+      Object.assign(styleCSS,
+         getContentBorderCSS({
+            borderSettings: brdSet,
+            demoUISettings: deUISet,
+            demoContainerPaddingRem: predictPaddingRem({
+               connection: p.connection,
+               selectedDemoConnection: p.selectedDemoConnection
+            })
+         }));
       
       return {
          css: Object.assign(styleCSS, p.contentStyle)
