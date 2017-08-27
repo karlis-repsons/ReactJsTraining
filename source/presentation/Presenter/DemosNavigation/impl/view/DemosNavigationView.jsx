@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SortableTree from 'react-sortable-tree';
-import makeClassNames from 'classnames';
 
 import {convertRemToPx} from '../../../share/convertPxAndRem';
 
 import DemosNavigationViewStyler from './DemosNavigationViewStyler';
 import DemosNavigationTreeStyler from './tree/DemosNavigationTreeStyler';
+import CloseIcon from './CloseIcon/CloseIcon';
 
 export default class DemosNavigationView extends React.Component {
    constructor(props) {
@@ -43,20 +43,26 @@ export default class DemosNavigationView extends React.Component {
       const classNames = DemosNavigationView.baseClassNames;
       const styler = new DemosNavigationViewStyler({props: p});
       
-      let maximizeSelectedDemoButton;
-      if (p.selectedDemoConnection.isDemoSelected)
-         maximizeSelectedDemoButton = (
-            <div style={styler.hideButton.css} onClick={p.onHideRequest}>
-               <i className='fa fa-times'
-                  style={styler.hideButton.icon.css} />
+      let hideButton = (
+         <div className='button hide shadow'
+              style={styler.hideButton.css}
+         >
+            <div className='background'
+                 style={styler.hideButton.background.css}
+                 onClick={p.onHideRequest}
+            >
+               <CloseIcon style={styler.hideButton.icon.css} />
             </div>
-         );
+         </div>
+      );
       
       return (
          <div className={classNames} style={styler.container.css}>
             <div className='content' style={styler.content.css}>
                
-               {maximizeSelectedDemoButton}
+               <div className='top row' style={styler.topRow.css}>
+                  {hideButton}
+               </div>
                
                <SortableTree
                   style={styler.sortableTree.css}

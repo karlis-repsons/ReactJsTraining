@@ -31,11 +31,15 @@ export default class DemosNavigationTreeStyler {
    get _overrideOuterContainerCSS() {
       const {calc} = this._parameters;
       const leftMarginRem = calc.leftMarginRem;
-      
-      // TODO: add correct top and bottom padding
+
+      // TODO: add correct top and bottom padding?
       
       return (
-         `.rst__node {
+         `.ReactVirtualized__Grid__innerScrollContainer {
+            width: ${leftMarginRem >= Number.EPSILON ?
+               'calc(100% - ' + leftMarginRem + 'rem) !important' : '100%'};
+         }
+         .rst__node {
             margin-left: ${leftMarginRem}rem;
             margin-right: ${leftMarginRem < 0 ? -leftMarginRem : 0}rem;
          }
@@ -132,13 +136,13 @@ export default class DemosNavigationTreeStyler {
             };
          }
          .rst__collapseButton, .rst__expandButton {
-            width: ${cbStates.normal.diameterRem}rem;
-            height: ${cbStates.normal.diameterRem}rem;
+            width: ${cbStates.normal.diameterRem}rem !important;
+            height: ${cbStates.normal.diameterRem}rem !important;
             ${boxShadowCSS.normal}
          }
          .rst__collapseButton:hover, .rst__expandButton:hover {
-            width: ${cbStates.hovered.diameterRem}rem;
-            height: ${cbStates.hovered.diameterRem}rem;
+            width: ${cbStates.hovered.diameterRem}rem !important;
+            height: ${cbStates.hovered.diameterRem}rem !important;
             ${boxShadowCSS.hovered}
          }
          .rst__collapseButton:focus, .rst__expandButton:focus {
@@ -157,6 +161,8 @@ export default class DemosNavigationTreeStyler {
       const borderCSSValue = (b =>
          `${b.cssStyle} ${b.color} ${b.thicknessRem}rem`)(ic.border);
       
+      const lc = ic.rstLabelContainer;
+      
       return (
          `.rst__rowContents {
              min-width: 0;
@@ -170,7 +176,9 @@ export default class DemosNavigationTreeStyler {
              border-left: ${borderCSSValue};
           }
           .rst__rowLabel {
-             padding-right: ${ic.labelContainer.paddingRightRem}rem;
+             margin-bottom: ${lc.marginRem.bottom}rem;
+             margin-left: ${lc.marginRem.left}rem;
+             padding-right: ${lc.paddingRightRem}rem;
           }`
       );
    }

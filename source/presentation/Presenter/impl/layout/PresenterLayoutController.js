@@ -36,8 +36,9 @@ export default class PresenterLayoutController extends BindMethodsBase {
          this.onUpdatedDemoBounds,
          this.saveViewRef,
          this.onUpdatedNavigationTreeWidth,
-         this.onNavigationRequest,
          this.onDemoRequest,
+         this.onHideNavigationRequest,
+         this.onNavigationRequest,
          this.onMaximizeDemoContainerRequest,
          this.afterDemoScroll
       ]);
@@ -103,19 +104,47 @@ export default class PresenterLayoutController extends BindMethodsBase {
       this._updateIfStaticLayout();
    }
    
+   _resetScrollPosition() {
+      // TODO s5eek
+      // Remove this by implementing
+      // recalculation of scroll position, taking into account the
+      // width and height of maximized and non-maximized demo.
+      
+      const {sccLI} = this._parameters;
+      
+      sccLI.verticalScrollDistanceRem = 0;
+      if (this._view)
+         this._view.setDemoScrollHeightPx(0);
+   }
+   
    onNavigationRequest() {
       const {LI, prUXSet} = this._parameters;
       LI.preferShowingDemoOrNavigation = preferNavigation;
       LI.demoContainer.preferMaximized =
          prUXSet.preferMaximizedDemoView.later;
       
+      this._resetScrollPosition(); // TODO s5eek
+      
       this._updateIfStaticLayout();
    }
    
    onDemoRequest() {
-      const {LI} = this._parameters;
+      const {LI, sccLI} = this._parameters;
       LI.preferShowingDemoOrNavigation = preferDemo;
       LI.demoContainer.isDemoSelected = true;
+      sccLI.verticalScrollDistanceRem = 0;
+      if (this._view)
+         this._view.setDemoScrollHeightPx(0);
+      
+      this._updateIfStaticLayout();
+   }
+   
+   onHideNavigationRequest() {
+      const {LI, dcLI} = this._parameters;
+      LI.preferShowingDemoOrNavigation = preferDemo;
+      dcLI.preferMaximized = true;
+      
+      this._resetScrollPosition(); // TODO s5eek
       
       this._updateIfStaticLayout();
    }
@@ -124,6 +153,9 @@ export default class PresenterLayoutController extends BindMethodsBase {
       const {LI, dcLI} = this._parameters;
       LI.preferShowingDemoOrNavigation = preferDemo;
       dcLI.preferMaximized = true;
+      
+      this._resetScrollPosition(); // TODO s5eek
+      
       this._updateIfStaticLayout();
    }
    

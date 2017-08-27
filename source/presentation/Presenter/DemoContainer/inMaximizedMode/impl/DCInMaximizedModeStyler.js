@@ -62,15 +62,18 @@ export default class DCInMaximizedModeStyler {
       const nbPrUISet = p.connection.settings.private.navigationButton.ui;
       const nbFont = nbPrUISet.style.font;
       
+      // TODO: take values from settings
+      // TODO: adjust predict DC padding if needed
+      
       return {
          css: {
             position: 'absolute',
             top: `${nbPrUISet.marginRem.top}rem`,
             left: `${nbPrUISet.marginRem.left}rem`,
             zIndex: 1,
-            cursor: 'pointer',
-            
-            backgroundColor: nbPrUISet.style.backgroundColor
+            padding: '0.44rem',
+            borderRadius: '1.5rem',
+            backgroundColor: 'hsla(214, 50%, 15%, 0.5)'
          },
          title: {
             css: {
@@ -78,10 +81,14 @@ export default class DCInMaximizedModeStyler {
                paddingLeft: `${nbPrUISet.paddingEm.left}em`,
                paddingBottom: `${nbPrUISet.paddingEm.bottom}em`,
                paddingRight: `${nbPrUISet.paddingEm.right}em`,
+               borderRadius: '0.7rem',
                fontSize: `${nbFont.sizeRem}rem`,
                lineHeight: `${nbFont.sizeRem}rem`,
                fontFamily: `${nbFont.names}`,
-               color: nbPrUISet.style.color
+               backgroundColor: nbPrUISet.style.backgroundColor,
+               color: nbPrUISet.style.color,
+               boxShadow: '0 0 0.4rem 0.3rem white, inset 0 0 0.4rem white',
+               cursor: 'pointer'
             }
          }
       };

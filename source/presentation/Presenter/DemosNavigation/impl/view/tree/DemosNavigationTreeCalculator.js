@@ -29,8 +29,10 @@ export default class DemosNavigationTreeCalculator {
       const {prUISet} = this._parameters;
       const ic = prUISet.itemContainer;
       
-      return (ic.boxShadow.maxThickness.rightRem
-              + prUISet.paddingRem.right);
+      return Math.max(0,
+         ic.boxShadow.maxThickness.rightRem
+         + ic.rstLabelContainer.marginRem.left
+         + prUISet.paddingRem.right);
    }
    
    get itemContainerExtraWidthRem() {
@@ -41,6 +43,7 @@ export default class DemosNavigationTreeCalculator {
          2 * ic.border.thicknessRem
          + ic.paddingRem.left + ic.paddingRem.right
          + ic.boxShadow.maxThickness.rightRem
-         + ic.labelContainer.paddingRightRem );
+         + ic.rstLabelContainer.marginRem.left
+         + ic.rstLabelContainer.paddingRightRem );
    }
 }

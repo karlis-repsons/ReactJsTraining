@@ -61,10 +61,10 @@ export default class DCInMaximizedMode extends React.Component {
             <div className='content' style={styler.content.css}>
                <div className='show navigation button'
                     style={styler.navigationButton.css}
-                    onClick={p.onNavigationRequest}
                >
                   <div className='title'
                        style={styler.navigationButton.title.css}
+                       onClick={p.onNavigationRequest}
                   >
                      {p.connection.content.navigationButton.title}
                   </div>

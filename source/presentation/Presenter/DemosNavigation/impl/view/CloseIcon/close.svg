@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   viewBox="0 0 90.0028 90.0028"
+   style="clip-rule:evenodd;fill-rule:evenodd;shape-rendering:geometricPrecision"
+   height="90.0028mm"
+   width="90.0028mm"
+   xml:space="preserve"
+>
+    <g transform="translate(-50.5263,-76.1769)">
+        <path
+            style="fill:#dc3324"
+            d="m 50.5263,159.986 83.8091,-83.8091 6.1932,6.1931 -83.8092,83.8091 -6.1931,-6.1931 z m 83.8097,6.1937 -83.8091,-83.8091 6.1931,-6.1932 83.8091,83.8092 -6.1931,6.1931 z"
+        />
+    </g>
+</svg>

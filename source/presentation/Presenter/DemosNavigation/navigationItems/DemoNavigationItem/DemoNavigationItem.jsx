@@ -4,6 +4,10 @@ import {NavLink} from 'react-router-dom';
 
 import measureTextWidthRem from '../../../share/measureTextWidthRem';
 
+import {getFontCSSValue} from '../share/getNavigationItemSharedCSS';
+
+import Styler from './impl/DemoNavigationItemStyler';
+
 export default class DemoNavigationItem extends React.Component {
    static predictWidthRem(
       {
@@ -13,39 +17,47 @@ export default class DemoNavigationItem extends React.Component {
       }
    )
    {
-      return measureTextWidthRem(
-         title, {cssFont: getCssFont(connection)});
+      const fontCSSValue = getFontCSSValue(connection);
+      const textWidthRem = measureTextWidthRem(
+         title, {cssFont: fontCSSValue});
+      
+      const niShUISty = connection.settings.shared.navigationItem.ui.style;
+      const pdRem = niShUISty.paddingRem;
+      const resultRem = textWidthRem + pdRem.left + pdRem.right;
+      
+      return resultRem;
    }
    
-   _renderLink() {
+   _renderLink(isSelected, styler) {
       const p = this.props;
-      const sdConn = p.selectedDemoConnection;
       
-      if (sdConn.demoPathOnServer === p.routePath)
-         return p.title;
+      if (isSelected)
+         return <span style={styler.text.css}>{
+            p.title
+         }</span>;
       else
-         return (
-            <NavLink to={p.routePath}>{
-               p.title
-            }</NavLink>
-         );
+         return <NavLink to={p.routePath} style={styler.text.css}>{
+            p.title
+         }</NavLink>;
    }
    
    render() {
       const p = this.props;
       
+      const isSelected =
+         p.selectedDemoConnection.demoPathOnServer === p.routePath;
+      const styler = new Styler({
+         props: this.props,
+         isSelected
+      });
+      
       return (
-         <div className='demo nav item kYe4r'>
-         <span
-            style={{
-               font: getCssFont(p.connection),
-               color: 'blue'
-            }}
-            onClick={p.onClick}
+         <div className='demo nav item kYe4r'
+              style={styler.container.css}
+              onClick={p.onClick}
          >{
-            this._renderLink()
-         }</span>
-         </div>
+               this._renderLink(isSelected, styler)
+         }</div>
       );
    }
 }
@@ -60,10 +72,3 @@ DemoNavigationItem.propTypes = {
    routePath: PropTypes.string.isRequired,
    onClick: PropTypes.func // f()
 };
-
-function getCssFont(connection) {
-   const shUISet = connection.settings.shared.ui;
-   const font = shUISet.style.navigationItemFont;
-   
-   return `${font.sizeRem}rem ${font.names}`;
-}

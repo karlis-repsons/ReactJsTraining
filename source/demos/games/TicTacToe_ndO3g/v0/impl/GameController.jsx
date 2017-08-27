@@ -1,26 +1,10 @@
 import React from 'react';
-
-import DemoBase from 'demos/share/DemoBase/DemoBase';
+import PropTypes from 'prop-types';
 
 import GameModel from './GameModel';
 import GameView from './GameView';
 
-const settings = {
-   presentation: {
-      ui: {
-         allDemoFitsInsideAnyContainer: true,
-         maxContainerButtonsOverlapRemAt: {allSides: 0},
-         demoPreferences: {}
-      },
-      ux: {
-         animation: {
-            mayAnimateContentSize: false
-         }
-      }
-   }
-};
-
-export default class GameController extends DemoBase {
+export default class GameController extends React.Component {
     constructor(props) {
         super(props);
 
@@ -58,7 +42,7 @@ export default class GameController extends DemoBase {
                         ref={r => this.view = r}
                         widthRem={p.widthRem}
                         heightRem={p.heightRem}
-                        style={this.baseStyle}
+                        style={p.style}
                         markings={this.state.display.markings}
                         titleText={getTitleText()}
                         statusText={getStatusText()}
@@ -87,4 +71,8 @@ export default class GameController extends DemoBase {
     }
 }
 
-GameController.settings = settings;
+GameController.propTypes = {
+   widthRem: PropTypes.number.isRequired,
+   heightRem: PropTypes.number.isRequired,
+   style: PropTypes.object
+};

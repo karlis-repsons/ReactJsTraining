@@ -56,19 +56,6 @@ export default class GameView extends React.Component {
       return baseFontSizeRem;
    }
    
-   getOuterStyle(marginThicknessRem) {
-      const p = this.props;
-      
-      const style = Object.assign(
-         {
-            margin: `${marginThicknessRem}rem`
-         },
-         p.style
-      );
-      
-      return style;
-   }
-   
    get titleStyle() {
       const bfsRem = this.baseFontSizeRem;
       const style = {
@@ -99,15 +86,13 @@ export default class GameView extends React.Component {
    
    render() {
       const p = this.props;
-      const marginThicknessRem =
-         Math.min(p.widthRem, p.heightRem) / 8;
       
       return (
          <SquareContainer
-            outerWidthRem={p.widthRem - 2 * marginThicknessRem}
-            outerHeightRem={p.heightRem - 2 * marginThicknessRem}
+            outerWidthRem={p.widthRem}
+            outerHeightRem={p.heightRem}
             squareAlignment={squareAlignments.centered}
-            outerStyle={this.getOuterStyle(marginThicknessRem)}
+            outerStyle={p.style}
          >
             <div className='game f32x0'>
                {p.titleText &&

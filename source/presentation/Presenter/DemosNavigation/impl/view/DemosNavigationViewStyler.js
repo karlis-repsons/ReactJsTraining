@@ -30,34 +30,88 @@ export default class DemosNavigationViewStyler {
    get content() {
       const {p} = this._parameters;
       
+      // TODO: correct settings and use of them
+      
       return {
-         css: p.contentStyle
+         css: Object.assign({
+               display: 'flex',
+               flexDirection: 'column'
+            },
+            p.contentStyle
+         )
+      };
+   }
+   
+   get topRow() {
+      const {p} = this._parameters;
+
+      // TODO: take settings from connection
+      
+      const visibilityCSSValue = p.selectedDemoConnection.isDemoSelected ?
+         'visible' : 'hidden';
+      
+      return {
+         css: {
+            visibility: visibilityCSSValue,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            width: '100%',
+            padding: '1.3rem',
+            boxSizing: 'border-box'
+         }
       };
    }
    
    get hideButton() {
       const {p} = this._parameters;
+
+      // TODO: take settings from connection
+
+      // For some reason, width and height CSS values were needed on outer div
+      // to make the button appear right in chrome.
+      
+      const bgPaddingRem = 0.3;
+      const backgroundSizeRem = {
+         width: 1.4805,
+         height: 1.4805
+      };
+      const shadowSizeRem = {
+         width: backgroundSizeRem.width + bgPaddingRem,
+         height: backgroundSizeRem.height + bgPaddingRem
+      };
       
       return {
          css: {
-            position: 'absolute',
-            right: '0.5rem',
-            top: '0.5rem',
-            width: '3rem',
-            height: '3rem',
-            zIndex: 1,
-            borderRadius: '3rem',
-            backgroundColor: 'hsla(203, 32%, 86%, 1)',
-            cursor: 'pointer'
+            position: 'relative',
+            width: `${shadowSizeRem.width}rem`,
+            height: `${shadowSizeRem.height}rem`,
+            padding: `${bgPaddingRem}rem`,
+            borderRadius: `${
+               Math.min(shadowSizeRem.width, shadowSizeRem.height)}rem`,
+            backgroundColor: 'hsla(214, 50%, 15%, 0.5)'
+         },
+         background: {
+            css: {
+               position: 'absolute',
+               top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+               width: `${backgroundSizeRem.width}rem`,
+               height: `${backgroundSizeRem.height}rem`,
+               borderRadius: `${Math.min(
+                  backgroundSizeRem.width, backgroundSizeRem.height)
+                  }rem`,
+               boxShadow: '0 0 0.4rem 0.3rem white, inset 0 0 0.4rem white',
+               backgroundColor: 'hsla(214, 50%, 99%, 0.75)',
+               cursor: 'pointer'
+            }
          },
          icon: {
             css: {
                position: 'absolute',
-               left: '50%',
-               top: '50%',
-               transform: 'translate(-50%, -50%)',
-               fontSize: '1.7rem',
-               color: 'hsla(0, 25%, 50%, 1)'//'hsla(10, 40%, 70%, 1)'
+               top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+               width: `${0.7 * backgroundSizeRem.width}rem`,
+               height: `${0.7 * backgroundSizeRem.height}rem`,
+               color: 'hsla(0, 25%, 31%, 1)'
             },
          }
       };
@@ -66,8 +120,8 @@ export default class DemosNavigationViewStyler {
    get sortableTree() {
       return {
          css: {
-            width: '100%', height: '100%',
-            zIndex: 0
+            flexGrow: 1,
+            width: '100%'
          }
       };
    }

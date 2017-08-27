@@ -22,41 +22,29 @@ export default class FakeDemosNavigationConnection {
    getSourceNavigationTree() {
       return [
          {
-            title: 'reusables',
+            title: 'The first and failing tries',
             children: [
                {
-                  title: 'SquareContainer',
+                  title: 'SquareTable',
+                  demoPathOnServer: '/demos/square-table-zW3Ec/v0/background-color-borders',
                   children: [
                      {
-                        title: 'Simple',
-                        demoPathOnServer: '/demos/square-container-kU7d2/v1/simple'
+                        title: 'fractal of SquareTable-s',
+                        demoPathOnServer: '/demos/square-table-zW3Ec/v0/fractal'
                      }
                   ]
                },
                {
-                  title: 'SquareTable',
-                  children: [
-                     {
-                        title: 'Table',
-                        demoPathOnServer: '/demos/square-table-zW3Ec/v0/background-color-borders'
-                     },
-                     {
-                        title: 'Fractal of tables',
-                        demoPathOnServer: '/demos/square-table-zW3Ec/v0/fractal'
-                     }
-                  ]
+                  title: 'Tic Tac Toe game',
+                  demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0'
                }
             ]
          },
          {
-            title: 'Tic Tac Toe game',
-            demoPathOnServer: '/demos/tic-tac-toe-ndO3g/v0'
-         },
-         {
-            title: 'presenter',
+            title: 'Presenter features',
             children: [
                {
-                  title: 'controlled scrolling feature',
+                  title: 'controlled scrolling',
                   children: [
                      {
                         title: 'short text',
@@ -69,7 +57,7 @@ export default class FakeDemosNavigationConnection {
                   ]
                },
                {
-                  title: 'Presenter structure',
+                  title: 'structure',
                   demoPathOnServer: '/demos/structure/samples/presenter',
                   children: [
                      {
@@ -81,6 +69,15 @@ export default class FakeDemosNavigationConnection {
                         demoPathOnServer: '/demos/structure/samples/presenter-impl-layout'
                      }
                   ]
+               }
+            ]
+         },
+         {
+            title: 'Reusables',
+            children: [
+               {
+                  title: 'SquareContainer',
+                  demoPathOnServer: '/demos/square-container-kU7d2/v1/simple'
                }
             ]
          }

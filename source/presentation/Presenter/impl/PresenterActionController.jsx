@@ -64,10 +64,11 @@ export default class PresenterActionController
             onUpdatedBounds={lCtrl.onUpdatedPresenterBounds}
             onUpdatedDemoBounds={lCtrl.onUpdatedDemoBounds}
             onUpdatedNavigationTreeWidth={lCtrl.onUpdatedNavigationTreeWidth}
+            onDemoRequest={this._onDemoRequest}
+            onHideNavigationRequest={lCtrl.onHideNavigationRequest}
             onMaximizeDemoContainerRequest={
                lCtrl.onMaximizeDemoContainerRequest}
             onNavigationRequest={lCtrl.onNavigationRequest}
-            onDemoRequest={this._onDemoRequest}
             afterDemoScroll={lCtrl.afterDemoScroll}
             selectedDemoPathOnServer={s.selectedDemo.pathOnServer}
          />

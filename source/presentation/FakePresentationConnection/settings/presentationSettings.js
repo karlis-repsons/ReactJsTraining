@@ -1,15 +1,12 @@
+/* eslint-disable quotes */
 // SI - settings input
-
-import PresenterHeaderStyler from '../../Presenter/PresenterHeader/impl/view/PresenterHeaderStyler';
 
 const devStyle = false; // use development colors etc. if true, use production style if false
 
 let p = { // dictionary for easy access to the main values
-   navigationItemFont: {
-      sizeRem: 16/16,
-      names: undefined
-   },
-   verticalScrollAccelerationFactor: 0.2
+   navigationItemFontSizeRem: 16 / 16,
+   verticalScrollAccelerationFactor: 0.2,
+   demosNavigationStructureLinesColor: 'hsla(35, 62%, 25%, 0.6)'
    // the below variables are initialized later:
    // baseFontSizeRem
    // defaultFontNames
@@ -24,7 +21,9 @@ let presentationSI = {
             style: {
                font: {
                   baseFontSizeRem: 1,
-                  defaultFontNames: 'Futura, sans-serif'
+                  defaultFontNames: 'Arial, Helvetica, sans-serif',
+                  sizeRem: 1, // for optional overriding
+                  names: 'Arial, Helvetica, sans-serif' // for optional overriding
                },
                color: {
                   background: 'hsla(217, 29%, 72%, 1)'
@@ -36,7 +35,7 @@ let presentationSI = {
          ui: {
             desktop: {
                navigationToPresenterWidthRatio: {
-                  max: 0.7,
+                  max: 0.5,
                   default: 0.3
                }
             },
@@ -98,8 +97,8 @@ presentationSI.presenter.header = {
                   left: 0, right: 0, top: 0, bottom: 0
                },
                paddingEm: {
-                  left: 1/1.8 * p.navigationItemFont.sizeRem,
-                  right: 1/1.8 * p.navigationItemFont.sizeRem,
+                  left: 1 / 1.8 * p.navigationItemFontSizeRem,
+                  right: 1 / 1.8 * p.navigationItemFontSizeRem,
                   top: 0.4,
                   bottom: 0.6
                },
@@ -122,9 +121,26 @@ presentationSI.presenter.demosNavigation = {};
 presentationSI.presenter.demosNavigation.share = {
    ui: {
       style: {
-         navigationItemFont: p.navigationItemFont,
          color: {
             background: undefined
+         }
+      }
+   },
+   navigationItem: {
+      ui: {
+         style: {
+            paddingRem: {
+               top: (devStyle ? 0 : 0.25) * p.navigationItemFontSizeRem,
+               right: (devStyle ? 0 : 0.5) * p.navigationItemFontSizeRem,
+               bottom: (devStyle ? 0 : 0.16) * p.navigationItemFontSizeRem,
+               left: (devStyle ? 0 : 0.5) * p.navigationItemFontSizeRem
+            },
+            backgroundColor: devStyle ?
+               undefined : 'hsla(214, 40%, 99%, 0.8)',
+            font: {
+               sizeRem: p.navigationItemFontSizeRem,
+               names: undefined
+            },
          }
       }
    }
@@ -132,7 +148,7 @@ presentationSI.presenter.demosNavigation.share = {
 presentationSI.presenter.demosNavigation.private = {
    ui: {
       backgroundColor: devStyle ?
-         'paleturquoise' : 'hsla(214, 40%, 90%, 0.6)'
+         'paleturquoise' : 'hsla(214, 40%, 99%, 0.8)'
    },
    tree: {
       ux: {
@@ -140,55 +156,65 @@ presentationSI.presenter.demosNavigation.private = {
       },
       ui: {
          paddingRem: {
-            left: 1 * p.navigationItemFont.sizeRem,
-            right: 1 * p.navigationItemFont.sizeRem,
-            top: 0 * p.navigationItemFont.sizeRem, // implementation pending
-            bottom: 0 * p.navigationItemFont.sizeRem // implementation pending
+            left: (devStyle ? 0 : 1.3) * p.navigationItemFontSizeRem,
+            right: (devStyle ? 0 : 1.3) * p.navigationItemFontSizeRem
          },
-         rowHeightRem: 2.7 * p.navigationItemFont.sizeRem,
+         rowHeightRem: (devStyle ? 3 : 2) * p.navigationItemFontSizeRem,
          structureLines: {
-            blockWidthRem: 3.5 * p.navigationItemFont.sizeRem,
+            blockWidthRem: 3.4 * p.navigationItemFontSizeRem,
             hLine: {
-               color: devStyle ? 'yellow' : 'hsla(214, 0%, 84%, 1)',
+               color: devStyle ?
+                  'yellow' : p.demosNavigationStructureLinesColor,
                thicknessRem:
-                  1 / (devStyle ? 18 : 30) * p.navigationItemFont.sizeRem,
-               minThicknessPx: devStyle ? 3 : 4
+               1 / (devStyle ? 18 : 3000) * p.navigationItemFontSizeRem,
+               minThicknessPx: devStyle ? 3 : 1
             },
             vLine: {
-               color: devStyle ? 'red' : 'hsla(214, 0%, 84%, 1)',
+               color: devStyle ?
+                  'red' : p.demosNavigationStructureLinesColor,
                thicknessRem:
-                  1 / (devStyle ? 11 : 30) * p.navigationItemFont.sizeRem,
-               minThicknessPx: devStyle ? 5 : 4
+               1 / (devStyle ? 11 : 3000) * p.navigationItemFontSizeRem,
+               minThicknessPx: devStyle ? 5 : 1
             }
          },
          expandCollapseButtons: {
             common: {
                backgroundColor: devStyle ?
-                  'white' : 'hsla(214, 40%, 97%, 1)',
+                  'white' : 'hsla(214, 40%, 99%, 0.8)',
                states: {
                   normal: {
-                     diameterRem: 1 * p.navigationItemFont.sizeRem,
+                     diameterRem: (
+                                     devStyle ? 1 : 1.1) * p.navigationItemFontSizeRem,
                      boxShadow: {
                         cssValue: devStyle ?
                            '0 0 0 0.0625rem hsla(203, 84%, 30%, 1)'
-                           : '0 0 0 0.0625rem hsla(214, 0%, 84%, 1)',
+                           : `0 0 0 0.0625rem ${p.demosNavigationStructureLinesColor}`,
                         maxThickness: {
-                           leftRem: 0.0625
+                           leftRem: devStyle ? 0.0625 : 0.0625
                         }
                      }
                   },
                   hovered: {
-                     diameterRem: 1.05 * p.navigationItemFont.sizeRem,
+                     diameterRem: (devStyle ?
+                        1.05 : 1.15) * p.navigationItemFontSizeRem,
                      boxShadow: {
                         cssValue: devStyle ?
                            '0 0 0 0.0625rem hsla(203, 84%, 50%, 1)'
-                        :
-                           `0 0
-                           ${0.4/18*16*p.navigationItemFont.sizeRem}rem
-                           ${0.1/18*16*p.navigationItemFont.sizeRem}rem
-                           hsla(45, 86%, 55%, 1)`,
+                           :
+                           `
+                              0 0 0 0.0625rem ${p.demosNavigationStructureLinesColor}
+                              ,
+                              0 0
+                              ${0.4 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                              ${0.1 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                              hsla(45, 86%, 55%, 1)
+                           `,
                         maxThickness: {
-                           leftRem: (0.4+0.1)/18*16*p.navigationItemFont.sizeRem
+                           leftRem: devStyle ?
+                              0.0625
+                              :
+                              (0.0625 +
+                               (0.4 + 0.1) / 18 * 16 * p.navigationItemFontSizeRem)
                         }
                      }
                   },
@@ -198,16 +224,21 @@ presentationSI.presenter.demosNavigation.private = {
                            `0 0 0 0.0625rem hsla(203, 84%, 30%, 0.84)
                             ,
                             0 0 0.0625rem 0.1875rem hsla(147, 84%, 39%, 1)`
-                        :
-                           `0 0
-                           ${0.4/18*16*p.navigationItemFont.sizeRem}rem
-                           ${0.1/18*16*p.navigationItemFont.sizeRem}rem
-                           hsla(45, 86%, 55%, 1)`,
+                           :
+                           `
+                              0 0 0 0.0625rem ${p.demosNavigationStructureLinesColor}
+                              ,
+                              0 0
+                              ${0.4 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                              ${0.1 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                              hsla(45, 86%, 55%, 1)
+                           `,
                         maxThickness: {
                            leftRem: devStyle ?
                               0.0625 + 0.1875
                               :
-                              (0.4+0.1)/18*16*p.navigationItemFont.sizeRem
+                              (0.0625 +
+                               (0.4 + 0.1) / 18 * 16 * p.navigationItemFontSizeRem)
                         }
                      }
                   }
@@ -216,51 +247,55 @@ presentationSI.presenter.demosNavigation.private = {
             expand: {
                signColor: devStyle ?
                   'green' : 'hsla(10, 40%, 70%, 1)',
-               backgroundImageCSSValue: 'url(\'data:image/svg+xml;utf8,<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="{signColor}" d="m 18.07627,9.9745767 -4.050847,0 0,-4.050848 c 0,-1.1180338 -0.907389,-2.0254236 -2.025423,-2.0254236 -1.118034,0 -2.0254235,0.9073898 -2.0254235,2.0254236 l 0.071905,4.050848 -4.1227503,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 l 4.1227503,-0.0719 -0.071905,4.122749 c 0,1.118034 0.9073895,2.025425 2.0254235,2.025425 1.118034,0 2.025423,-0.907391 2.025423,-2.025425 l 0,-4.122749 4.050847,0.0719 c 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z" /></svg>\')'
+               backgroundImageCSSValue: `url(\'data:image/svg+xml;utf8,<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='{signColor}' d='m 18.07627,9.9745767 -4.050847,0 0,-4.050848 c 0,-1.1180338 -0.907389,-2.0254236 -2.025423,-2.0254236 -1.118034,0 -2.0254235,0.9073898 -2.0254235,2.0254236 l 0.071905,4.050848 -4.1227503,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 l 4.1227503,-0.0719 -0.071905,4.122749 c 0,1.118034 0.9073895,2.025425 2.0254235,2.025425 1.118034,0 2.025423,-0.907391 2.025423,-2.025425 l 0,-4.122749 4.050847,0.0719 c 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z' /></svg>\')`
             },
             collapse: {
                signColor: devStyle ?
                   'red' : 'hsla(10, 40%, 70%, 1)',
-               backgroundImageCSSValue: 'url(\'data:image/svg+xml;utf8,<svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="{signColor}" d="m 18.07627,9.9745767 -12.1525388,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 12.1525388,0 5.0499608,-0.126066 12.1525388,0 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z" /></svg>\')'
+               backgroundImageCSSValue: `url(\'data:image/svg+xml;utf8,<svg version='1.2' baseProfile='tiny' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='{signColor}' d='m 18.07627,9.9745767 -12.1525388,0 c -1.1180338,0 -2.0254236,0.9073893 -2.0254236,2.0254233 0,1.118033 0.9073898,2.025423 2.0254236,2.025423 12.1525388,0 5.0499608,-0.126066 12.1525388,0 1.118034,0 2.025425,-0.90739 2.025425,-2.025423 0,-1.118034 -0.907391,-2.0254233 -2.025425,-2.0254233 z' /></svg>\')`
             }
          },
          itemContainer: {
             paddingRem: {
-               top: 0.5 * p.navigationItemFont.sizeRem,
-               right: 0.5 * p.navigationItemFont.sizeRem,
-               bottom: 0.5 * p.navigationItemFont.sizeRem,
-               left: 0.5 * p.navigationItemFont.sizeRem
+               top: (devStyle ? 0.5 : 0) * p.navigationItemFontSizeRem,
+               right: (devStyle ? 0.5 : 0) * p.navigationItemFontSizeRem,
+               bottom: (devStyle ? 0.5 : 0) * p.navigationItemFontSizeRem,
+               left: (devStyle ? 0.5 : 0) * p.navigationItemFontSizeRem
             },
             border: {
-               thicknessRem: devStyle ? 1/16 : 0,
+               thicknessRem: devStyle ? 1 / 16 : 0,
                color: devStyle ?
                   'red' : 'hsla(214, 40%, 99%, 1)',
                cssStyle: 'solid'
             },
-            borderRadiusRem: p.navigationItemFont.sizeRem / 2,
+            borderRadiusRem: p.navigationItemFontSizeRem / 2,
             boxShadow: {
                cssValue: devStyle ?
-                  '0 0 0 0' : `
-                     ${0.3/18*16*p.navigationItemFont.sizeRem}rem
-                     ${-0.3/18*16*p.navigationItemFont.sizeRem}rem
-                     ${1 /18*16*p.navigationItemFont.sizeRem}rem
-                     hsla(214, 40%, 99%, 1)
-                     ,
-                     ${-0.3/18*16*p.navigationItemFont.sizeRem}rem
-                     ${0.3/18*16*p.navigationItemFont.sizeRem}rem
-                     ${1 /18*16*p.navigationItemFont.sizeRem}rem
-                     hsla(214, 40%, 99%, 1)
-                  `,
+                  `${0.3 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   ${-0.3 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   ${1 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   hsla(214, 40%, 99%, 1)
+                  ,
+                   ${-0.3 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   ${0.3 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   ${1 / 18 * 16 * p.navigationItemFontSizeRem}rem
+                   hsla(214, 40%, 99%, 1)
+                  `
+                  : '0 0 0 0',
                maxThickness: {
                   rightRem: devStyle ?
-                     0
+                     (0.3 + 1) / 3 / 18 * 16 * p.navigationItemFontSizeRem
                      :
-                     (0.3 + 1)/3/18*16*p.navigationItemFont.sizeRem
+                     0
                }
             },
             backgroundColor: devStyle ?
-               'hsla(44, 84%, 92%, 0.5)' : 'hsla(214, 40%, 99%, 1)',
-            labelContainer: {
+               'hsla(44, 84%, 92%, 0.5)' : 'hsla(0, 0%, 0%, 0)',
+            rstLabelContainer: {
+               marginRem: {
+                  bottom: 0.15 * p.navigationItemFontSizeRem,
+                  left: 0
+               },
                paddingRightRem: 0
             }
          }
@@ -271,13 +306,40 @@ presentationSI.presenter.demosNavigation.parentInput = presentationSI.presenter;
 
 // demoNavigationItem
 presentationSI.presenter.demosNavigation.demoNavigationItem = {
-   //
+   private: {
+      notSelected: {
+         ui: {
+            style: {
+               backgroundColor: undefined,
+               color: 'hsla(91, 100%, 18%, 1)',
+               textDecoration: 'none'
+            }
+         }
+      },
+      selected: {
+         ui: {
+            style: {
+               backgroundColor: 'hsla(61, 100%, 88%, 0.8)',
+               color: 'hsla(91, 100%, 18%, 1)',
+               textDecoration: 'none'
+            }
+         }
+      }
+   }
 };
 presentationSI.presenter.demosNavigation.demoNavigationItem.parentInput = presentationSI.presenter.demosNavigation;
 
 // groupingNavigationItem
 presentationSI.presenter.demosNavigation.groupingNavigationItem = {
-   //
+   private: {
+      ui: {
+         style: {
+            backgroundColor: undefined,
+            color: 'hsla(46, 62%, 23%, 1)',
+            textDecoration: undefined
+         }
+      }
+   }
 };
 presentationSI.presenter.demosNavigation.groupingNavigationItem.parentInput = presentationSI.presenter.demosNavigation;
 
@@ -329,22 +391,22 @@ presentationSI.presenter.demoContainer.inMaximizedMode = {
       navigationButton: {
          ui: {
             marginRem: {
-               top: devStyle? 0.8 : 0.5,
-               right: devStyle? 0.8 : 1.6/3,
-               bottom: devStyle? 0.8 : 1.6/3,
-               left: devStyle? 0.8 : 1.6/3
+               top: devStyle ? 0.8 : 1.3,
+               right: devStyle ? 0.8 : 1.3,
+               bottom: devStyle ? 0.8 : 1.3,
+               left: devStyle ? 0.8 : 1.3
             },
             paddingEm: {
-               top: 0.3/1.6, right: 0.4, bottom: 0.45/1.6, left: 0.4
+               top: 0.15, right: 0.35, bottom: 0.26, left: 0.35
             },
             style: {
                backgroundColor: devStyle ?
-                  'hsla(10, 43%, 69%, 1)' : 'hsla(203, 32%, 86%, 0.88)',
+                  'hsla(10, 43%, 69%, 1)' : 'hsla(214, 50%, 99%, 0.75)',
                color: devStyle ?
-                  'hsla(229, 70%, 50%, 1)' : 'hsla(0, 25%, 50%, 1)',
+                  'hsla(229, 70%, 50%, 1)' : 'hsla(0, 25%, 31%, 1)',
                font: {
-                  sizeRem: 1.6,
-                  names: undefined
+                  sizeRem: 1.05,
+                  names: 'Arial, Helvetica, sans-serif' // TODO: handle case of undefined
                }
             }
          }

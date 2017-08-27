@@ -9,6 +9,7 @@ import {
 
 import {bindMethodsBaseExtends} from 'BindMethodsBase_h436s_v0';
 import {convertRemToPx} from '../../share/convertPxAndRem';
+import {InvalidOperationException} from 'exceptionTypes_mjS3d_v0';
 
 import PresenterHeader from '../../PresenterHeader/PresenterHeader';
 import PresenterFooter from '../../PresenterFooter/PresenterFooter';
@@ -109,7 +110,7 @@ export default class PresenterView
             selectedDemoPathOnServer={p.selectedDemoPathOnServer}
             onUpdatedUITreeData={p.onUpdatedNavigationTreeWidth}
             onDemoRequest={p.onDemoRequest}
-            onHideRequest={p.onMaximizeDemoContainerRequest}
+            onHideRequest={p.onHideNavigationRequest}
             key='DemosNavigation'
          />);
    }
@@ -200,7 +201,12 @@ export default class PresenterView
    }
    
    setDemoScrollHeightPx(h) {
-      this._scrollContainer.scrollTop = h;
+      if (h >= Number.EPSILON && !this._scrollContainer)
+         throw new InvalidOperationException(
+            'May not set scroll height when having no scroll container.');
+      
+      if (this._scrollContainer)
+         this._scrollContainer.scrollTop = h;
    }
    
    _renderFooter(style) {
@@ -226,11 +232,12 @@ PresenterView.propTypes = {
    shouldRenderContent: PropTypes.bool.isRequired,
    layoutParameters: PropTypes.object,
    onUpdatedBounds: PropTypes.func,
-   onUpdatedDemoBounds: PropTypes.func, // TODO
+   onUpdatedDemoBounds: PropTypes.func,
    onUpdatedNavigationTreeWidth: PropTypes.func,
+   onDemoRequest: PropTypes.func, // f({selectedDemoPathOnServer})
+   onHideNavigationRequest: PropTypes.func,
    onMaximizeDemoContainerRequest: PropTypes.func,
    onNavigationRequest: PropTypes.func,
-   onDemoRequest: PropTypes.func, // f({selectedDemoPathOnServer})
-   afterDemoScroll: PropTypes.func, // f(verticalScrollDistancePx) TODO
+   afterDemoScroll: PropTypes.func, // f(verticalScrollDistancePx)
    selectedDemoPathOnServer: PropTypes.string
 };
