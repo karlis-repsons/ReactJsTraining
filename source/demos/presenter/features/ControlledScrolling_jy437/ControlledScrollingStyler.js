@@ -1,3 +1,5 @@
+const textColor = 'hsla(203, 32%, 29%, 1)';
+
 export default class ControlledScrollingStyler {
    constructor({props}) {
       this._props = props;
@@ -34,7 +36,7 @@ export default class ControlledScrollingStyler {
                marginTop: '4.5rem',
                marginBottom: '4.5rem',
                padding: '4.8rem 3rem',
-               color: 'hsla(203, 32%, 29%, 1)',
+               color: textColor,
                backgroundColor: 'hsla(214, 40%, 100%, 0.9)',
                boxShadow: '0 0 16rem 0 hsla(214, 40%, 100%, 1)'
             }
@@ -49,6 +51,11 @@ export default class ControlledScrollingStyler {
             paddingBottom: '0.3rem',
             textAlign: 'center',
             fontSize: '1.1rem'
+         },
+         link: {
+            css: {
+               color: textColor
+            }
          }
       };
    }
