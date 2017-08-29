@@ -13,7 +13,7 @@ let prod = {
 module.exports = merge(webpackConfigShare, {
    output: {
       path: prod.outputPath,
-      filename: '[name].bundle.js',
+      filename: '[name].bundle.[chunkhash].js',
       publicPath: '/',
       sourceMapFilename: '[name].map'
    },
