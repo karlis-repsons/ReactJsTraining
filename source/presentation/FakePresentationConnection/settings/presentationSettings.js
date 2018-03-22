@@ -131,12 +131,12 @@ presentationSI.presenter.demosNavigation.share = {
          style: {
             paddingRem: {
                top: (devStyle ? 0 : 0.25) * p.navigationItemFontSizeRem,
-               right: (devStyle ? 0 : 0.5) * p.navigationItemFontSizeRem,
+               right: (devStyle ? 0 : 0.25) * p.navigationItemFontSizeRem,
                bottom: (devStyle ? 0 : 0.16) * p.navigationItemFontSizeRem,
-               left: (devStyle ? 0 : 0.5) * p.navigationItemFontSizeRem
+               left: (devStyle ? 0 : 0.25) * p.navigationItemFontSizeRem
             },
             backgroundColor: devStyle ?
-               undefined : 'hsla(214, 40%, 99%, 0.8)',
+               undefined : 'hsla(214, 40%, 99%, 0)',
             font: {
                sizeRem: p.navigationItemFontSizeRem,
                names: undefined
@@ -148,7 +148,7 @@ presentationSI.presenter.demosNavigation.share = {
 presentationSI.presenter.demosNavigation.private = {
    ui: {
       backgroundColor: devStyle ?
-         'paleturquoise' : 'hsla(214, 40%, 99%, 0.8)'
+         'paleturquoise' : 'hsla(214, 40%, 99%, 0.9)'
    },
    tree: {
       ux: {

@@ -50,7 +50,8 @@ export default class DemoNavigationItemStyler {
       return {
          css: Object.assign({}, privateCSS,
             {
-               color: prUISty.color
+               color: prUISty.color,
+               textShadow: '0 0 1px hsla(91, 0%, 18%, 0.2)'
             })
       };
    }

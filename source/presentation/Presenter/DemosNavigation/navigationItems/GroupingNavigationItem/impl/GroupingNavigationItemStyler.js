@@ -22,7 +22,8 @@ export default class GroupingNavigationItemStyler {
       return {
          css: Object.assign({}, sharedCSS, privateCSS,
             {
-               color: prUISty.color
+               color: prUISty.color,
+               textShadow: '0 0 1px hsla(91, 0%, 18%, 0.2)'
             })
       };
    }
